@@ -18,5 +18,9 @@
   "scripts": {
     "dev": "bun --hot index.js",
     "start": "node index.js"
+  },
+  "imports": {
+    "#models/*": "./models/*.js",
+    "#routes/*": "./controllers/routers/*.js"
   }
 }

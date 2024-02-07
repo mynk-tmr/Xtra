@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config"; //to support env files
 import mongoose from "mongoose";
-import userRoutes from "./routes/users.js";
-import authRoutes from "./routes/authorize.js";
+import userRoutes from "#routes/users";
+import authRoutes from "#routes/authorize";
 
 await mongoose.connect(process.env.MONGODB_URI);
 console.log("Connected to database");
