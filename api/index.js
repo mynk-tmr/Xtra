@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true })); //to allow nested object creati
 
 app.get("/api/", async (req, res) => {
   res.json({
-    message: "Bun + Vite",
+    message: process.env.TEST_STRING,
   });
 });
 
