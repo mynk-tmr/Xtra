@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 //User is constructor of new documents in /users and enforces the provided schema
 
 //before calling user.save() do...
@@ -32,3 +32,13 @@ userSchema.pre("save", async (next) => {
   }
   next(); //mongoose needs this
 });
+
+async function getUserByEmail(email) {
+  return await User.findOne({ email });
+}
+
+function createUser(userData) {
+  return new User(userData);
+}
+
+export { User, createUser, getUserByEmail };

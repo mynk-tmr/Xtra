@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config"; //to support env files
 import mongoose from "mongoose";
-import userRouter from "./routes/users";
+import userRouter from "./routes/user-register.js";
 
 await mongoose.connect(process.env.MONGODB_URI);
 console.log("Connected to database");
