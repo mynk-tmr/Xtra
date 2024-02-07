@@ -1,23 +1,24 @@
 import express from "express";
-import { User } from "../models/user.js";
-import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import {
+  getValidationErrors,
+  errorResponse,
+  validationsAtLogin,
+} from "../utils/validator.js";
+import { setJWTCookieInResponse } from "../utils/jwtHandler.js";
+import { getUserByEmail } from "../models/user.js";
 
 async function loginUser(req, res) {
-  const validationErrors = validationResult(req);
-
-  if (!validationErrors.isEmpty()) {
-    return errorResponse(res, 400, validationErrors.array());
-  }
-
+  const errors = getValidationErrors(req);
+  if (errors) return new errorResponse(res, 400, errors);
   const { email, password } = req.body;
-
   try {
-    let user = await User.findOne({ email });
+    let user = await getUserByEmail(email);
     if (!user) return errorResponse(res, 400, "Invalid credentials");
     const isPasswordOK = await bcrypt.compare(password, user.password);
     if (!isPasswordOK) return errorResponse(res, 400, "Invalid credentials");
-    return successResponse(res, jwtToken);
+    setJWTCookieInResponse(res, user._id);
+    return res.status(200).json({ userId: user._id });
   } catch (error) {
     console.log(error);
     return errorResponse(res, 500, "Something went wrong");
@@ -25,5 +26,5 @@ async function loginUser(req, res) {
 }
 
 const router = express.Router();
-router.post("/login", validations, loginUser);
+router.post("/login", validationsAtLogin, loginUser);
 export default router;

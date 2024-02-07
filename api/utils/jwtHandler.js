@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
-export function setJWTCookieInResponse(res, user) {
-  const jwtToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, {
+export function setJWTCookieInResponse(res, userId) {
+  const jwtToken = jwt.sign({ userId }, process.env.JWT_SECRET_KEY, {
     expiresIn: "1d",
   });
   const ONE_DAY = 24 * 60 * 60 * 1000;
