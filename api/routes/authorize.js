@@ -10,7 +10,7 @@ import { getUserByEmail } from "../models/user.js";
 
 async function loginUser(req, res) {
   const errors = getValidationErrors(req);
-  if (errors) return new errorResponse(res, 400, errors);
+  if (errors) return errorResponse(res, 400, errors);
   const { email, password } = req.body;
   try {
     let user = await getUserByEmail(email);

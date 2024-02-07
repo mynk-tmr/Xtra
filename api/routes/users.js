@@ -9,7 +9,7 @@ import { createUser, getUserByEmail } from "../models/user.js";
 
 async function registerUser(req, res) {
   const errors = getValidationErrors(req);
-  if (errors) return new errorResponse(res, 400, errors);
+  if (errors) return errorResponse(res, 400, errors);
 
   try {
     let user = await getUserByEmail(req.body.email);
