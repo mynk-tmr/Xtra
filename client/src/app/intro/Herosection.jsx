@@ -10,7 +10,7 @@ export const HeroSection = () => {
         <br />
         Or rent storage for your <b className="text-accent">eXTRA items</b>
       </h1>
-      <p className="text-black prose-lg">
+      <p className="text-black prose-lg mb-12">
         Welcome to <Xtralogo />. Every storage on our platform is verified by
         our team to be <b>safe</b>, <b>affordable</b> and <b>convenient</b>
       </p>
