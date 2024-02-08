@@ -7,6 +7,7 @@ export default {
         dblue: "#030D18",
         sky: "#338CFF",
         grass: "#8DCA3F",
+        love: "rgb(248 113 113)",
       },
       gridTemplateColumns: {
         fill: "repeat(auto-fill , minmax(36ch , 1fr))",
@@ -18,7 +19,7 @@ export default {
     },
     boxShadow: {
       stripe:
-        "lightgray 0px 0px 0px 2px, lightgray 0px 4px 6px -1px, lightgray 0px 1px 0px inset",
+        "lightgray 0px 0px 0px 2px, lightgray 0px 2px 6px -1px, lightgray 0px 1px 0px inset",
     },
   },
   plugins: [],

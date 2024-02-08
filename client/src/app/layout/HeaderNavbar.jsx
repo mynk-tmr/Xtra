@@ -10,8 +10,8 @@ const HeaderNavbar = () => {
   const isSmallScreen = useMediaQuery("(max-width: 576px)");
   return (
     <nav
-      className={`h-fit w-full px-6 lg:px-12 py-3 z-50 fixed bottom-0 shadow-stripe ${
-        !isSmallScreen && "top-0 sticky border-none"
+      className={`bg-white h-fit w-full px-6 lg:px-12 py-3 z-50 fixed bottom-0 shadow-stripe ${
+        !isSmallScreen && "top-0 sticky"
       }`}>
       <div className="flex items-center">
         <Link to="/" className="py-1.5 mr-auto">
