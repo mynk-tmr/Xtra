@@ -1,30 +1,29 @@
-import { NavButton } from "@/components/NavButton";
 import Xtralogo from "@/components/Xtralogo";
+import { Link } from "react-router-dom";
 
 export const HeroSection = () => {
   return (
-    <section className="min-h-[90vh] grid content-center gap-y-16">
-      <h1 className="text-4xl font-bold tracking-tight">
-        Turn your <strong className="text-grass">eXTRA SPACE</strong> into{" "}
-        <strong className="text-sky">eXTRA CASH</strong>
+    <section className="min-h-[90vh] prose grid content-center">
+      <h1>
+        Turn your <b className="text-primary">eXTRA SPACE</b> into{" "}
+        <b className="text-secondary">eXTRA CASH</b>
         <br />
-        Or rent storage for your{" "}
-        <strong className="text-love">eXTRA items</strong>.
+        Or rent storage for your <b className="text-accent">eXTRA items</b>
       </h1>
-      <p className="max-w-prose font-mono">
+      <p className="text-black prose-lg">
         Welcome to <Xtralogo />. Every storage on our platform is verified by
-        our team to be <u>safe</u>, <u>affordable</u> and <u>convenient</u>
+        our team to be <b>safe</b>, <b>affordable</b> and <b>convenient</b>
       </p>
-      <nav className="flex gap-6">
-        <button className="btn btn-primary" to="/home">
-          Browse Storage
-        </button>
-        <NavButton
-          className="bg-sky text-white hover:border-sky hover:text-inherit hover:bg-white"
-          to="/login">
-          Sign In / Create Account
-        </NavButton>
-      </nav>
+      <div className="flex gap-x-6 prose-a:no-underline prose-a:font-bold">
+        <Link to="/home">
+          <button className="btn btn-primary">Browse Storage</button>
+        </Link>
+        <Link to="/login">
+          <button className="btn btn-secondary">
+            Sign In / Create Account
+          </button>
+        </Link>
+      </div>
     </section>
   );
 };

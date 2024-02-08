@@ -1,5 +1,6 @@
 import daisyui from "daisyui";
 import mypresets from "./daisyui.config";
+import typography from "@tailwindcss/typography";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -13,12 +14,14 @@ export default {
       screens: {
         xs: { min: "540px" },
       },
-    },
-    boxShadow: {
-      stripe:
-        "lightgray 0px 0px 0px 2px, lightgray 0px 2px 6px -1px, lightgray 0px 1px 0px inset",
+      boxShadow: {
+        stripe: "lightgray 0px 2px 3px, lightgray 0px -2px 3px",
+      },
+      fontFamily: {
+        sans: "Lato, sans-serif",
+      },
     },
   },
-  plugins: [daisyui],
+  plugins: [typography, daisyui],
   daisyui: mypresets,
 };

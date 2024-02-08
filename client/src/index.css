@@ -13,3 +13,9 @@
     @apply bg-green-500 rounded-full;
   }
 }
+
+@layer components {
+  .adjusticons *:has(svg) {
+    @apply flex gap-x-3 items-center;
+  }
+}
