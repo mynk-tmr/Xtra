@@ -16,9 +16,9 @@ export const HeroSection = () => {
         our team to be <u>safe</u>, <u>affordable</u> and <u>convenient</u>
       </p>
       <nav className="flex gap-6">
-        <NavButton className="bg-grass hover:bg-white border-grass" to="/home">
+        <button className="btn btn-primary" to="/home">
           Browse Storage
-        </NavButton>
+        </button>
         <NavButton
           className="bg-sky text-white hover:border-sky hover:text-inherit hover:bg-white"
           to="/login">
