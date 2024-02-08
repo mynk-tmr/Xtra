@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import NavList from "./NavList";
 import useToggle from "@/libs/hooks/useToggle";
 import useMediaQuery from "@/libs/hooks/useMediaQuery";
+import Xtralogo from "@/components/Xtralogo";
 
 const HeaderNavbar = () => {
   const [open, toggle] = useToggle(false);
@@ -14,7 +15,7 @@ const HeaderNavbar = () => {
       }`}>
       <div className="flex items-center">
         <Link to="/" className="py-1.5 mr-auto">
-          Xtra
+          <Xtralogo className="text-2xl" />
         </Link>
         {!isSmallScreen ? (
           <NavList className="mx-0 flex flex-row items-center gap-6" />

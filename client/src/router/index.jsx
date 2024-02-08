@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RootLayout from "../app/layout";
+import RootLayout from "@/app/layout";
 import NotFound from "./404";
 
 export default function Router() {
