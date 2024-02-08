@@ -14,7 +14,7 @@ const NavList = ({ className }) => {
       {list.map((item) => (
         <li
           key={item.text}
-          className={`p-1 font-semibold text-sm hover:text-blue-500 transition-colors
+          className={`p-1 font-semibold hover:text-blue-500 transition-colors
           ${
             location.pathname.includes(item.href) ? "text-sky" : "text-dblue"
           }`}>
