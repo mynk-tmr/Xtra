@@ -1,5 +1,3 @@
-function RootLayout() {
-  return "Root";
-}
+const RootLayout = () => {};
 
 export default RootLayout;
