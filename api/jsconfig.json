@@ -3,6 +3,7 @@
     "paths": {
       "#models/*": ["./models/*.js"],
       "#routes/*": ["./controllers/routers/*.js"]
-    }
+    },
+    "esModuleInterop": true
   }
 }
