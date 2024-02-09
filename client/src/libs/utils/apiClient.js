@@ -1,4 +1,5 @@
-const BASEURL = import.meta.env.VITE_API_BASE_URL;
+const BASEURL =
+  import.meta.env.MODE == "production" ? "" : import.meta.env.VITE_API_BASE_URL;
 
 class ApiClient {
   async post({ data, endpoint }) {
