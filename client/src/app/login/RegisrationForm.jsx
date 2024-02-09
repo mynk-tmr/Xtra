@@ -2,15 +2,43 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const fields = [
-  ["firstName", "text"],
-  ["lastName", "text"],
-  ["email", "email"],
-  ["password", "password"],
+const formFields = [
+  {
+    name: "firstName",
+    type: "text",
+  },
+  {
+    name: "lastName",
+    type: "text",
+  },
+  {
+    name: "email",
+    type: "email",
+    validations: {
+      pattern: {
+        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+        message: "Email format is invalid !",
+      },
+    },
+  },
+  {
+    name: "password",
+    type: "password",
+    validations: {
+      minLength: {
+        value: 6,
+        message: "Password must be of atleast 6 characters",
+      },
+    },
+  },
+  {
+    name: "confirm_password",
+    type: "password",
+  },
 ];
 
 const RegistrationForm = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
   function onValid(jsonFormdata) {
     console.log(jsonFormdata);
   }
@@ -20,33 +48,34 @@ const RegistrationForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onValid, onError)} className="w-fit">
-      <fieldset className="uppercase text-sm grid gap-4 lg:grid-cols-2">
-        {fields.map(([name, type]) => (
-          <div key={name} className="form-control md:flex-row">
-            <label className="label w-[15ch] font-bold" htmlFor={name}>
-              {name}
+    <form onSubmit={handleSubmit(onValid, onError)} noValidate>
+      <fieldset className="uppercase">
+        {formFields.map((field) => (
+          <div className="form-control md:flex-row mb-4" key={field.name}>
+            <label
+              htmlFor={field.name}
+              className="label label-text !text-xs font-bold w-[36ch]">
+              {field.name.replaceAll("_", " ")}
             </label>
             <input
-              className="input min-w-[36ch] input-bordered bg-white text-info"
-              id={name}
-              type={type}
-              {...register(name, {
-                required: `${name} is required !`,
+              type={field.type}
+              id={field.name}
+              autoComplete="true"
+              className="input input-bordered bg-white w-full"
+              {...register(field.name, {
+                ...field?.validations,
+                required: `${field.name} is required field !`,
+                validate:
+                  field.name === "confirm_password" &&
+                  function (val) {
+                    if (watch("password") !== val)
+                      return "your passwords don't match !";
+                  },
               })}
             />
           </div>
         ))}
-        <div className="flex mt-4 justify-between">
-          <button type="submit" className="btn btn-info btm-nav-sm">
-            Create Account
-          </button>
-          <Link to="reset">
-            <button className="ml-auto btn btn-ghost btn-info text-error">
-              Forgot Password ?
-            </button>
-          </Link>
-        </div>
+        <button className="btn btn-info btn-outline">Create Account</button>
       </fieldset>
     </form>
   );
