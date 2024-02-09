@@ -4,6 +4,7 @@ import "./index.css";
 import "@fontsource/lato";
 import Router from "./router";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { AppContextProvider } from "./contexts/AppContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,7 +17,9 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Router />
+      <AppContextProvider>
+        <Router />
+      </AppContextProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

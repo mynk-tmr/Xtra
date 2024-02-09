@@ -1,37 +1,69 @@
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import NavList from "./NavList";
-import useToggle from "@/libs/hooks/useToggle";
-import useMediaQuery from "@/libs/hooks/useMediaQuery";
 import Xtralogo from "@/components/Xtralogo";
+import { useAppContext } from "@/contexts/AppContext";
+import {
+  HeartIcon,
+  MapIcon,
+  BuildingOfficeIcon,
+  UserCircleIcon,
+  KeyIcon,
+  Square3Stack3DIcon,
+} from "@heroicons/react/20/solid";
+import useMediaQuery from "@/libs/hooks/useMediaQuery";
+
+const navItems = {
+  anon: [
+    ["login", "Sign In", KeyIcon],
+    ["search", "Search", MapIcon],
+  ],
+  loggedin: [
+    ["search", "Search", MapIcon],
+    ["profile", "Profile", UserCircleIcon],
+    ["user/listings", "My Listings", BuildingOfficeIcon],
+    ["user/bookings", "My Bookings", HeartIcon],
+  ],
+};
 
 const HeaderNavbar = () => {
-  const [open, toggle] = useToggle(false);
-  const isSmallScreen = useMediaQuery("(max-width: 576px)");
+  const { isLoggedIn } = useAppContext();
+  const isSmallScreen = useMediaQuery("(max-width:620px)");
+  const navList = isLoggedIn ? navItems.loggedin : navItems.anon;
+  const closeMenu = () => {
+    let focused = document.activeElement;
+    focused?.blur();
+  };
+
   return (
-    <nav
-      className={`bg-white h-fit w-full px-6 lg:px-12 py-3 z-50 fixed bottom-0 shadow-stripe ${
-        !isSmallScreen && "top-0 sticky"
-      }`}>
-      <div className="flex items-center">
-        <Link to="/" className="py-1.5 mr-auto">
-          <Xtralogo className="text-2xl md:text-3xl" />
+    <nav className="navbar px-4 md:px-12 h-fit fixed bottom-0 xs:top-0 z-10 bg-white">
+      <div className="flex-1">
+        <Link to="/">
+          <Xtralogo className="text-3xl" />
         </Link>
-        {!isSmallScreen ? (
-          <NavList className="mx-0 flex flex-row items-center gap-6" />
-        ) : (
-          <button className="size-6 [&_svg]:size-6" onClick={toggle}>
-            {open ? (
-              <XMarkIcon strokeWidth={2} />
-            ) : (
-              <Bars3Icon strokeWidth={2} />
-            )}
-          </button>
-        )}
       </div>
-      {isSmallScreen && open && (
-        <div onClick={toggle}>
-          <NavList className="my-2 flex flex-col gap-2" />
+      {!isSmallScreen || !isLoggedIn ? (
+        <menu className="flex-none menu menu-horizontal">
+          {navList.map(([href, name, Icon]) => (
+            <li key={name}>
+              <Link to={href} className="text-secondary-content">
+                <Icon className="size-6" /> {name}
+              </Link>
+            </li>
+          ))}
+        </menu>
+      ) : (
+        <div className="dropdown dropdown-top dropdown-left xs:dropdown-bottom bg-white">
+          <div role="button" tabIndex="0" className="btn btn-ghost btn-circle">
+            <Square3Stack3DIcon className="w-6" />
+          </div>
+          <menu className="menu menu-compact dropdown-content p-2 shadow-lg rounded-box w-[36ch] text-base">
+            {navList.map(([href, name, Icon]) => (
+              <li key={name} onClick={closeMenu}>
+                <Link to={href} className="text-secondary-content">
+                  <Icon className="size-6" /> {name}
+                </Link>
+              </li>
+            ))}
+          </menu>
         </div>
       )}
     </nav>

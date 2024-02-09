@@ -18,4 +18,7 @@
   .adjusticons *:has(> svg) {
     @apply flex gap-x-3 items-center;
   }
+  a:has(button) {
+    @apply outline-none;
+  }
 }
