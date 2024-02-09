@@ -7,6 +7,7 @@ import {
 } from "../helpers/validator.js";
 import { setJWTCookieInResponse } from "../helpers/jwtHandler.js";
 import { getUserByEmail } from "#models/user";
+import { verifyToken } from "../middlewares/verifyToken.js";
 
 async function loginUser(req, res) {
   const errors = getValidationErrors(req);
@@ -27,4 +28,9 @@ async function loginUser(req, res) {
 
 const router = express.Router();
 router.post("/login", validationsAtLogin, loginUser);
+router.get("/validate-token", verifyToken, (req, res) => {
+  //transferring req.userId into body
+  return res.status(200).json({ userId: req.userId });
+});
+
 export default router;

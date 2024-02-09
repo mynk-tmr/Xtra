@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useMutation } from "react-query";
-import apiClient from "@/libs/utils/apiClient";
+import * as apiClient from "@/libs/utils/apiClient";
 
 const formFields = [
   {

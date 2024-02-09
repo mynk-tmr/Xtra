@@ -4,6 +4,7 @@ import "dotenv/config"; //to support env files
 import mongoose from "mongoose";
 import userRoutes from "#routes/users";
 import authRoutes from "#routes/authorize";
+import cookieParser from "cookie-parser";
 
 await mongoose.connect(process.env.MONGODB_URI);
 console.log("Connected to database");
@@ -15,6 +16,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use(express.json()); //to recognise request body as JSON
 app.use(express.urlencoded({ extended: true })); //to allow nested object creation from query strings
 
