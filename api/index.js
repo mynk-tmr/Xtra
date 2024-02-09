@@ -9,7 +9,12 @@ await mongoose.connect(process.env.MONGODB_URI);
 console.log("Connected to database");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL, //only allow this url
+    credentials: true,
+  })
+);
 app.use(express.json()); //to recognise request body as JSON
 app.use(express.urlencoded({ extended: true })); //to allow nested object creation from query strings
 

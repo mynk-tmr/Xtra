@@ -7,6 +7,7 @@ class ApiClient {
     try {
       response = await fetch(`${BASEURL}/api/${endpoint}`, {
         method: "POST",
+        credentials: "include", //enable cookies
         headers: {
           "Content-Type": "application/json",
         },
