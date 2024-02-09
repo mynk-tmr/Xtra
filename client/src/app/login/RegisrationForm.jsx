@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useMutation } from "react-query";
+import apiClient from "@/libs/utils/apiClient";
 
 const formFields = [
   {
@@ -16,6 +17,7 @@ const formFields = [
     type: "email",
     validations: {
       pattern: {
+        //eslint-disable-next-line no-useless-escape
         value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
         message: "Email format is invalid !",
       },
@@ -39,9 +41,21 @@ const formFields = [
 
 const RegistrationForm = () => {
   const { register, handleSubmit, watch } = useForm();
-  function onValid(jsonFormdata) {
-    console.log(jsonFormdata);
+  const { mutate: submitUserInfo } = useMutation({
+    mutationFn: apiClient.post,
+    onSuccess: function () {
+      toast.success("Registration successful 😎");
+    },
+    onError: function (error) {
+      //.message is what we sent from server or apiClient
+      toast.error(error.message);
+    },
+  });
+
+  function onValid(data) {
+    submitUserInfo({ data, endpoint: "users/register" });
   }
+
   function onError(errors) {
     const { message } = Object.values(errors).at(0);
     toast.error(message.toUpperCase());
