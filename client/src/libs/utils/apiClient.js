@@ -13,7 +13,7 @@ class ApiClient {
         body: JSON.stringify(data),
       });
     } catch (err) {
-      throw { message: "Server couldn't be reached 😥" };
+      throw { message: "Server couldn't be reached" };
     }
 
     if (!response.ok) {

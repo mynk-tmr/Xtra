@@ -17,7 +17,7 @@ async function registerUser(req, res) {
     user = createUser(req.body);
     await user.save(); //save to collection
     setJWTCookieInResponse(res, user._id);
-    return res.sendStatus(200);
+    return res.status(200);
   } catch (error) {
     console.log(error);
     return errorResponse(res, 500, "Something went wrong");

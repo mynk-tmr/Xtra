@@ -48,11 +48,12 @@ const RegistrationForm = () => {
     },
     onError: function (error) {
       //.message is what we sent from server or apiClient
-      toast.error(error.message);
+      toast.error(error.message + "  😥");
     },
   });
 
   function onValid(data) {
+    //calls apiClient.post
     submitUserInfo({ data, endpoint: "users/register" });
   }
 

@@ -4,11 +4,11 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import RootLayout from "@/app/layout";
+import RootLayout from "@/pages/_layout";
 import NotFound from "./404";
-import IntroPage from "@/app/intro";
-import LoginPage from "@/app/login";
-import RegistrationForm from "@/app/login/RegisrationForm";
+import IntroPage from "@/pages/intro";
+import LoginPage from "@/pages/login";
+import RegistrationForm from "@/pages/login/RegisrationForm";
 
 export default function Router() {
   const router = createBrowserRouter(
