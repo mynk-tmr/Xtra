@@ -7,14 +7,6 @@ import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
 
 const formFields = [
   {
-    name: "firstName",
-    type: "text",
-  },
-  {
-    name: "lastName",
-    type: "text",
-  },
-  {
     name: "email",
     type: "email",
     validations: {
@@ -35,32 +27,26 @@ const formFields = [
       },
     },
   },
-  {
-    name: "confirm_password",
-    type: "password",
-  },
 ];
 
-const RegistrationForm = () => {
-  const { register, handleSubmit, watch } = useForm();
+const LoginForm = () => {
+  const { register, handleSubmit } = useForm();
   const goto = useNavigateToHome();
   const invalidator = useTokenInvalidator();
   const { mutate: submitUserInfo } = useMutation({
     mutationFn: apiClient.post,
     onSuccess: async function () {
-      toast.success("Registration successful 😎");
+      toast.success("You are signed in! 😎");
       await invalidator();
       goto();
     },
-    onError: function (error) {
-      //.message is what we sent from server or apiClient
-      toast.error(error.message + "  😥");
+    onError: function () {
+      toast.error("Sign In Failed. Kindly try again 😥");
     },
   });
 
   function onValid(data) {
-    //calls apiClient.post
-    submitUserInfo({ data, endpoint: "users/register" });
+    submitUserInfo({ data, endpoint: "authorize/login" });
   }
 
   function onError(errors) {
@@ -86,20 +72,14 @@ const RegistrationForm = () => {
               {...register(field.name, {
                 ...field?.validations,
                 required: `${field.name} is required field !`,
-                validate:
-                  field.name === "confirm_password" &&
-                  function (val) {
-                    if (watch("password") !== val)
-                      return "your passwords don't match !";
-                  },
               })}
             />
           </div>
         ))}
-        <button className="btn btn-info btn-outline">Create Account</button>
+        <button className="btn btn-info btn-outline w-[20ch]">Sign In</button>
       </fieldset>
     </form>
   );
 };
 
-export default RegistrationForm;
+export default LoginForm;

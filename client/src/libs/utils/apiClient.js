@@ -20,7 +20,7 @@ export async function post({ data, endpoint }) {
   return await fetchHandler(() =>
     fetch(`${BASEURL}/api/${endpoint}`, {
       method: "POST",
-      credentials: "include", //enable cookies
+      credentials: "include", //include cookies (jwt) in request
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,7 +32,7 @@ export async function post({ data, endpoint }) {
 export async function get(endpoint) {
   return await fetchHandler(() =>
     fetch(`${BASEURL}/api/${endpoint}`, {
-      credentials: "include", //enable cookies
+      credentials: "include",
     })
   );
 }

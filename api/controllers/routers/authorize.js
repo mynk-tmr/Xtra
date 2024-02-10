@@ -28,9 +28,17 @@ async function loginUser(req, res) {
 
 const router = express.Router();
 router.post("/login", validationsAtLogin, loginUser);
+
 router.get("/validate-token", verifyToken, (req, res) => {
   //transferring req.userId into body
   return res.status(200).json({ userId: req.userId });
+});
+
+router.post("/logout", (req, res) => {
+  res.cookie("auth_token", "", {
+    expires: new Date(0), //clear client's cookie
+  });
+  res.send();
 });
 
 export default router;
