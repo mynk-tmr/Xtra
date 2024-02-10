@@ -1,10 +1,10 @@
-import express from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config"; //to support env files
+import express from "express";
 import mongoose from "mongoose";
-import userRoutes from "#routes/_users";
-import authRoutes from "#routes/_authorize";
-import cookieParser from "cookie-parser";
+import authRoutes from "./routers/_authorize.js";
+import userRoutes from "./routers/_users.js";
 
 await mongoose.connect(process.env.MONGODB_URI);
 console.log(

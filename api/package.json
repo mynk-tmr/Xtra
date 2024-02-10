@@ -7,10 +7,6 @@
     "start": "node index.js",
     "e2e": "cross-env DOTENV_CONFIG_PATH=.env.e2e nodemon"
   },
-  "imports": {
-    "#models/*": "./models/*.js",
-    "#routes/*": "./controllers/routers/*.js"
-  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",

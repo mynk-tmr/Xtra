@@ -1,11 +1,11 @@
 import express from "express";
-import { createUser, getUserByEmail } from "#models/_user";
 import { setJWTCookieInResponse } from "../helpers/_jwtHandler.js";
 import {
   errorResponse,
   getValidationErrors,
   validationsAtRegister,
 } from "../helpers/_validator.js";
+import { createUser, getUserByEmail } from "../models/_user.js";
 
 async function registerUser(req, res) {
   const errors = getValidationErrors(req);
@@ -17,7 +17,7 @@ async function registerUser(req, res) {
     user = createUser(req.body);
     await user.save(); //save to collection
     setJWTCookieInResponse(res, user._id);
-    return res.sendStatus(200);
+    return res.sendStatus(201);
   } catch (error) {
     console.log(error);
     return errorResponse(res, 500, "Something went wrong");

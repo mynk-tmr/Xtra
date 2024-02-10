@@ -1,13 +1,13 @@
-import express from "express";
 import bcrypt from "bcryptjs";
+import express from "express";
+import { setJWTCookieInResponse } from "../helpers/_jwtHandler.js";
 import {
-  getValidationErrors,
   errorResponse,
+  getValidationErrors,
   validationsAtLogin,
 } from "../helpers/_validator.js";
-import { setJWTCookieInResponse } from "../helpers/_jwtHandler.js";
-import { getUserByEmail } from "#models/_user";
 import { verifyToken } from "../middlewares/_verifyToken.js";
+import { getUserByEmail } from "../models/_user.js";
 
 async function loginUser(req, res) {
   const errors = getValidationErrors(req);
