@@ -74,3 +74,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
