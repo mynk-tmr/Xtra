@@ -2,6 +2,15 @@
   "name": "api",
   "type": "module",
   "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node index.js",
+    "e2e": "cross-env DOTENV_CONFIG_PATH=.env.e2e nodemon"
+  },
+  "imports": {
+    "#models/*": "./models/*.js",
+    "#routes/*": "./controllers/routers/*.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
@@ -13,15 +22,8 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.1"
   },
-  "description": "",
-  "keywords": [],
-  "license": "ISC",
-  "scripts": {
-    "dev": "bun --hot index.js",
-    "start": "node index.js"
-  },
-  "imports": {
-    "#models/*": "./models/*.js",
-    "#routes/*": "./controllers/routers/*.js"
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.3"
   }
 }

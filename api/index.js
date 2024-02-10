@@ -7,7 +7,10 @@ import authRoutes from "#routes/_authorize";
 import cookieParser from "cookie-parser";
 
 await mongoose.connect(process.env.MONGODB_URI);
-console.log("Connected to database");
+console.log(
+  "Connected to database",
+  process.env.MONGODB_URI.includes("cluster0") ? "e2e-test" : "production"
+);
 
 const app = express();
 app.use(
