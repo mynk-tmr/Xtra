@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
+import { Link } from "react-router-dom";
 
 const formFields = [
   {
@@ -30,6 +31,7 @@ const formFields = [
 ];
 
 const LoginForm = () => {
+  document.title = "Xtra | Login";
   const { register, handleSubmit } = useForm();
   const goto = useNavigateToHome();
   const invalidator = useTokenInvalidator();
@@ -76,8 +78,16 @@ const LoginForm = () => {
             />
           </div>
         ))}
-        <button className="btn btn-info btn-outline w-[20ch]">Sign In</button>
+        <button className="btn btn-secondary text-white w-[20ch]">
+          Sign In
+        </button>
       </fieldset>
+      <Link to="register" className="btn btn-link text-info">
+        New Account? Register
+      </Link>
+      <Link to="recovery" className="btn btn-link text-error">
+        Forgot Password? Seek Help
+      </Link>
     </form>
   );
 };

@@ -42,6 +42,7 @@ const formFields = [
 ];
 
 const RegistrationForm = () => {
+  document.title = "Xtra | Create Account";
   const { register, handleSubmit, watch } = useForm();
   const goto = useNavigateToHome();
   const invalidator = useTokenInvalidator();
