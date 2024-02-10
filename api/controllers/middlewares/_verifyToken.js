@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { errorResponse } from "../helpers/validator.js";
+import { errorResponse } from "../helpers/_validator.js";
 
 export const verifyToken = (req, res, next) => {
   console.log("verifying ...");

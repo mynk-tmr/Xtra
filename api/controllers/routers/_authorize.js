@@ -4,10 +4,10 @@ import {
   getValidationErrors,
   errorResponse,
   validationsAtLogin,
-} from "../helpers/validator.js";
-import { setJWTCookieInResponse } from "../helpers/jwtHandler.js";
-import { getUserByEmail } from "#models/user";
-import { verifyToken } from "../middlewares/verifyToken.js";
+} from "../helpers/_validator.js";
+import { setJWTCookieInResponse } from "../helpers/_jwtHandler.js";
+import { getUserByEmail } from "#models/_user";
+import { verifyToken } from "../middlewares/_verifyToken.js";
 
 async function loginUser(req, res) {
   const errors = getValidationErrors(req);

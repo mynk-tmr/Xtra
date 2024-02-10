@@ -1,11 +1,11 @@
 import express from "express";
-import { createUser, getUserByEmail } from "#models/user";
-import { setJWTCookieInResponse } from "../helpers/jwtHandler.js";
+import { createUser, getUserByEmail } from "#models/_user";
+import { setJWTCookieInResponse } from "../helpers/_jwtHandler.js";
 import {
   errorResponse,
   getValidationErrors,
   validationsAtRegister,
-} from "../helpers/validator.js";
+} from "../helpers/_validator.js";
 
 async function registerUser(req, res) {
   const errors = getValidationErrors(req);
