@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js",
-    "e2e": "cross-env DOTENV_CONFIG_PATH=.env.e2e nodemon"
+    "e2e": "cross-env DOTENV_CONFIG_PATH=.env.e2e nodemon",
+    "lint": "eslint . --ext js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "eslint": "^8.56.0",
     "nodemon": "^3.0.3"
   }
 }
