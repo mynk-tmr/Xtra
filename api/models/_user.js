@@ -7,19 +7,10 @@ const requiredString = {
 };
 
 const userSchema = new mongoose.Schema({
-  email: {
-    ...requiredString,
-    unique: true,
-  },
-  password: {
-    ...requiredString,
-  },
-  firstName: {
-    ...requiredString,
-  },
-  lastName: {
-    ...requiredString,
-  },
+  email: { ...requiredString, unique: true },
+  password: requiredString,
+  firstName: requiredString,
+  lastName: requiredString,
 });
 
 //pre hook (before save)  [don't use arrow fn, this must be runtime bound]

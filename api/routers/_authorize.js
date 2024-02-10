@@ -5,7 +5,7 @@ import {
   errorResponse,
   getValidationErrors,
   validationsAtLogin,
-} from "../helpers/_validator.js";
+} from "../middlewares/_validator.js";
 import { verifyToken } from "../middlewares/_verifyToken.js";
 import { getUserByEmail } from "../models/_user.js";
 

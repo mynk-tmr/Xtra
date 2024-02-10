@@ -5,6 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 import authRoutes from "./routers/_authorize.js";
 import userRoutes from "./routers/_users.js";
+import mylistingRoutes from "./routers/_myListings.js";
 
 await mongoose.connect(process.env.MONGODB_URI);
 console.log(
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true })); //to allow nested object creati
 
 app.use("/api/authorize", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/my-listings/", mylistingRoutes);
 
 app.listen(8000, () => {
   console.log("Visit http://localhost:8000/api");

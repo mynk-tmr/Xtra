@@ -4,7 +4,7 @@ import {
   errorResponse,
   getValidationErrors,
   validationsAtRegister,
-} from "../helpers/_validator.js";
+} from "../middlewares/_validator.js";
 import { createUser, getUserByEmail } from "../models/_user.js";
 
 async function registerUser(req, res) {
