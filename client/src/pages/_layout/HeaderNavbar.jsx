@@ -1,28 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import Xtralogo from "@/components/Xtralogo";
 import { useAppContext } from "@/contexts/AppContext";
-import {
-  HeartIcon,
-  MapIcon,
-  BuildingOfficeIcon,
-  UserCircleIcon,
-  KeyIcon,
-  Square3Stack3DIcon,
-} from "@heroicons/react/20/solid";
 import useMediaQuery from "@/libs/hooks/useMediaQuery";
-
-const navItems = {
-  anon: [
-    ["login", "Sign In", KeyIcon],
-    ["search", "Search", MapIcon],
-  ],
-  loggedin: [
-    ["search", "Search", MapIcon],
-    ["profile", "Profile", UserCircleIcon],
-    ["user/listings", "My Listings", BuildingOfficeIcon],
-    ["user/bookings", "My Bookings", HeartIcon],
-  ],
-};
+import navItems from "@/config/navItems";
+import { Square3Stack3DIcon } from "@heroicons/react/20/solid";
 
 const HeaderNavbar = () => {
   const { isLoggedIn } = useAppContext();

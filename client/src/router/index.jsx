@@ -11,6 +11,7 @@ import LoginPage from "@/pages/login";
 import RegistrationForm from "@/pages/login/RegisrationForm";
 import ProfilePage from "@/pages/profile";
 import LoginForm from "@/pages/login/LoginForm";
+import MyListingsPage from "@/pages/mylistings";
 
 export default function Router() {
   const router = createBrowserRouter(
@@ -22,6 +23,7 @@ export default function Router() {
           <Route index Component={LoginForm} />
           <Route path="register" Component={RegistrationForm} />
         </Route>
+        <Route path="mylistings" Component={MyListingsPage} />
         <Route path="*" Component={NotFound} />
       </Route>
     )
