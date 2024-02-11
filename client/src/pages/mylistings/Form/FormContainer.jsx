@@ -13,8 +13,10 @@ const FormContainer = () => {
     toast.success("Your listing is added 😍");
   }
   function onError(errors) {
-    const { message } = Object.values(errors)[0];
-    toast.error(message);
+    setTimeout(() => {
+      let firstBad = document.activeElement;
+      toast.error(errors[firstBad.name].message);
+    }, 0);
   }
   return (
     <FormProvider {...formMethods}>

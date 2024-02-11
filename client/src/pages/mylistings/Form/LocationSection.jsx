@@ -43,13 +43,13 @@ const LocationSection = () => {
         <section className="*:badge *:badge-success *:mr-4">
           <input
             id="state"
-            disabled={true}
+            readOnly={true}
             value={data.state}
             {...register("state")}
           />
           <input
             id="city"
-            disabled={true}
+            readOnly={true}
             value={data.city}
             {...register("city")}
           />

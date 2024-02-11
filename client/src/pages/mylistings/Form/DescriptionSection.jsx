@@ -5,11 +5,17 @@ const DescriptionSection = () => {
   const { register, watch } = useFormContext();
   return (
     <Fieldset legend="Add Details">
-      <label htmlFor="description">Give a description</label>
+      <label htmlFor="description">
+        Give a description <small>(atleast 20 characters)</small>
+      </label>
       <textarea
         id="description"
         {...register("description", {
-          required: "Description is required",
+          validate: function (desc) {
+            return desc && desc.length > 19
+              ? true
+              : "Please provide a description of 20 characters at minimum";
+          },
         })}
       />
       <section>
@@ -22,7 +28,10 @@ const DescriptionSection = () => {
           type="number"
           {...register("entraceDimensions_width", {
             required: "Width of Entrance is required",
-            min: 0,
+            min: {
+              value: 1,
+              message: "Entrace width must be atleast 1 feet",
+            },
           })}
         />
         <label htmlFor="entraceDimensions_height" className="ml-6">
@@ -33,7 +42,10 @@ const DescriptionSection = () => {
           type="number"
           {...register("entraceDimensions_height", {
             required: "Height of Entrance is required",
-            min: 0,
+            min: {
+              value: 1,
+              message: "Entrace width must be atleast 1 feet",
+            },
           })}
         />
       </section>
@@ -45,8 +57,11 @@ const DescriptionSection = () => {
           id="storageSpace"
           type="number"
           {...register("storageSpace", {
-            required: "Stoarage space is required",
-            min: 0,
+            required: "Storage space is required",
+            min: {
+              value: 10,
+              message: "Storage space must be atleast 10 square feet",
+            },
           })}
         />
       </section>
@@ -57,8 +72,11 @@ const DescriptionSection = () => {
           id="pricePerDay"
           type="number"
           {...register("pricePerDay", {
-            required: "Price is required",
-            min: 0,
+            valueAsNumber: true,
+            validate: function (price) {
+              if (!price || price < 1) return "Price must be atleast 1";
+              return true;
+            },
           })}
         />
         <label htmlFor="discount" className="ml-6">
@@ -66,12 +84,14 @@ const DescriptionSection = () => {
         </label>
         <input
           id="discount"
-          defaultValue={0}
           type="number"
           {...register("discount", {
+            valueAsNumber: true,
             validate: function (discount) {
-              if (discount < 0 || discount > watch("pricePerDay"))
-                return "Discount given is invalid.";
+              if (!discount || discount < 0)
+                return "Discount must be 0 or more";
+              if (discount > watch("pricePerDay"))
+                return "Discount can't be more than price.";
               return true;
             },
           })}

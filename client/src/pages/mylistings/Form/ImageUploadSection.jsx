@@ -11,6 +11,7 @@ const ImageUploadSection = () => {
         !
       </small>
       <input
+        accept="image/*"
         type="file"
         multiple
         className="file-input file-input-bordered"

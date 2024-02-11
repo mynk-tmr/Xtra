@@ -21,6 +21,7 @@ const FacilitiesSection = () => {
             <input
               type="checkbox"
               id={facility}
+              value={facility}
               className="checkbox checkbox-accent mr-3"
               {...register("facilities", {
                 validate: function (facilities) {
@@ -45,6 +46,7 @@ const FacilitiesSection = () => {
             <input
               type="radio"
               id={id}
+              value={id}
               className="radio radio-secondary mr-3"
               {...register("type", {
                 required: "Select atleast one Type",

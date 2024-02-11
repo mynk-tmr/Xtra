@@ -45,3 +45,14 @@ test("user can create a new listing", async () => {
   await page.getByRole("button", { name: "Create New Listing" }).click();
   await page.locator(".Toastify__toast--success");
 });
+
+test("discount price check is working", async () => {
+  await page.locator("[name=pricePerDay]").fill("8");
+  await page.locator("[name=discount]").fill("10");
+  await page.getByRole("button", { name: "Create New Listing" }).click();
+  await page.locator(".Toastify__toast--error");
+  await page.locator("[name=discount]").fill("-4");
+  await page.locator(".Toastify__toast--error");
+  await page.locator("[name=discount]").fill("4");
+  await page.locator(".Toastify__toast--success");
+});
