@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "bunx --bun vite --config config/vite.config.js",
-    "build": "vite --config config/vite.config.js build",
-    "lint": "eslint . --config config/.eslintrc.cjs --ext js,jsx",
-    "preview": "vite --config config/vite.config.js preview"
+    "dev": "bunx --bun vite --config tools/vite.config.js",
+    "build": "vite --config tools/vite.config.js build",
+    "lint": "eslint . --config tools/.eslintrc.cjs --ext js,jsx",
+    "preview": "vite --config tools/vite.config.js preview"
   },
   "dependencies": {
     "@fontsource-variable/azeret-mono": "^5.0.19",

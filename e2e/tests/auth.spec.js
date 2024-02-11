@@ -1,5 +1,6 @@
 // @ts-check
 import { test } from "@playwright/test";
+import { closeBrowser } from "../utils/browser";
 
 let page = null;
 
@@ -9,9 +10,7 @@ test.beforeAll(async ({ browser }) => {
   await page.goto("http://localhost:3000/");
 });
 
-test.afterAll(async ({ browser }) => {
-  browser.close();
-});
+test.afterAll(closeBrowser);
 
 test("unregistered user cannot login", async () => {
   await page.getByRole("link", { name: "Sign In", exact: true }).click();
