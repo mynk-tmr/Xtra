@@ -1,23 +1,78 @@
+import Fieldset from "@/components/Fieldset";
 import { useFormContext } from "react-hook-form";
 
 const DescriptionSection = () => {
   const { register } = useFormContext();
   return (
-    <fieldset className="grid gap-2 p-4 card-bordered rounded-box bg-white">
-      <legend className="text-center text-xl font-bold bg-white px-4 rounded-md">
-        Add Details
-      </legend>
-      <label htmlFor="description" className="label-text font-bold">
-        Give a description
-      </label>
-      <input
+    <Fieldset legend="Add Details">
+      <label htmlFor="description">Give a description</label>
+      <textarea
         id="description"
-        className="input bg-warning/30"
         {...register("description", {
           required: "Description is required",
         })}
       />
-    </fieldset>
+      <section>
+        <h4>Provide Entrance Dimensions</h4>
+        <label htmlFor="entraceDimensions_width">
+          Width <small>(feet)</small>
+        </label>
+        <input
+          id="entraceDimensions_width"
+          type="number"
+          {...register("entraceDimensions_width", {
+            required: "Width of Entrance is required",
+            min: 0,
+          })}
+        />
+        <label htmlFor="entraceDimensions_height" className="ml-6">
+          Height <small>(feet)</small>
+        </label>
+        <input
+          id="entraceDimensions_height"
+          type="number"
+          {...register("entraceDimensions_height", {
+            required: "Height of Entrance is required",
+            min: 0,
+          })}
+        />
+      </section>
+      <section>
+        <label htmlFor="storageSpace">
+          <b>Storage Space</b> <small>(square per feet)</small>
+        </label>
+        <input
+          id="storageSpace"
+          type="number"
+          {...register("storageSpace", {
+            required: "Stoarage space is required",
+            min: 0,
+          })}
+        />
+      </section>
+      <section className="[&_input]:!w-[13ch]">
+        <h4>Pricing Information (₹ / day)</h4>
+        <label htmlFor="pricePerDay">Price</label>
+        <input
+          id="pricePerDay"
+          type="number"
+          {...register("pricePerDay", {
+            required: "Price is required",
+            min: 0,
+          })}
+        />
+        <label htmlFor="discount" className="ml-6">
+          Discount
+        </label>
+        <input
+          id="discount"
+          type="number"
+          {...register("discount", {
+            min: 0,
+          })}
+        />
+      </section>
+    </Fieldset>
   );
 };
 
