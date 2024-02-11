@@ -1,10 +1,12 @@
 import { getLocationDetails } from "@/libs/utils/getLocationDetails";
 import { useFormContext } from "react-hook-form";
 import { useQuery } from "react-query";
+import Fieldset from "@/components/Fieldset";
+import { toast } from "react-toastify";
 
 const LocationSection = () => {
   const { register } = useFormContext();
-  const { isLoading, data, refetch } = useQuery({
+  const { isLoading, isError, data, refetch } = useQuery({
     queryKey: "newlistingLocation",
     queryFn: () => {
       let ele = document.getElementById("pincode");
@@ -12,20 +14,33 @@ const LocationSection = () => {
     },
     refetchOnWindowFocus: false,
     enabled: false,
+    onError: function () {
+      toast.error("Pincode is invalid !");
+    },
   });
 
   return (
-    <fieldset disabled={isLoading}>
-      <legend className={legendStyles}>Add Location</legend>
-      <div>
-        <label>Enter Pincode :</label>
-        <input type="number" id="pincode" {...register("pincode")} />
+    <Fieldset legend="Add Location" disabled={isLoading}>
+      <section>
+        <label htmlFor="pincode" className="mr-8">
+          Enter Pincode :
+          <input
+            type="number"
+            min="100000"
+            max="999999"
+            id="pincode"
+            className="!w-[13ch]"
+            {...register("pincode", {
+              required: "Pincode is required",
+            })}
+          />
+        </label>
         <button type="button" onClick={refetch}>
           Confirm
         </button>
-      </div>
-      {data && (
-        <div>
+      </section>
+      {data && !isError && (
+        <section className="*:badge *:badge-success *:mr-4">
           <input
             id="state"
             disabled={true}
@@ -38,21 +53,25 @@ const LocationSection = () => {
             value={data.city}
             {...register("city")}
           />
-        </div>
+        </section>
       )}
-      {data?.localities && (
-        <div>
+      {data?.localities && !isError && (
+        <section>
           <label>Select Locality :</label>
-          <select id="locality" {...register("locality")}>
+          <select
+            id="locality"
+            {...register("locality", {
+              required: "Please select a locality",
+            })}>
             {data.localities.map((locality) => (
-              <option key={locality} value={locality} selected>
+              <option key={locality} value={locality}>
                 {locality}
               </option>
             ))}
           </select>
-        </div>
+        </section>
       )}
-    </fieldset>
+    </Fieldset>
   );
 };
 

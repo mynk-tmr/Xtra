@@ -31,9 +31,9 @@ test("user can create a new listing", async () => {
   await page.locator("[name=storageSpace]").fill("100");
 
   await page.getByLabel("Fire Protection").check();
-  await page.getByLabel("Guarded").check();
+  await page.getByLabel("Guarded Area").check();
   await page.getByLabel("Pest Control").check();
-  await page.getByLabel("Security Camera").check();
+  await page.getByLabel("Security Cameras").check();
 
   await page.setInputFiles("[name=imageFiles]", [
     "../images/1.jpeg",

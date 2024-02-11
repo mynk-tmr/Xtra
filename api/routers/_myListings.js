@@ -19,6 +19,7 @@ router.post(
       listingData.imageUrls = await uploadFiles(req.files);
       listingData.lastUpdated = new Date();
       listingData.userId = req.userId;
+      listingData.starRating = 0;
       const listing = createListing(listingData);
       await listing.save();
     } catch (err) {

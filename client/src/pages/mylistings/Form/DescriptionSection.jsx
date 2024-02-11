@@ -66,6 +66,7 @@ const DescriptionSection = () => {
         </label>
         <input
           id="discount"
+          defaultValue={0}
           type="number"
           {...register("discount", {
             min: 0,

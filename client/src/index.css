@@ -9,6 +9,10 @@
   *::-webkit-scrollbar {
     @apply w-2;
   }
+  select::-webkit-scrollbar {
+    @apply w-1;
+  }
+
   *::-webkit-scrollbar-thumb {
     @apply bg-green-500 rounded-full;
   }
