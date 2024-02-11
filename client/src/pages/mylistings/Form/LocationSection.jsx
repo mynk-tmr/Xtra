@@ -57,7 +57,7 @@ const LocationSection = () => {
       )}
       {data?.localities && !isError && (
         <section>
-          <label>Select Locality :</label>
+          <label htmlFor="locality">Select Locality :</label>
           <select
             id="locality"
             {...register("locality", {

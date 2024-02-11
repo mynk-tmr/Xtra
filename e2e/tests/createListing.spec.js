@@ -1,6 +1,7 @@
 import { test } from "@playwright/test";
 import { logintoWebSite } from "../utils/login";
 import { closeBrowser } from "../utils/browser";
+import path from "path";
 
 let page = null;
 
@@ -13,11 +14,9 @@ test.afterAll(closeBrowser);
 test("user can create a new listing", async () => {
   await page.getByRole("link", { name: "My Listings" }).click();
 
-  await page.locator("[name=state]").fill("Uttar Pradesh");
-  await page.locator("[name=city]").fill("Noida");
-  await page.locator("[name=locality]").fill("Godrej Nest");
-  await page.locator("[name=pincode]").fill("300411");
-  await page.selectOption("[name=type]", "Residential");
+  await page.locator("[name=pincode]").fill("110019");
+  await page.getByRole("button", { name: "Confirm" }).click();
+  await page.selectOption("[name=locality]", "Kalkaji");
 
   await page
     .locator("[name=description]")
@@ -34,12 +33,13 @@ test("user can create a new listing", async () => {
   await page.getByLabel("Guarded Area").check();
   await page.getByLabel("Pest Control").check();
   await page.getByLabel("Security Cameras").check();
+  await page.getByLabel("Residential").check();
 
-  await page.setInputFiles("[name=imageFiles]", [
-    "../images/1.jpeg",
-    "../images/2.jpeg",
-    "../images/3.jpeg",
-    "../images/4.jpeg",
+  await page.setInputFiles("[name=listingImages]", [
+    path.join(__dirname, "images", "1.jpeg"),
+    path.join(__dirname, "images", "2.jpeg"),
+    path.join(__dirname, "images", "3.jpeg"),
+    path.join(__dirname, "images", "4.jpeg"),
   ]);
 
   await page.getByRole("button", { name: "Create New Listing" }).click();

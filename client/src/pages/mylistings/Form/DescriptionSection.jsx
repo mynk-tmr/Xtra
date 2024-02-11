@@ -2,7 +2,7 @@ import Fieldset from "@/components/Fieldset";
 import { useFormContext } from "react-hook-form";
 
 const DescriptionSection = () => {
-  const { register } = useFormContext();
+  const { register, watch } = useFormContext();
   return (
     <Fieldset legend="Add Details">
       <label htmlFor="description">Give a description</label>
@@ -69,7 +69,11 @@ const DescriptionSection = () => {
           defaultValue={0}
           type="number"
           {...register("discount", {
-            min: 0,
+            validate: function (discount) {
+              if (discount < 0 || discount > watch("pricePerDay"))
+                return "Discount given is invalid.";
+              return true;
+            },
           })}
         />
       </section>
