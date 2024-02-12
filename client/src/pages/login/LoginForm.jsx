@@ -42,7 +42,7 @@ const LoginForm = () => {
     <form onSubmit={handleSubmit(onValid, onError)} noValidate>
       <Fieldset disabled={isSubmitting} legend="Login">
         {loginFields.map((field) => (
-          <section className="md:flex-row" key={field.name}>
+          <section key={field.name}>
             <label htmlFor={field.name} className="uppercase">
               {field.name.replaceAll("_", " ")}
             </label>
@@ -50,6 +50,7 @@ const LoginForm = () => {
               type={field.type}
               id={field.name}
               autoComplete="true"
+              className="!input-md"
               {...register(field.name, {
                 ...field?.validations,
                 required: `${field.name} is required field !`,
@@ -57,7 +58,7 @@ const LoginForm = () => {
             />
           </section>
         ))}
-        <button>
+        <button className="!btn-md btn-primary">
           {isSubmitting && <span className="loading loading-spinner"></span>}
           Sign In
         </button>

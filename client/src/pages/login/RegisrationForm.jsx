@@ -5,6 +5,7 @@ import * as apiClient from "@/libs/utils/apiClient";
 import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
 import { registrationFields } from "@/config/formFields";
+import Fieldset from "@/components/Fieldset";
 
 const RegistrationForm = () => {
   document.title = "Xtra | Create Account";
@@ -41,19 +42,19 @@ const RegistrationForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onValid, onError)} noValidate>
-      <fieldset className="uppercase" disabled={isSubmitting}>
+      <Fieldset legend="Add Account" disabled={isSubmitting}>
         {registrationFields.map((field) => (
-          <div className="form-control md:flex-row mb-4" key={field.name}>
+          <section key={field.name}>
             <label
               htmlFor={field.name}
-              className="label label-text !text-xs font-bold w-[36ch]">
+              className="uppercase !text-xs font-bold">
               {field.name.replaceAll("_", " ")}
             </label>
             <input
               type={field.type}
               id={field.name}
+              className="mx-4 !input-md"
               autoComplete="true"
-              className="input input-bordered bg-white w-full"
               {...register(field.name, {
                 ...field?.validations,
                 required: `${field.name} is required field !`,
@@ -65,13 +66,13 @@ const RegistrationForm = () => {
                   },
               })}
             />
-          </div>
+          </section>
         ))}
-        <button className="btn btn-info btn-outline">
+        <button className="!btn-md !btn-secondary">
           {isSubmitting && <span className="loading loading-spinner"></span>}
           Create Account
         </button>
-      </fieldset>
+      </Fieldset>
     </form>
   );
 };
