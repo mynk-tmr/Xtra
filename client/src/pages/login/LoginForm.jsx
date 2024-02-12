@@ -6,10 +6,15 @@ import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
 import { Link } from "react-router-dom";
 import { loginFields } from "@/config/formFields";
+import Fieldset from "@/components/Fieldset";
 
 const LoginForm = () => {
   document.title = "Xtra | Login";
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
   const goto = useNavigateToHome();
   const invalidator = useTokenInvalidator();
   const { mutate: submitUserInfo } = useMutation({
@@ -35,30 +40,28 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onValid, onError)} noValidate>
-      <fieldset className="uppercase">
+      <Fieldset disabled={isSubmitting} legend="Login">
         {loginFields.map((field) => (
-          <div className="form-control md:flex-row mb-4" key={field.name}>
-            <label
-              htmlFor={field.name}
-              className="label label-text !text-xs font-bold w-[36ch]">
+          <section className="md:flex-row" key={field.name}>
+            <label htmlFor={field.name} className="uppercase">
               {field.name.replaceAll("_", " ")}
             </label>
             <input
               type={field.type}
               id={field.name}
               autoComplete="true"
-              className="input input-bordered bg-white w-full"
               {...register(field.name, {
                 ...field?.validations,
                 required: `${field.name} is required field !`,
               })}
             />
-          </div>
+          </section>
         ))}
-        <button className="btn btn-secondary text-white w-[20ch]">
+        <button>
+          {isSubmitting && <span className="loading loading-spinner"></span>}
           Sign In
         </button>
-      </fieldset>
+      </Fieldset>
       <Link to="register" className="btn btn-link text-info">
         New Account? Register
       </Link>

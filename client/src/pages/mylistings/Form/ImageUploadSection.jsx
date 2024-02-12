@@ -14,7 +14,6 @@ const ImageUploadSection = () => {
         accept="image/*"
         type="file"
         multiple
-        className="file-input file-input-bordered"
         id="listingImages"
         {...register("listingImages", {
           validate: function (files) {

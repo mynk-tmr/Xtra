@@ -49,7 +49,7 @@ const LocationSection = () => {
         </button>
       </section>
       {data && !isError && (
-        <section className="*:badge *:badge-success md:!flex-row">
+        <section>
           <input
             id="state"
             readOnly={true}

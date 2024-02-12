@@ -22,7 +22,6 @@ const FacilitiesSection = () => {
               type="checkbox"
               id={facility}
               value={facility}
-              className="checkbox checkbox-accent mr-3"
               {...register("facilities", {
                 validate: function (facilities) {
                   return facilities?.length > 0
@@ -47,7 +46,6 @@ const FacilitiesSection = () => {
               type="radio"
               id={id}
               value={id}
-              className="radio radio-secondary mr-3"
               {...register("type", {
                 required: "Select atleast one Type",
               })}

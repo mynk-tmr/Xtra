@@ -8,7 +8,12 @@ import { registrationFields } from "@/config/formFields";
 
 const RegistrationForm = () => {
   document.title = "Xtra | Create Account";
-  const { register, handleSubmit, watch } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting },
+  } = useForm();
   const goto = useNavigateToHome();
   const invalidator = useTokenInvalidator();
   const { mutate: submitUserInfo } = useMutation({
@@ -36,7 +41,7 @@ const RegistrationForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onValid, onError)} noValidate>
-      <fieldset className="uppercase">
+      <fieldset className="uppercase" disabled={isSubmitting}>
         {registrationFields.map((field) => (
           <div className="form-control md:flex-row mb-4" key={field.name}>
             <label
@@ -62,7 +67,10 @@ const RegistrationForm = () => {
             />
           </div>
         ))}
-        <button className="btn btn-info btn-outline">Create Account</button>
+        <button className="btn btn-info btn-outline">
+          {isSubmitting && <span className="loading loading-spinner"></span>}
+          Create Account
+        </button>
       </fieldset>
     </form>
   );

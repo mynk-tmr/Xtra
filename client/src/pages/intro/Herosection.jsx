@@ -1,7 +1,9 @@
 import Xtralogo from "@/components/Xtralogo";
+import { useAppContext } from "@/contexts/AppContext";
 import { Link } from "react-router-dom";
 
 export const HeroSection = () => {
+  const { isLoggedIn } = useAppContext();
   return (
     <section className="min-h-[90vh] prose grid content-center">
       <h1>
@@ -18,8 +20,10 @@ export const HeroSection = () => {
         <Link to="/home" className="btn btn-primary">
           Browse Storage
         </Link>
-        <Link to="/login" className="btn btn-secondary">
-          Sign In / Create Account
+        <Link
+          to={isLoggedIn ? "/profile" : "/login"}
+          className="btn btn-secondary">
+          {isLoggedIn ? "Go to Profile" : "Sign In / Create Account"}
         </Link>
       </div>
     </section>
