@@ -22,28 +22,25 @@ const LocationSection = () => {
   return (
     <Fieldset legend="Add Location" disabled={isLoading}>
       <section>
-        <label htmlFor="pincode" className="mr-8">
-          Enter Pincode :
-          <input
-            type="number"
-            id="pincode"
-            className="!w-[13ch]"
-            {...register("pincode", {
-              required: "Pincode is required",
-              validate: function () {
-                if (watch("state") && watch("city") && watch("locality"))
-                  return true;
-                return "Please confirm Pincode !";
-              },
-            })}
-          />
-        </label>
+        <label htmlFor="pincode">Enter Pincode</label>
+        <input
+          type="number"
+          id="pincode"
+          {...register("pincode", {
+            required: "Pincode is required",
+            validate: function () {
+              if (watch("state") && watch("city") && watch("locality"))
+                return true;
+              return "Please confirm Pincode !";
+            },
+          })}
+        />
         <button type="button" onClick={refetch}>
-          Confirm
+          {data && !isError ? "Change pincode" : "Confirm"}
         </button>
       </section>
       {data && !isError && (
-        <section className="*:badge *:badge-success *:mr-4">
+        <section className="*:badge *:badge-success md:!flex-row">
           <input
             id="state"
             readOnly={true}

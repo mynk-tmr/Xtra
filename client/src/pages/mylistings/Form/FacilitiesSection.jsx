@@ -5,7 +5,7 @@ const FacilitiesSection = () => {
   const { register } = useFormContext();
   return (
     <Fieldset legend="Add Features">
-      <section className="grid gap-3 grid-cols-fillxs *:flex *:items-center">
+      <section className="!grid !grid-cols-fillxs *:flex *:items-center">
         <h4 className="col-span-full">Facilities available</h4>
         {[
           "Guarded Area",
@@ -35,7 +35,7 @@ const FacilitiesSection = () => {
           </label>
         ))}
       </section>
-      <section className="grid gap-3 *:flex *:items-center">
+      <section className="*:flex *:items-center">
         <h4 className="col-span-full">Type</h4>
         {[
           [["Residential"], ["good for household items"]],
@@ -52,7 +52,7 @@ const FacilitiesSection = () => {
                 required: "Select atleast one Type",
               })}
             />
-            <span className="flex gap-4">
+            <span className="flex items-center gap-4">
               <b>{id}</b>
               {hint}
             </span>
