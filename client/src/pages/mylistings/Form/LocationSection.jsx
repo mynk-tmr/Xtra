@@ -5,7 +5,7 @@ import Fieldset from "@/components/Fieldset";
 import { toast } from "react-toastify";
 
 const LocationSection = () => {
-  const { register } = useFormContext();
+  const { register, watch } = useFormContext();
   const { isLoading, isError, data, refetch } = useQuery({
     queryKey: "newlistingLocation",
     queryFn: () => {
@@ -26,12 +26,15 @@ const LocationSection = () => {
           Enter Pincode :
           <input
             type="number"
-            min="100000"
-            max="999999"
             id="pincode"
             className="!w-[13ch]"
             {...register("pincode", {
               required: "Pincode is required",
+              validate: function () {
+                if (watch("state") && watch("city") && watch("locality"))
+                  return true;
+                return "Please confirm Pincode !";
+              },
             })}
           />
         </label>

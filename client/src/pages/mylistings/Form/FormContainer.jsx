@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import DescriptionSection from "./DescriptionSection";
+import DetailsSection from "./DetailsSection";
 import FacilitiesSection from "./FacilitiesSection";
 import LocationSection from "./LocationSection";
 import ImageUploadSection from "./ImageUploadSection";
@@ -24,7 +24,7 @@ const FormContainer = () => {
         noValidate
         className="grid gap-y-8"
         onSubmit={handleSubmit(onSuccess, onError)}>
-        <DescriptionSection />
+        <DetailsSection />
         <FacilitiesSection />
         <LocationSection />
         <ImageUploadSection />

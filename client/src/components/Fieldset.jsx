@@ -9,10 +9,11 @@ const Fieldset = ({ legend, children, ...props }) => {
 
       [&_h4]:font-bold [&_h4]:label-text
 
+      [&>section]:form-control [&>section]:gap-2
+
       [&_input[type="text"]]:input [&_input[type="text"]]:bg-warning/30
 
-      [&_input[type="number"]]:input [&_input[type="number"]]:bg-warning/30
-      [&_input[type="number"]]:w-[11ch] [&_input[type="number"]]:!input-sm [&_input[type="number"]]:ml-4
+      [&_input[type="number"]]:input [&_input[type="number"]]:bg-warning/30 [&_input[type="number"]]:!input-sm
 
       [&_textarea]:textarea [&_textarea]:bg-warning/30
 
