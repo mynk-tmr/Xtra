@@ -35,7 +35,7 @@
 }
 
 .fieldset select {
-  @apply select select-sm ml-4 bg-red-200;
+  @apply select select-sm ml-4 bg-primary/50;
 }
 
 .fieldset input[type="file"] {

@@ -1,9 +1,8 @@
 import { getLocationDetails } from "@/libs/utils/getLocationDetails";
 import { useFormContext } from "react-hook-form";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import Fieldset from "@/components/Fieldset";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 
 const LocationSection = () => {
   const { register, watch } = useFormContext();
@@ -19,15 +18,6 @@ const LocationSection = () => {
       toast.error("Pincode is invalid !");
     },
   });
-
-  const queryClient = useQueryClient();
-
-  useEffect(
-    //to remove data on unMount
-    () => () => queryClient.removeQueries({ queryKey: "newlistingLocation" }),
-    [queryClient]
-  );
-
   return (
     <Fieldset legend="Add Location" disabled={isLoading}>
       <section>
