@@ -22,4 +22,9 @@
   .adjusticons *:has(> svg) {
     @apply flex gap-x-3 items-center;
   }
+
+  .font-exbold {
+    font-weight: bold;
+    text-shadow: 0px 1px, -1px 0px;
+  }
 }
