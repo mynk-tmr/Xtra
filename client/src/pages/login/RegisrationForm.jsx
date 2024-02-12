@@ -4,42 +4,7 @@ import { useMutation } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
-
-const formFields = [
-  {
-    name: "firstName",
-    type: "text",
-  },
-  {
-    name: "lastName",
-    type: "text",
-  },
-  {
-    name: "email",
-    type: "email",
-    validations: {
-      pattern: {
-        //eslint-disable-next-line no-useless-escape
-        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-        message: "Email format is invalid !",
-      },
-    },
-  },
-  {
-    name: "password",
-    type: "password",
-    validations: {
-      minLength: {
-        value: 6,
-        message: "Password must be of atleast 6 characters",
-      },
-    },
-  },
-  {
-    name: "confirm_password",
-    type: "password",
-  },
-];
+import { registrationFields } from "@/config/formFields";
 
 const RegistrationForm = () => {
   document.title = "Xtra | Create Account";
@@ -72,7 +37,7 @@ const RegistrationForm = () => {
   return (
     <form onSubmit={handleSubmit(onValid, onError)} noValidate>
       <fieldset className="uppercase">
-        {formFields.map((field) => (
+        {registrationFields.map((field) => (
           <div className="form-control md:flex-row mb-4" key={field.name}>
             <label
               htmlFor={field.name}
