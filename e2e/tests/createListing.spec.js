@@ -52,7 +52,9 @@ test("discount price check is working", async () => {
   await page.getByRole("button", { name: "Create New Listing" }).click();
   await page.locator(".Toastify__toast--error");
   await page.locator("[name=discount]").fill("-4");
+  await page.getByRole("button", { name: "Create New Listing" }).click();
   await page.locator(".Toastify__toast--error");
   await page.locator("[name=discount]").fill("4");
+  await page.getByRole("button", { name: "Create New Listing" }).click();
   await page.locator(".Toastify__toast--success");
 });
