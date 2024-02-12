@@ -6,9 +6,10 @@ import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
 import { registrationFields } from "@/config/formFields";
 import Fieldset from "@/components/Fieldset";
+import usePageTitle from "@/libs/hooks/usePageTitle";
 
 const RegistrationForm = () => {
-  document.title = "Xtra | Create Account";
+  usePageTitle("Xtra | Create Account");
   const {
     register,
     handleSubmit,

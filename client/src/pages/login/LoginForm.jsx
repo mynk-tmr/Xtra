@@ -7,9 +7,10 @@ import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
 import { Link } from "react-router-dom";
 import { loginFields } from "@/config/formFields";
 import Fieldset from "@/components/Fieldset";
+import usePageTitle from "@/libs/hooks/usePageTitle";
 
 const LoginForm = () => {
-  document.title = "Xtra | Login";
+  usePageTitle("Xtra | Login");
   const {
     register,
     handleSubmit,
@@ -24,8 +25,8 @@ const LoginForm = () => {
       await invalidator();
       goto();
     },
-    onError: function () {
-      toast.error("Sign In Failed. Kindly try again 😥");
+    onError: function (error) {
+      toast.error(error.message + "  😥");
     },
   });
 

@@ -7,7 +7,7 @@
 }
 
 .fieldset label {
-  @apply label-text;
+  @apply label label-text;
 }
 
 .fieldset h4 {
