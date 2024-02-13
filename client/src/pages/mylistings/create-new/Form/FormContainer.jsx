@@ -18,7 +18,6 @@ const FormContainer = () => {
   const goto = useNavigate();
 
   function onSuccess(data) {
-    console.log(data);
     toast.success("Your listing is added 😍");
     setTimeout(removeFormValues, 0); //to run this after React cleanups
     queryClient.removeQueries({ queryKey: "newlistingLocation" });

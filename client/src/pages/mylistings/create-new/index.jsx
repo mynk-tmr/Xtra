@@ -1,9 +1,9 @@
 import Xtralogo from "@/components/Xtralogo";
 import FormContainer from "./Form/FormContainer";
 
-const MyListingsPage = () => {
+const CreateListingPage = () => {
   return (
-    <section className="p-8 mx-auto prose">
+    <section>
       <h1>
         Add your new <Xtralogo /> space
       </h1>
@@ -12,4 +12,4 @@ const MyListingsPage = () => {
   );
 };
 
-export default MyListingsPage;
+export default CreateListingPage;

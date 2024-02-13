@@ -11,7 +11,9 @@ import LoginPage from "@/pages/login";
 import RegistrationForm from "@/pages/login/RegisrationForm";
 import ProfilePage from "@/pages/profile";
 import LoginForm from "@/pages/login/LoginForm";
-import MyListingsPage from "@/pages/mylistings";
+import MyListingsLayout from "@/pages/mylistings/_layout";
+import CreateListingPage from "@/pages/mylistings/create-new";
+import DisplayListings from "@/pages/mylistings/display";
 
 export default function Router() {
   const router = createBrowserRouter(
@@ -23,7 +25,10 @@ export default function Router() {
           <Route index Component={LoginForm} />
           <Route path="register" Component={RegistrationForm} />
         </Route>
-        <Route path="mylistings" Component={MyListingsPage} />
+        <Route path="mylistings" Component={MyListingsLayout}>
+          <Route index Component={DisplayListings} />
+          <Route path="create-new" Component={CreateListingPage} />
+        </Route>
         <Route path="*" Component={NotFound} />
       </Route>
     )
