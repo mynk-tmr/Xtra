@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import useLocalStorage from "@/libs/hooks/useLocalStorage";
 import { useEffect } from "react";
 import { useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
 const FormContainer = () => {
   const [formValues, storeFormValues, removeFormValues] =
@@ -35,10 +35,7 @@ const FormContainer = () => {
 
   return (
     <FormProvider {...formMethods}>
-      <form
-        noValidate
-        className="grid gap-y-8"
-        onSubmit={handleSubmit(onSuccess, onError)}>
+      <Form className="grid gap-y-8" method="POST">
         <DetailsSection />
         <FacilitiesSection />
         <LocationSection />
@@ -46,7 +43,7 @@ const FormContainer = () => {
         <button type="submit" className="btn btn-secondary">
           Create New Listing
         </button>
-      </form>
+      </Form>
     </FormProvider>
   );
 };

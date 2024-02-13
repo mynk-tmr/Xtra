@@ -10,7 +10,10 @@
   @apply label-text;
 }
 
-.fieldset h4 {
+.fieldset h5,
+h4,
+h3,
+h2 {
   @apply label-text font-bold;
 }
 
@@ -18,7 +21,7 @@
   @apply textarea bg-yellow-100;
 }
 
-.fieldset > section {
+.fieldset>section {
   @apply form-control gap-2;
 }
 

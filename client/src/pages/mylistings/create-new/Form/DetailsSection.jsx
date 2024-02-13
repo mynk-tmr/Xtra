@@ -1,5 +1,6 @@
 import Fieldset from "@/components/Fieldset";
 import { useFormContext } from "react-hook-form";
+import LabeledInput from "@/components/LabeledInput";
 
 function createRegisterOptions(label, minvalue, unit, validate) {
   return {
@@ -14,91 +15,36 @@ function createRegisterOptions(label, minvalue, unit, validate) {
 }
 
 const DetailsSection = () => {
-  const { register, watch } = useFormContext();
   return (
     <Fieldset legend="Add Details">
-      <label htmlFor="description">
-        Give a description <small>(atleast 20 characters)</small>
-      </label>
-      <textarea
-        id="description"
-        className="!h-[15ch]"
-        {...register("description", {
-          validate: function (desc) {
-            return desc && desc.length > 19
-              ? true
-              : "Please provide a description of 20 characters at minimum";
-          },
-        })}
+
+      <LabeledInput name="description" tag="textarea" className="!h-[15ch]"
+        label={<span>Give a description <small>(atleast 20 characters)</small></span>}
       />
+
       <section>
         <h4>Provide Entrance Dimensions</h4>
-        <label htmlFor="entraceDimensions_width">
-          Width <small>(feet)</small>
-        </label>
-        <input
-          id="entraceDimensions_width"
-          type="number"
-          {...register(
-            "entraceDimensions_width",
-            createRegisterOptions("Width", 1, "feet")
-          )}
+        <LabeledInput name="entranceWidth" tag="input" type="number"
+          label={<span>Width <small>(feet)</small></span>}
         />
-        <label htmlFor="entraceDimensions_height">
-          Height <small>(feet)</small>
-        </label>
-        <input
-          id="entraceDimensions_height"
-          type="number"
-          {...register(
-            "entraceDimensions_height",
-            createRegisterOptions("Height", 1, "feet")
-          )}
+        <LabeledInput name="entranceHeight" tag="input" type="number"
+          label={<span>Height <small>(feet)</small></span>}
         />
       </section>
+
       <section>
-        <label htmlFor="storageSpace">
-          <b>Storage Space</b> <small>(square per feet)</small>
-        </label>
-        <input
-          id="storageSpace"
-          type="number"
-          {...register(
-            "storageSpace",
-            createRegisterOptions("Storage Space", 10, "feet")
-          )}
+        <LabeledInput name="storageSpace" tag="input" type="number"
+          label={<span>Storage Space <small>(square feet)</small></span>}
         />
       </section>
+
       <section>
-        <h4>
-          Pricing Information <b className="text-info">(₹ / day)</b>
-        </h4>
-        <label htmlFor="pricePerDay">Price</label>
-        <input
-          id="pricePerDay"
-          type="number"
-          {...register(
-            "pricePerDay",
-            createRegisterOptions("Price", 1, "₹ / day")
-          )}
+        <h4>Pricing Information <b className="text-info">(₹ / day)</b></h4>
+        <LabeledInput name="pricePerDay" tag="input" type="number"
+          label={"Price"}
         />
-        <label htmlFor="discount">Discount</label>
-        <input
-          id="discount"
-          type="number"
-          {...register(
-            "discount",
-            createRegisterOptions(
-              "Discount",
-              0,
-              "₹ / day",
-              function (discount) {
-                return discount < watch("pricePerDay")
-                  ? true
-                  : "Discount must be lower than Price";
-              }
-            )
-          )}
+        <LabeledInput name="discount" tag="input" type="number"
+          label={"Discount"}
         />
       </section>
     </Fieldset>

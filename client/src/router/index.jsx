@@ -14,6 +14,7 @@ import LoginForm from "@/pages/login/LoginForm";
 import MyListingsLayout from "@/pages/mylistings/_layout";
 import CreateListingPage from "@/pages/mylistings/create-new";
 import DisplayListings from "@/pages/mylistings/display";
+import createListingAction from "@/pages/mylistings/create-new/createListingAction";
 
 export default function Router() {
   const router = createBrowserRouter(
@@ -27,7 +28,11 @@ export default function Router() {
         </Route>
         <Route path="mylistings" Component={MyListingsLayout}>
           <Route index Component={DisplayListings} />
-          <Route path="create-new" Component={CreateListingPage} />
+          <Route
+            path="create-new"
+            Component={CreateListingPage}
+            action={createListingAction}
+          />
         </Route>
         <Route path="*" Component={NotFound} />
       </Route>
