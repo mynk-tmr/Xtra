@@ -1,11 +1,11 @@
-import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
-  const goto = useNavigateToHome();
+  const goto = useNavigate();
   useEffect(() => {
     document.activeElement?.blur();
-    goto(1600);
+    setTimeout(goto, 1600, "/", { replace: true });
   }, [goto]);
   return "Not found";
 };

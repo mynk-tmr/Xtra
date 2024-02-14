@@ -1,8 +1,4 @@
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { useMutation } from "react-query";
-import * as apiClient from "@/libs/utils/apiClient";
-import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import { Link, useOutletContext } from "react-router-dom";
 import { loginFields } from "@/config/formFields";
 import Fieldset from "@/components/Fieldset";
@@ -13,25 +9,7 @@ import LoadingDots from "@/components/LoadingDots";
 const LoginForm = () => {
   usePageTitle("Xtra | Login");
   const { register, handleSubmit } = useForm();
-  const invalidator = useTokenInvalidator();
-  const { redirectOnSuccess } = useOutletContext();
-  const { mutate: submitUserInfo, isLoading } = useMutation({
-    mutationFn: (data) => apiClient.post({ data, endpoint: "authorize/login" }),
-    onSuccess: async function () {
-      toast.success("You are signed in! 😎");
-      await invalidator();
-      redirectOnSuccess();
-    },
-    onError: function (error) {
-      toast.error(error.message + "  😥");
-    },
-  });
-
-  function onError(errors) {
-    const { message } = Object.values(errors).at(0);
-    toast.error(message.toUpperCase());
-  }
-
+  const { submitUserInfo, onError, isLoading } = useOutletContext();
   if (isLoading) {
     return (
       <LoadingDots>
@@ -39,9 +17,13 @@ const LoginForm = () => {
       </LoadingDots>
     );
   }
-
   return (
-    <form onSubmit={handleSubmit(submitUserInfo, onError)} noValidate>
+    <form
+      onSubmit={handleSubmit(
+        (data) => submitUserInfo({ data, endpoint: "authorize/login" }),
+        onError
+      )}
+      noValidate>
       <Fieldset legend="Login">
         {loginFields.map((field) => (
           <LabeledInput

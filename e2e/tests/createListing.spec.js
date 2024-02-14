@@ -31,7 +31,7 @@ test("user can create a new listing", async () => {
   const byName = (val) => `[name=${val}]`;
 
   await page.getByRole("link", { name: "My Listings" }).click();
-  await page.getByRole("link", { name: "Create New Listing" }).click();
+  await page.getByRole("link", { name: "Create New" }).click();
 
   await page.locator(byName(fields.pincode)).fill("110019");
   await page.getByRole("button", { name: "Confirm" }).click();

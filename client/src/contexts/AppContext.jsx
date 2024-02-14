@@ -8,7 +8,7 @@ export const useAppContext = () => useContext(AppContext);
 
 export const AppContextProvider = ({ children }) => {
   const { isSuccess, isLoading } = useQuery({
-    queryKey: "validateToken", //onmount validate client's stored jwt to login
+    queryKey: "validateToken",
     queryFn: () => apiClient.get("authorize/validate-token"),
     retry: false,
     refetchOnWindowFocus: false,

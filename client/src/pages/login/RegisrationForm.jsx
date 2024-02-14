@@ -1,33 +1,15 @@
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { useMutation } from "react-query";
-import * as apiClient from "@/libs/utils/apiClient";
-import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import { registrationFields } from "@/config/formFields";
 import Fieldset from "@/components/Fieldset";
 import usePageTitle from "@/libs/hooks/usePageTitle";
 import LabeledInput from "@/components/LabeledInput";
 import LoadingDots from "@/components/LoadingDots";
+import { useOutletContext } from "react-router-dom";
 
 const RegistrationForm = () => {
   usePageTitle("Xtra | Create Account");
   const { register, handleSubmit, watch } = useForm();
-  const invalidator = useTokenInvalidator();
-  const { mutate: submitUserInfo, isLoading } = useMutation({
-    mutationFn: (data) => apiClient.post({ data, endpoint: "users/register" }),
-    onSuccess: async function () {
-      toast.success("Registration successful 😎");
-      await invalidator();
-    },
-    onError: function (error) {
-      toast.error(error.message + "  😥");
-    },
-  });
-
-  function onError(errors) {
-    const { message } = Object.values(errors).at(0);
-    toast.error(message.toUpperCase());
-  }
+  const { submitUserInfo, onError, isLoading } = useOutletContext();
 
   if (isLoading) {
     return (
@@ -38,7 +20,12 @@ const RegistrationForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(submitUserInfo, onError)} noValidate>
+    <form
+      onSubmit={handleSubmit(
+        (data) => submitUserInfo({ data, endpoint: "users/register" }),
+        onError
+      )}
+      noValidate>
       <Fieldset legend="Add Account">
         {registrationFields.map((field) => (
           <LabeledInput
