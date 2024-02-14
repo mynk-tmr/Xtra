@@ -5,7 +5,7 @@ import Blocker from "./Blocker";
 import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingDots from "@/components/LoadingDots";
 
 const CreateListingPage = () => {
   const queryClient = useQueryClient();
@@ -14,7 +14,8 @@ const CreateListingPage = () => {
     isLoading,
     isSuccess,
   } = useMutation({
-    mutationFn: (data) => apiClient.postForm({ data, endpoint: "my-listings" }),
+    mutationFn: (data) =>
+      apiClient.postForm({ data, endpoint: "my-listings/create-new" }),
     onSuccess: () => {
       toast.success("Your listing is added 😍");
       queryClient.removeQueries({ queryKey: "newlistingLocation" });
@@ -47,7 +48,11 @@ const CreateListingPage = () => {
         isSuccess={isSuccess}
       />
       {blocker.state === "blocked" && <Blocker blocker={blocker} />}
-      {isLoading && <LoadingSpinner />}
+      {isLoading && (
+        <LoadingDots>
+          <h4>Creating your Listing ....</h4>{" "}
+        </LoadingDots>
+      )}
     </section>
   );
 };

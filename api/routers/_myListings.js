@@ -1,13 +1,13 @@
 import express from "express";
 import { formDataParser, uploadFiles } from "../middlewares/_cloudinary.js";
-import { createListing } from "../models/_myListing.js";
+import { Listing } from "../models/_myListing.js";
 import { validationsAtCreateListing } from "../middlewares/_validator.js";
 import { verifyToken } from "../middlewares/_verifyToken.js";
-import { jsonResponse } from "../helpers/_formatters.js";
+import { handleInternalError, jsonResponse } from "../helpers/_formatters.js";
 
 const router = express.Router();
 router.post(
-  "/",
+  "/create-new",
   verifyToken,
   validationsAtCreateListing,
   formDataParser.array("listingImages", 6),
@@ -18,14 +18,22 @@ router.post(
       listingData.lastUpdated = new Date();
       listingData.userId = req.userId;
       listingData.starRating = 1;
-      const listing = createListing(listingData);
+      const listing = new Listing(listingData);
       await listing.save();
       return jsonResponse(res, 201, listing);
     } catch (err) {
-      console.log(err);
-      return jsonResponse(res, 500, "Something went wrong.");
+      return handleInternalError(res, err);
     }
   }
 );
+
+router.get("/", verifyToken, async (req, res) => {
+  try {
+    const listing = await Listing.find({ userId: req.userId });
+    return jsonResponse(res, 200, listing);
+  } catch (err) {
+    return handleInternalError(res, err);
+  }
+});
 
 export default router;

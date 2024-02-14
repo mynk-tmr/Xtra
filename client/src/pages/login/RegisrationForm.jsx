@@ -3,76 +3,64 @@ import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
-import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
 import { registrationFields } from "@/config/formFields";
 import Fieldset from "@/components/Fieldset";
 import usePageTitle from "@/libs/hooks/usePageTitle";
+import LabeledInput from "@/components/LabeledInput";
+import LoadingDots from "@/components/LoadingDots";
 
 const RegistrationForm = () => {
   usePageTitle("Xtra | Create Account");
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { isSubmitting },
-  } = useForm();
-  const goto = useNavigateToHome();
+  const { register, handleSubmit, watch } = useForm();
   const invalidator = useTokenInvalidator();
-  const { mutate: submitUserInfo } = useMutation({
-    mutationFn: apiClient.post,
+  const { mutate: submitUserInfo, isLoading } = useMutation({
+    mutationFn: (data) => apiClient.post({ data, endpoint: "users/register" }),
     onSuccess: async function () {
       toast.success("Registration successful 😎");
       await invalidator();
-      goto();
     },
     onError: function (error) {
-      //.message is what we sent from server or apiClient
       toast.error(error.message + "  😥");
     },
   });
-
-  function onValid(data) {
-    //calls apiClient.post
-    submitUserInfo({ data, endpoint: "users/register" });
-  }
 
   function onError(errors) {
     const { message } = Object.values(errors).at(0);
     toast.error(message.toUpperCase());
   }
 
+  if (isLoading) {
+    return (
+      <LoadingDots>
+        <h4>Registering your Account. Please wait ....</h4>
+      </LoadingDots>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit(onValid, onError)} noValidate>
-      <Fieldset legend="Add Account" disabled={isSubmitting}>
+    <form onSubmit={handleSubmit(submitUserInfo, onError)} noValidate>
+      <Fieldset legend="Add Account">
         {registrationFields.map((field) => (
-          <section key={field.name}>
-            <label
-              htmlFor={field.name}
-              className="uppercase !text-xs font-bold">
-              {field.name.replaceAll("_", " ")}
-            </label>
-            <input
-              type={field.type}
-              id={field.name}
-              className="mx-4 !input-md"
-              autoComplete="true"
-              {...register(field.name, {
-                ...field?.validations,
-                required: `${field.name} is required field !`,
-                validate:
-                  field.name === "confirm_password" &&
-                  function (val) {
-                    if (watch("password") !== val)
-                      return "your passwords don't match !";
-                  },
-              })}
-            />
-          </section>
+          <LabeledInput
+            key={field.name}
+            label={
+              <b className="capitalize">{field.name.replaceAll("_", " ")}</b>
+            }
+            type={field.type}
+            autoComplete="true"
+            {...register(field.name, {
+              ...field?.validations,
+              required: `${field.name} is required field !`,
+              validate:
+                field.name === "confirm_password" &&
+                function (val) {
+                  if (watch("password") !== val)
+                    return "your passwords don't match !";
+                },
+            })}
+          />
         ))}
-        <button className="!btn-md !btn-secondary">
-          {isSubmitting && <span className="loading loading-spinner"></span>}
-          Create Account
-        </button>
+        <button className="btn-secondary !btn-md">Create Account</button>
       </Fieldset>
     </form>
   );

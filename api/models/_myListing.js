@@ -24,10 +24,4 @@ const listingSchema = new mongoose.Schema({
 });
 
 // listings collection in db
-const Listing = mongoose.model("Listing", listingSchema);
-
-function createListing(listingData) {
-  return new Listing(listingData);
-}
-
-export { Listing, createListing };
+export const Listing = mongoose.model("Listing", listingSchema);

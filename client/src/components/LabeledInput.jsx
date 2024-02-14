@@ -1,20 +1,25 @@
 import { forwardRef } from "react";
+import PasswordField from "./PasswordField";
 
 const LabeledInput = forwardRef(({ label, as, className, ...props }, ref) => {
   const useId = props.id ?? props.name;
 
+  if (props.type === "password") {
+    const forwardProps = { label, className, useId, ...props };
+    return <PasswordField ref={ref} {...forwardProps} />;
+  }
+
   const customStyles = `
     ${
-      props.type !== "checkbox" &&
-      props.type !== "radio" &&
-      props.type !== "file" &&
-      "input bg-yellow-100 input-sm input-bordered"
+      ["checkbox", "radio", "file"].includes(props.type)
+        ? ""
+        : "input bg-yellow-100 input-sm input-bordered"
     }
-    ${props.type == "checkbox" && "checkbox checkbox-accent"}
-    ${props.type == "radio" && "radio radio-secondary"}
-    ${props.readOnly && "opacity-60 cursor-not-allowed font-bold"}
-    ${props.disabled && "opacity-60 cursor-not-allowed font-bold"}
-    ${props.type == "file" && "file-input bg-inherit file-input-bordered"}
+    ${props.type == "checkbox" ? "checkbox checkbox-accent" : ""}
+    ${props.type == "radio" ? "radio radio-secondary" : ""}
+    ${props.readOnly ? "opacity-60 cursor-not-allowed font-bold" : ""}
+    ${props.disabled ? "opacity-60 cursor-not-allowed font-bold" : ""}
+    ${props.type == "file" ? "file-input bg-inherit file-input-bordered" : ""}
   `;
 
   if (props.type == "radio" || props.type == "checkbox") {
