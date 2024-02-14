@@ -3,6 +3,9 @@ import { useFormContext } from "react-hook-form";
 import { useQuery } from "react-query";
 import Fieldset from "@/components/Fieldset";
 import { toast } from "react-toastify";
+import LabeledInput from "@/components/LabeledInput";
+import fields from "@/config/createLisitingFields";
+import Select from "@/components/Select";
 
 const LocationSection = () => {
   const { register, watch } = useFormContext();
@@ -21,18 +24,15 @@ const LocationSection = () => {
   return (
     <Fieldset legend="Add Location" disabled={isLoading}>
       <section>
-        <label htmlFor="pincode">Enter Pincode</label>
-        <input
-          type="number"
-          id="pincode"
-          {...register("pincode", {
-            required: "Pincode is required",
-            validate: function () {
-              if (watch("state") && watch("city") && watch("locality"))
-                return true;
-              return "Please confirm Pincode !";
+        <LabeledInput
+          id={fields.pincode}
+          {...register(fields.pincode, {
+            validate: (pincode) => {
+              if (!pincode || !watch(fields.state) || !watch(fields.city))
+                return "Please confirm pincode !";
             },
           })}
+          type="number"
         />
         <button type="button" onClick={refetch}>
           {data && !isError ? "Change pincode" : "Confirm"}
@@ -40,34 +40,31 @@ const LocationSection = () => {
       </section>
       {data && !isError && (
         <section>
-          <input
-            id="state"
+          <LabeledInput
+            id={fields.state}
+            {...register(fields.state)}
             readOnly={true}
             value={data.state}
             {...register("state")}
           />
-          <input
-            id="city"
+          <LabeledInput
+            id={fields.city}
+            {...register(fields.city)}
             readOnly={true}
             value={data.city}
-            {...register("city")}
           />
         </section>
       )}
       {data?.localities && !isError && (
         <section>
-          <label htmlFor="locality">Select Locality :</label>
-          <select
-            id="locality"
-            {...register("locality", {
-              required: "Please select a locality",
-            })}>
-            {data.localities.map((locality) => (
-              <option key={locality} value={locality}>
-                {locality}
-              </option>
-            ))}
-          </select>
+          <Select
+            id={fields.locality}
+            {...register(fields.locality, {
+              required: "Pick your locality !",
+            })}
+            label="Pick your locality:"
+            options={data.localities}
+          />
         </section>
       )}
     </Fieldset>

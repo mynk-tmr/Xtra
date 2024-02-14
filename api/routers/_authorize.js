@@ -2,27 +2,27 @@ import bcrypt from "bcryptjs";
 import express from "express";
 import { setJWTCookieInResponse } from "../helpers/_jwtHandler.js";
 import {
-  errorResponse,
   getValidationErrors,
   validationsAtLogin,
 } from "../middlewares/_validator.js";
+import { jsonResponse } from "../helpers/_formatters.js";
 import { verifyToken } from "../middlewares/_verifyToken.js";
 import { getUserByEmail } from "../models/_user.js";
 
 async function loginUser(req, res) {
   const errors = getValidationErrors(req);
-  if (errors) return errorResponse(res, 400, errors);
+  if (errors) return jsonResponse(res, 400, errors);
   const { email, password } = req.body;
   try {
     let user = await getUserByEmail(email);
-    if (!user) return errorResponse(res, 400, "Invalid credentials");
+    if (!user) return jsonResponse(res, 400, "Invalid credentials");
     const isPasswordOK = await bcrypt.compare(password, user.password);
-    if (!isPasswordOK) return errorResponse(res, 400, "Invalid credentials");
+    if (!isPasswordOK) return jsonResponse(res, 400, "Invalid credentials");
     setJWTCookieInResponse(res, user._id);
-    return res.status(200).json({ userId: user._id });
+    return jsonResponse(res, 200, { userId: user._id }); //userId is sent so script can read
   } catch (error) {
     console.log(error);
-    return errorResponse(res, 500, "Something went wrong");
+    return jsonResponse(res, 500, "Something went wrong");
   }
 }
 
@@ -31,7 +31,7 @@ router.post("/login", validationsAtLogin, loginUser);
 
 router.get("/validate-token", verifyToken, (req, res) => {
   //transferring req.userId into body
-  return res.status(200).json({ userId: req.userId });
+  return jsonResponse(res, 200, { userId: req.userId });
 });
 
 router.post("/logout", (req, res) => {

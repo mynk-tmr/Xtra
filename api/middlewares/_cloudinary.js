@@ -20,7 +20,7 @@ export async function uploadFiles(files) {
   const tasks = files.map(async (file) => {
     const b64 = Buffer.from(file.buffer).toString("base64");
     let dataURI = "data:" + file.mimetype + ";base64," + b64;
-    const { url } = await cloudinary.v2.uploader.upload(dataURI);
+    const { url } = await cloudinary.uploader.upload(dataURI);
     return url;
   });
 

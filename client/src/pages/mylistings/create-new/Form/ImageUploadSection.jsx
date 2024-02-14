@@ -1,54 +1,60 @@
 import Fieldset from "@/components/Fieldset";
 import ImagePreviewer from "@/components/ImagePreviewer";
-import { useRef, useState } from "react";
+import LabeledInput from "@/components/LabeledInput";
+import fields from "@/config/createLisitingFields";
+import useImagePreviewer from "@/libs/hooks/useImagePreviewer";
 import { useFormContext } from "react-hook-form";
 
 const ImageUploadSection = () => {
-  const { register, watch } = useFormContext();
-  const [images, setImages] = useState([]);
-  const imagePreviewDialog = useRef(null);
-  const openPreviewer = () => imagePreviewDialog.current.showModal();
-  const closePreview = () => imagePreviewDialog.current.close();
+  const { images, changeImages, clearImages } = useImagePreviewer();
+  const $ = (q) => document.getElementById(q);
+  const { register } = useFormContext();
 
   return (
     <Fieldset legend="Add Images">
-      <label htmlFor="listingImages">Upload images of your storage</label>
+      <LabeledInput
+        {...register(fields.listingImages, {
+          validate: (files) => {
+            if (!files || files.length > 6) return "Pick 1-6 images !";
+          },
+        })}
+        label={"Upload images of your storage (max 6)"}
+        accept="image/*"
+        type="file"
+        multiple
+        onDrop={(e) => {
+          e.preventDefault();
+          e.target.files = e.dataTransfer.files;
+          clearImages();
+          changeImages(e);
+        }}
+        onChange={(e) => {
+          clearImages();
+          changeImages(e);
+        }}
+      />
       <small className="text-info font-semibold">
         Good pictures are really important to generate interest in your listing
         !
       </small>
-      <input
-        accept="image/*"
-        type="file"
-        multiple
-        id="listingImages"
-        {...register("listingImages", {
-          onChange: () => setImages(watch("listingImages")),
-          validate: function (files) {
-            if (!files.length) return "Please select atleast 1 image";
-            if (files.length > 6) return "Maximum 6 images are allowed ..";
-            return true;
-          },
-        })}
-      />
       {!images.length ? null : (
         <>
           <button
             type="button"
             className="w-fit btn-accent"
-            onClick={openPreviewer}>
+            onClick={() => $("imagePreview").showModal()}>
             Preview Images
           </button>
-          <dialog ref={imagePreviewDialog} className="modal">
+          <dialog id="imagePreview" className="modal">
             <section className="modal-box w-11/12 max-w-5xl bg-neutral">
               <ImagePreviewer files={images} />
             </section>
             <div className="modal-action -translate-y-14">
               <button
                 type="button"
-                onClick={closePreview}
-                className="btn-warning !btn-wide">
-                Close
+                onClick={() => $("imagePreview").close()}
+                className="btn-warning !btn-circle btn-lg">
+                X
               </button>
             </div>
           </dialog>

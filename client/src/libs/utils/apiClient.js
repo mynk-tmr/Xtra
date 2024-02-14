@@ -10,8 +10,12 @@ async function fetchHandler(callback) {
     throw { message: "Server couldn't be reached" };
   }
   if (!response.ok) {
-    const { message } = await response.json();
-    throw new Error(message);
+    try {
+      const { message } = await response.json();
+      throw { message };
+    } catch (err) {
+      throw { message: "Server failed to fulfill request" };
+    }
   }
   return response;
 }
@@ -25,6 +29,16 @@ export async function post({ data, endpoint }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    })
+  );
+}
+
+export async function postForm({ data, endpoint }) {
+  return await fetchHandler(() =>
+    fetch(`${BASEURL}/api/${endpoint}`, {
+      method: "POST",
+      credentials: "include",
+      body: data,
     })
   );
 }

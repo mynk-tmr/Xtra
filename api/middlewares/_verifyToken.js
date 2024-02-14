@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { errorResponse } from "./_validator.js";
+import { jsonResponse } from "../helpers/_formatters.js";
 
 /* this checks auth_token in each request, unhash it & append to
   request body so client/server can access it if needed be...
@@ -13,6 +13,6 @@ export const verifyToken = (req, res, next) => {
     next();
   } catch (err) {
     console.log(err);
-    return errorResponse(res, 401, "unauthorized access");
+    return jsonResponse(res, 401, "unauthorized access");
   }
 };

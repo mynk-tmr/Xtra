@@ -5,12 +5,6 @@ import { validationResult, body } from "express-validator";
   - reusable validations that can scale to any complexity or database type
   - fewer database calls */
 
-export function errorResponse(res, code, message) {
-  return res.status(code).json({
-    message,
-  });
-}
-
 export function getValidationErrors(req) {
   const errors = validationResult(req);
   return errors.isEmpty() ? null : errors.array(); //of error objects
@@ -31,15 +25,16 @@ export const validationsAtLogin = [
 
 export const validationsAtCreateListing = [
   //body creates a middleware to test a field in req.body
-  body("state", "missing state").notEmpty(),
-  body("city", "missing city").notEmpty(),
+  body("state", "invalid state").notEmpty(),
+  body("city", "invalid city").notEmpty(),
   body("pincode", "invalid pincode").isInt({ min: 100000, max: 999999 }),
-  body("locality", "missing locality").notEmpty(),
-  body("type", "missing type").notEmpty(),
+  body("locality", "invalid locality").notEmpty(),
+  body("type", "invalid type").notEmpty(),
   body("description", "invalid description").isLength({ min: 20 }),
-  body("facilities", "missing facilities").isArray(),
-  body("pricePerDay", "missing pricePerDay").isInt({ min: 1 }),
-  body("discount", "missing discount").isInt({ min: 0 }),
-  body("entraceDimensions", "missing entraceDimensions").isArray(),
-  body("storageSpace", "missing storageSpace").isFloat({ min: 0 }),
+  body("facilities", "invalid facilities").isArray(),
+  body("pricePerDay", "invalid pricePerDay").isInt({ min: 1 }),
+  body("discount", "invalid discount").isInt({ min: 0 }),
+  body("entranceWidth", "invalid entranceWidth").isInt({ min: 1 }),
+  body("entranceHeight", "invalid entranceHeight").isInt({ min: 1 }),
+  body("storageSpace", "invalid storageSpace").isFloat({ min: 0 }),
 ];

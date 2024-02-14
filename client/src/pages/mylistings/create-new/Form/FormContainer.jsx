@@ -1,41 +1,41 @@
-import { FormProvider, useForm } from "react-hook-form";
 import DetailsSection from "./DetailsSection";
 import FacilitiesSection from "./FacilitiesSection";
 import LocationSection from "./LocationSection";
 import ImageUploadSection from "./ImageUploadSection";
-import { toast } from "react-toastify";
 import useLocalStorage from "@/libs/hooks/useLocalStorage";
-import { useEffect } from "react";
-import { useQueryClient } from "react-query";
-import { Form, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
-const FormContainer = () => {
+const FormContainer = ({ blocker, onSucces, onError }) => {
   const [formValues, storeFormValues, removeFormValues] =
     useLocalStorage("listingDraft");
-  const formMethods = useForm({ defaultValues: formValues });
-  const { handleSubmit, getValues } = formMethods;
-  const queryClient = useQueryClient();
-  const goto = useNavigate();
+  const formMethods = useForm({
+    defaultValues: formValues,
+  });
 
-  function onSuccess(data) {
-    toast.success("Your listing is added 😍");
-    setTimeout(removeFormValues, 0); //to run this after React cleanups
-    queryClient.removeQueries({ queryKey: "newlistingLocation" });
-    goto("/profile");
-  }
-  function onError(errors) {
-    setTimeout(() => {
-      let firstBad = document.activeElement;
-      toast.error(errors[firstBad.name].message);
-    }, 0);
+  const { getValues, handleSubmit } = formMethods;
+
+  //save to local storage before unmount
+  useEffect(() => {
+    if (blocker.state !== "blocked") return;
+    else storeFormValues(getValues());
+  }, [blocker.state, storeFormValues, getValues]);
+
+  function handleSuccess() {
+    removeFormValues();
+    let fd = new FormData(formRef.current);
+    onSucces(fd);
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => storeFormValues(getValues()), []);
+  const formRef = useRef(null);
 
   return (
     <FormProvider {...formMethods}>
-      <Form className="grid gap-y-8" method="POST">
+      <form
+        ref={formRef}
+        className="grid gap-y-8"
+        onSubmit={handleSubmit(handleSuccess, onError)}
+        encType="multipart/form-data">
         <DetailsSection />
         <FacilitiesSection />
         <LocationSection />
@@ -43,7 +43,7 @@ const FormContainer = () => {
         <button type="submit" className="btn btn-secondary">
           Create New Listing
         </button>
-      </Form>
+      </form>
     </FormProvider>
   );
 };

@@ -1,10 +1,55 @@
-const LabeledInput = ({ name, label, tag, ...props }) => {
-  if (!tag) throw new SyntaxError('Missing tag in ' + name + ' LabeledInput');
-  const Input = tag;
-  return <>
-    <label htmlFor={name}>{label}</label>
-    <Input id={name} name={name} {...props} />
-  </>;
-};
+import { forwardRef } from "react";
+
+const LabeledInput = forwardRef(({ label, as, className, ...props }, ref) => {
+  const useId = props.id ?? props.name;
+
+  const customStyles = `
+    ${
+      props.type !== "checkbox" &&
+      props.type !== "radio" &&
+      props.type !== "file" &&
+      "input bg-yellow-100 input-sm input-bordered"
+    }
+    ${props.type == "checkbox" && "checkbox checkbox-accent"}
+    ${props.type == "radio" && "radio radio-secondary"}
+    ${props.readOnly && "opacity-60 cursor-not-allowed font-bold"}
+    ${props.disabled && "opacity-60 cursor-not-allowed font-bold"}
+    ${props.type == "file" && "file-input bg-inherit file-input-bordered"}
+  `;
+
+  if (props.type == "radio" || props.type == "checkbox") {
+    return (
+      <div className={`flex items-center gap-3`}>
+        <input
+          id={useId}
+          ref={ref}
+          className={`${customStyles} ${className}`}
+          {...props}
+        />
+        <label className="label-text cursor-pointer" htmlFor={useId}>
+          {label}
+        </label>
+      </div>
+    );
+  }
+
+  const Input = as ? "textarea" : "input";
+
+  return (
+    <>
+      <label className="label-text" htmlFor={useId}>
+        {label}
+      </label>
+      <Input
+        ref={ref}
+        id={useId}
+        className={`${customStyles} ${className}`}
+        {...props}
+      />
+    </>
+  );
+});
+
+LabeledInput.displayName = "LabeledInput";
 
 export default LabeledInput;
