@@ -6,14 +6,22 @@ import useLocalStorage from "@/libs/hooks/useLocalStorage";
 import { useEffect, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-const FormContainer = ({ blocker, onSucces, onError }) => {
+const FormContainer = ({ blocker, submit, onError, isSuccess }) => {
   const [formValues, storeFormValues, removeFormValues] =
     useLocalStorage("listingDraft");
   const formMethods = useForm({
     defaultValues: formValues,
   });
 
-  const { getValues, handleSubmit } = formMethods;
+  const { getValues, handleSubmit, reset } = formMethods;
+
+  //on server's ok, clear all
+  useEffect(() => {
+    if (isSuccess) {
+      removeFormValues();
+      reset();
+    }
+  }, [isSuccess, removeFormValues, reset]);
 
   //save to local storage before unmount
   useEffect(() => {
@@ -21,10 +29,9 @@ const FormContainer = ({ blocker, onSucces, onError }) => {
     else storeFormValues(getValues());
   }, [blocker.state, storeFormValues, getValues]);
 
-  function handleSuccess() {
-    removeFormValues();
+  function onValid() {
     let fd = new FormData(formRef.current);
-    onSucces(fd);
+    submit(fd);
   }
 
   const formRef = useRef(null);
@@ -34,7 +41,7 @@ const FormContainer = ({ blocker, onSucces, onError }) => {
       <form
         ref={formRef}
         className="grid gap-y-8"
-        onSubmit={handleSubmit(handleSuccess, onError)}
+        onSubmit={handleSubmit(onValid, onError)}
         encType="multipart/form-data">
         <DetailsSection />
         <FacilitiesSection />

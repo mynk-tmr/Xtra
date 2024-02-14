@@ -5,6 +5,7 @@ import Blocker from "./Blocker";
 import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
+import LoadingSpinner from "./LoadingSpinner";
 
 const CreateListingPage = () => {
   const queryClient = useQueryClient();
@@ -41,10 +42,12 @@ const CreateListingPage = () => {
       </h1>
       <FormContainer
         blocker={blocker}
-        onSucces={submitData}
+        submit={submitData}
         onError={onError}
+        isSuccess={isSuccess}
       />
       {blocker.state === "blocked" && <Blocker blocker={blocker} />}
+      {isLoading && <LoadingSpinner />}
     </section>
   );
 };

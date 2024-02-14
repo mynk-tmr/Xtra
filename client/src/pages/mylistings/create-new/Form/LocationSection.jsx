@@ -27,9 +27,11 @@ const LocationSection = () => {
         <LabeledInput
           id={fields.pincode}
           {...register(fields.pincode, {
-            validate: (pincode) => {
-              if (!pincode || !watch(fields.state) || !watch(fields.city))
-                return "Please confirm pincode !";
+            required: "Please confirm pincode !",
+            validate: () => {
+              console.log(watch(fields.state), watch(fields.city));
+              if (watch(fields.state) && watch(fields.city)) return true;
+              return "Please confirm Pincode !";
             },
           })}
           type="number"
@@ -60,7 +62,9 @@ const LocationSection = () => {
           <Select
             id={fields.locality}
             {...register(fields.locality, {
-              required: "Pick your locality !",
+              validate: (value) => {
+                if (value == "__null__") return "Pick your locality";
+              },
             })}
             label="Pick your locality:"
             options={data.localities}

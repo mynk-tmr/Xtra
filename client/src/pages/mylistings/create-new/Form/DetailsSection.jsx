@@ -76,9 +76,9 @@ const DetailsSection = () => {
           id={fields.storageSpace}
           type="number"
           label={
-            <span>
+            <h4>
               Storage Space <small>(square feet)</small>
-            </span>
+            </h4>
           }
         />
       </section>
