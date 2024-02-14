@@ -42,7 +42,9 @@ const StorageView = ({
           ) : (
             <span className="flex-center gap-2">
               <del className="text-sm">{pricePerDay}</del>
-              <ins>{pricePerDay - discount}</ins>
+              <ins className="no-underline text-error">
+                {pricePerDay - discount}
+              </ins>
             </span>
           )}
           <small>₹ / day</small>
