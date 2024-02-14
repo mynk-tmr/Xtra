@@ -1,7 +1,10 @@
 import Xtralogo from "@/components/Xtralogo";
-import { Outlet } from "react-router-dom";
+import { useAppContext } from "@/contexts/AppContext";
+import { Navigate, Outlet } from "react-router-dom";
 
 const LoginPage = () => {
+  const { isLoggedIn } = useAppContext();
+  if (isLoggedIn) return <Navigate to="/profile" replace={true} />;
   return (
     <section className="p-8 prose mx-auto pb-40">
       <h1>

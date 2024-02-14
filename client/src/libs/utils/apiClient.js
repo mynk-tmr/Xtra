@@ -44,9 +44,11 @@ export async function postForm({ data, endpoint }) {
 }
 
 export async function get(endpoint) {
-  return await fetchHandler(() =>
+  let response = await fetchHandler(() =>
     fetch(`${BASEURL}/api/${endpoint}`, {
       credentials: "include",
     })
   );
+  let { message } = await response.json();
+  return message;
 }

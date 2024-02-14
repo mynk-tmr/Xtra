@@ -37,7 +37,7 @@ const CreateListingPage = () => {
     }, 0);
   }
   return (
-    <section>
+    <section className="prose">
       <h1>
         Add your new <Xtralogo /> space
       </h1>
