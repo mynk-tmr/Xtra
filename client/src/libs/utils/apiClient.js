@@ -10,12 +10,8 @@ async function fetchHandler(callback) {
     throw { message: "Server couldn't be reached" };
   }
   if (!response.ok) {
-    try {
-      const { message } = await response.json();
-      throw { message };
-    } catch (err) {
-      throw { message: "Server failed to fulfill request" };
-    }
+    const body = await response.json();
+    throw new Error(body.message ?? response.statusText);
   }
   return response;
 }

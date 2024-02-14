@@ -14,20 +14,23 @@ import LoginForm from "@/pages/login/LoginForm";
 import MyListingsLayout from "@/pages/mylistings/_layout";
 import CreateListingPage from "@/pages/mylistings/create-new";
 import DisplayListings from "@/pages/mylistings/display";
+import AuthRequired from "./AuthRequired";
 
 export default function Router() {
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <Route path="/" Component={RootLayout}>
         <Route index Component={IntroPage} />
-        <Route path="profile" Component={ProfilePage} />
         <Route path="login" Component={LoginPage}>
           <Route index Component={LoginForm} />
           <Route path="register" Component={RegistrationForm} />
         </Route>
-        <Route path="mylistings" Component={MyListingsLayout}>
-          <Route index Component={DisplayListings} />
-          <Route path="create-new" Component={CreateListingPage} />
+        <Route Component={AuthRequired}>
+          <Route path="profile" Component={ProfilePage} />
+          <Route path="mylistings" Component={MyListingsLayout}>
+            <Route index Component={DisplayListings} />
+            <Route path="create-new" Component={CreateListingPage} />
+          </Route>
         </Route>
         <Route path="*" Component={NotFound} />
       </Route>

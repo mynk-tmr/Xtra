@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { loginFields } from "@/config/formFields";
 import Fieldset from "@/components/Fieldset";
 import usePageTitle from "@/libs/hooks/usePageTitle";
@@ -14,11 +14,13 @@ const LoginForm = () => {
   usePageTitle("Xtra | Login");
   const { register, handleSubmit } = useForm();
   const invalidator = useTokenInvalidator();
+  const { redirectOnSuccess } = useOutletContext();
   const { mutate: submitUserInfo, isLoading } = useMutation({
     mutationFn: (data) => apiClient.post({ data, endpoint: "authorize/login" }),
     onSuccess: async function () {
       toast.success("You are signed in! 😎");
       await invalidator();
+      redirectOnSuccess();
     },
     onError: function (error) {
       toast.error(error.message + "  😥");

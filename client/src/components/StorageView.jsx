@@ -63,7 +63,7 @@ const StorageView = ({
             </small>
           </span>
         </address>
-        <quote className="font-mono text-sm opacity-90">{description}</quote>
+        <q className="font-mono text-sm opacity-90">{description}</q>
         <div className="card-actions">
           {facilities?.map((facility, index) => (
             <span className="badge text-xs" key={index}>
