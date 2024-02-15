@@ -2,23 +2,26 @@ import { getLocationDetails } from "@/libs/utils/getLocationDetails";
 import { useFormContext } from "react-hook-form";
 import { useQuery } from "react-query";
 import Fieldset from "@/components/Fieldset";
-import { toast } from "react-toastify";
 import LabeledInput from "@/components/LabeledInput";
 import fields from "@/config/createLisitingFields";
 import Select from "@/components/Select";
+import { notifyError } from "@/libs/utils/toast";
 
 const LocationSection = () => {
-  const { register, watch } = useFormContext();
+  const { register, watch, setValue } = useFormContext();
   const { isLoading, isError, data, refetch } = useQuery({
     queryKey: "newlistingLocation",
-    queryFn: () => {
-      let ele = document.getElementById("pincode");
-      return getLocationDetails(ele.value);
+    queryFn: async () => {
+      let pincode = watch(fields.pincode);
+      return await getLocationDetails(pincode);
     },
     refetchOnWindowFocus: false,
     enabled: false,
     onError: function () {
-      toast.error("Pincode is invalid !");
+      notifyError("Pincode is invalid !");
+      setValue(fields.state, undefined);
+      setValue(fields.city, undefined);
+      setValue(fields.locality, undefined);
     },
   });
   return (
@@ -29,7 +32,6 @@ const LocationSection = () => {
           {...register(fields.pincode, {
             required: "Please confirm pincode !",
             validate: () => {
-              console.log(watch(fields.state), watch(fields.city));
               if (watch(fields.state) && watch(fields.city)) return true;
               return "Please confirm Pincode !";
             },

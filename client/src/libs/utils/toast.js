@@ -12,5 +12,8 @@ export function notifySuccess(message) {
 }
 
 export function notifyError(error) {
-  toast.error(error.message);
+  let message;
+  if (typeof error == "string") message = error;
+  else message = error.message;
+  toast.error(message);
 }
