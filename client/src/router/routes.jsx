@@ -15,6 +15,7 @@ import MyListingsLayout from "@/pages/mylistings/_layout";
 import CreateListingPage from "@/pages/mylistings/create-new";
 import DisplayListings from "@/pages/mylistings/display";
 import AuthRequired from "./AuthRequired";
+import EditListingPage from "@/pages/mylistings/EditListingPage";
 
 export default function Router() {
   const router = createBrowserRouter(
@@ -30,6 +31,7 @@ export default function Router() {
           <Route path="mylistings" Component={MyListingsLayout}>
             <Route index Component={DisplayListings} />
             <Route path="create-new" Component={CreateListingPage} />
+            <Route path="edit/:assetId" Component={EditListingPage} />
           </Route>
         </Route>
         <Route path="*" Component={NotFound} />

@@ -36,4 +36,14 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/:id", verifyToken, async (req, res) => {
+  const id = req.params.id.toString();
+  try {
+    const listing = await Listing.findOne({ userId: req.userId, _id: id });
+    return jsonResponse(res, 200, listing);
+  } catch (err) {
+    return handleInternalError(res, err);
+  }
+});
+
 export default router;

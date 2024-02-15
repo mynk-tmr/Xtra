@@ -6,11 +6,11 @@ import useLocalStorage from "@/libs/hooks/useLocalStorage";
 import { useEffect, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-const FormContainer = ({ blocker, submit, onError, isSuccess }) => {
+const FormContainer = ({ blocker, submit, onError, isSuccess, withData }) => {
   const [formValues, storeFormValues, removeFormValues] =
     useLocalStorage("listingDraft");
   const formMethods = useForm({
-    defaultValues: formValues,
+    defaultValues: withData ?? formValues,
   });
 
   const { getValues, handleSubmit, reset } = formMethods;
@@ -25,9 +25,9 @@ const FormContainer = ({ blocker, submit, onError, isSuccess }) => {
 
   //save to local storage before unmount
   useEffect(() => {
-    if (blocker.state !== "blocked") return;
+    if (blocker?.state !== "blocked") return;
     else storeFormValues(getValues());
-  }, [blocker.state, storeFormValues, getValues]);
+  }, [blocker?.state, storeFormValues, getValues]);
 
   function onValid() {
     let fd = new FormData(formRef.current);
