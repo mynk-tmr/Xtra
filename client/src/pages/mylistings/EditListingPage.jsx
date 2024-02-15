@@ -10,14 +10,18 @@ import { notifyError, notifySuccess } from "@/libs/utils/toast";
 const EditListingPage = () => {
   usePageTitle("Xtra | Edit Listing");
   const { assetId } = useParams();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading: isGettingInfo } = useQuery({
     queryKey: `listing_${assetId}`,
     queryFn: () => apiClient.get(`my-listings/${assetId}`),
     enabled: Boolean(assetId),
     refetchOnWindowFocus: false,
   });
 
-  const { mutate, isSuccess } = useMutation({
+  const {
+    mutate,
+    isSuccess,
+    isLoading: isPuttingInfo,
+  } = useMutation({
     mutationFn: (formData) => apiClient.putListing(formData, assetId),
     onSuccess: () => {
       notifySuccess("Your listing was updated 😁");
@@ -25,10 +29,10 @@ const EditListingPage = () => {
     onError: notifyError,
   });
 
-  if (isLoading) {
+  if (isGettingInfo || isPuttingInfo) {
     return (
       <LoadingDots>
-        <h1>Loading info ..</h1>
+        <h1>Processing Request ...</h1>
       </LoadingDots>
     );
   }
@@ -43,6 +47,7 @@ const EditListingPage = () => {
         submit={mutate}
         isSuccess={isSuccess}
         enableLocalStorage={false}
+        submitBtnText="Update This Listing"
       />
     </section>
   );

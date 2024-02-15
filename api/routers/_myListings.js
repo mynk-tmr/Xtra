@@ -69,7 +69,7 @@ router.put(
       let newImgUrls = await uploadFiles(req.files);
       listing.imageUrls = newImgUrls.concat(listingData.imageUrls); //because user can delete existing ones
       listing.lastUpdated = new Date();
-
+      await listing.save();
       return jsonResponse(res, 201, listing);
     } catch (err) {
       return handleInternalError(res, err);

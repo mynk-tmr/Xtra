@@ -13,6 +13,7 @@ const FormContainer = ({
   isSuccess,
   withData,
   enableLocalStorage = true, //store to it only for create-new page
+  submitBtnText = "Create New Listing",
 }) => {
   const [fromLS, storeToLS, removefromLS] = useLocalStorage(
     enableLocalStorage ? "listingDraft" : ""
@@ -23,15 +24,13 @@ const FormContainer = ({
 
   const { getValues, handleSubmit, reset } = formMethods;
 
-  //populate form withData (null or server sent values)
-  useEffect(() => {
-    reset(withData);
-  }, [withData, reset]);
-
   //on server's ok, clear all
   useEffect(() => {
-    if (isSuccess) removefromLS();
-  }, [isSuccess, removefromLS]);
+    if (isSuccess) {
+      removefromLS();
+      reset(withData);
+    }
+  }, [isSuccess, removefromLS, reset, withData]);
 
   //save to local storage before unmount
   useEffect(() => {
@@ -43,6 +42,8 @@ const FormContainer = ({
 
   function onValid() {
     let fd = new FormData(formRef.current);
+    let imageUrls = getValues("imageUrls"); //only for editPage
+    fd.append("imageUrls", JSON.stringify(imageUrls));
     submit(fd);
   }
 
@@ -58,7 +59,7 @@ const FormContainer = ({
         <LocationSection />
         <ImageUploadSection />
         <button type="submit" className="btn btn-secondary">
-          Create New Listing
+          {submitBtnText}
         </button>
       </form>
     </FormProvider>
