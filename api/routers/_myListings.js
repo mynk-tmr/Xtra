@@ -37,13 +37,44 @@ router.get("/", verifyToken, async (req, res) => {
 });
 
 router.get("/:id", verifyToken, async (req, res) => {
-  const id = req.params.id.toString();
   try {
+    const id = req.params.id.toString();
     const listing = await Listing.findOne({ userId: req.userId, _id: id });
     return jsonResponse(res, 200, listing);
   } catch (err) {
     return handleInternalError(res, err);
   }
 });
+
+router.put(
+  "/:id",
+  verifyToken,
+  validationsAtCreateListing,
+  formDataParser.array("listingImages", 6),
+  async (req, res) => {
+    try {
+      const listingData = req.body;
+      let listing = await Listing.findOneAndUpdate(
+        {
+          //filters
+          _id: req.params.id.toString(),
+          userId: req.userId,
+        },
+        listingData, //update (uses merge strategy)
+        { new: true } //return updated one
+      );
+
+      if (!listing) return jsonResponse(res, 404, "No such listing is present");
+
+      let newImgUrls = await uploadFiles(req.files);
+      listing.imageUrls = newImgUrls.concat(listingData.imageUrls); //because user can delete existing ones
+      listing.lastUpdated = new Date();
+
+      return jsonResponse(res, 201, listing);
+    } catch (err) {
+      return handleInternalError(res, err);
+    }
+  }
+);
 
 export default router;

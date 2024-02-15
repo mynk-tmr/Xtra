@@ -2,10 +2,10 @@ import Xtralogo from "@/components/Xtralogo";
 import FormContainer from "./Form/FormContainer";
 import { useBlocker } from "react-router-dom";
 import Blocker from "./Blocker";
-import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import LoadingDots from "@/components/LoadingDots";
+import { notifyError, notifySuccess } from "@/libs/utils/toast";
 
 const CreateListingPage = () => {
   const queryClient = useQueryClient();
@@ -14,15 +14,12 @@ const CreateListingPage = () => {
     isLoading,
     isSuccess,
   } = useMutation({
-    mutationFn: (data) =>
-      apiClient.postForm({ data, endpoint: "my-listings/create-new" }),
+    mutationFn: apiClient.postListing,
     onSuccess: () => {
-      toast.success("Your listing is added 😍");
+      notifySuccess("Your listing is added 😍");
       queryClient.removeQueries({ queryKey: "newlistingLocation" });
     },
-    onError: (error) => {
-      toast.error(error.message);
-    },
+    onError: notifyError,
   });
 
   const blocker = useBlocker(
@@ -30,12 +27,6 @@ const CreateListingPage = () => {
       currentLocation !== nextLocation && !isSuccess
   );
 
-  function onError(errors) {
-    setTimeout(() => {
-      let firstBad = document.activeElement;
-      toast.error(errors[firstBad.name].message);
-    }, 0);
-  }
   return (
     <section className="prose">
       <h1>
@@ -44,7 +35,6 @@ const CreateListingPage = () => {
       <FormContainer
         blocker={blocker}
         submit={submitData}
-        onError={onError}
         isSuccess={isSuccess}
       />
       {blocker.state === "blocked" && <Blocker blocker={blocker} />}

@@ -1,10 +1,11 @@
 import usePageTitle from "@/libs/hooks/usePageTitle";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import * as apiClient from "@/libs/utils/apiClient";
 import LoadingDots from "@/components/LoadingDots";
 import FormContainer from "./create-new/Form/FormContainer";
 import Xtralogo from "@/components/Xtralogo";
+import { notifyError, notifySuccess } from "@/libs/utils/toast";
 
 const EditListingPage = () => {
   usePageTitle("Xtra | Edit Listing");
@@ -14,6 +15,14 @@ const EditListingPage = () => {
     queryFn: () => apiClient.get(`my-listings/${assetId}`),
     enabled: Boolean(assetId),
     refetchOnWindowFocus: false,
+  });
+
+  const { mutate, isSuccess } = useMutation({
+    mutationFn: (formData) => apiClient.putListing(formData, assetId),
+    onSuccess: () => {
+      notifySuccess("Your listing was updated 😁");
+    },
+    onError: notifyError,
   });
 
   if (isLoading) {
@@ -29,7 +38,12 @@ const EditListingPage = () => {
       <h1 className="text-center">
         Edit your <Xtralogo /> Storage{" "}
       </h1>
-      <FormContainer withData={data} />
+      <FormContainer
+        withData={data}
+        submit={mutate}
+        isSuccess={isSuccess}
+        enableLocalStorage={false}
+      />
     </section>
   );
 };

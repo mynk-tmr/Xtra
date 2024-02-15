@@ -12,7 +12,7 @@ import RegistrationForm from "@/pages/login/RegisrationForm";
 import ProfilePage from "@/pages/profile";
 import LoginForm from "@/pages/login/LoginForm";
 import MyListingsLayout from "@/pages/mylistings/_layout";
-import CreateListingPage from "@/pages/mylistings/create-new";
+import CreateListingPage from "@/pages/mylistings/create-new/CreateListingPage";
 import DisplayListings from "@/pages/mylistings/display";
 import AuthRequired from "./AuthRequired";
 import EditListingPage from "@/pages/mylistings/EditListingPage";

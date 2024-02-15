@@ -29,12 +29,22 @@ export async function post({ data, endpoint }) {
   );
 }
 
-export async function postForm({ data, endpoint }) {
+export async function postListing(formData) {
   return await fetchHandler(() =>
-    fetch(`${BASEURL}/api/${endpoint}`, {
+    fetch(`${BASEURL}/api/my-listings/create-new`, {
       method: "POST",
       credentials: "include",
-      body: data,
+      body: formData,
+    })
+  );
+}
+
+export async function putListing(formData, assetId) {
+  return await fetchHandler(() =>
+    fetch(`${BASEURL}/api/my-listings/${assetId}`, {
+      method: "PUT",
+      credentials: "include",
+      body: formData,
     })
   );
 }
