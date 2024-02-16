@@ -1,5 +1,23 @@
 import { StarIcon, MapPinIcon } from "@heroicons/react/16/solid";
 
+const PriceBadge = ({ discount, pricePerDay }) => {
+  return (
+    <div className="p-1 bg-primary mt-2 rounded-l-md flex gap-1 items-center font-bold">
+      {!discount ? (
+        pricePerDay
+      ) : (
+        <span>
+          <del className="text-xs mr-1">{pricePerDay}</del>
+          <ins className="no-underline text-error">
+            {pricePerDay - discount}
+          </ins>
+        </span>
+      )}
+      <small>₹ / day</small>
+    </div>
+  );
+};
+
 const StorageView = ({
   description,
   discount,
@@ -17,64 +35,52 @@ const StorageView = ({
   storageSpace,
 }) => {
   return (
-    <article className="relative card bg-success shadow-xl">
-      <div className="absolute top-0 right-0">
-        <span className="flex font-bold backdrop-blur-sm justify-end mr-1">
-          <StarIcon className="w-6 text-yellow-400" /> {starRating}
-        </span>
-        {isNew && (
-          <div className="p-1 bg-accent text-sm pl-6 mt-2 rounded-l-md">
-            NEW
-          </div>
-        )}
-      </div>
-      <figure className="-mb-14">
+    <figure className="shadow-xl">
+      <article className="relative card bg-success h-96">
         <img
           src={imageUrls[0]}
           alt={"Picture of Storage"}
-          className="flex-grow"
+          className="absolute size-full rounded-t-md"
         />
-      </figure>
-      <div className="card-body gap-y-4">
-        <h2 className="card-title w-fit bg-secondary rounded-md p-2">
-          {!discount ? (
-            pricePerDay
-          ) : (
-            <span className="flex-center gap-2">
-              <del className="text-sm">{pricePerDay}</del>
-              <ins className="no-underline text-error">
-                {pricePerDay - discount}
-              </ins>
-            </span>
+        <div className="absolute top-0 right-0">
+          <span className="flex text-yellow-400 font-bold justify-end mr-1">
+            <StarIcon className="w-6" /> {starRating}
+          </span>
+          <PriceBadge discount={discount} pricePerDay={pricePerDay} />
+          {isNew && (
+            <div className="p-1 pl-3 bg-accent text-sm mt-2 rounded-l-md ml-auto w-fit">
+              NEW
+            </div>
           )}
-          <small>₹ / day</small>
-        </h2>
-        <span className="flex-center *:badge flex-wrap gap-y-3">
-          <i className="!badge-primary opacity-80">
-            {entranceWidth} X {entranceHeight} ft.
-          </i>
-          <i className="!badge-warning opacity-80">{storageSpace} sq. feet</i>
-          <i className="!bg-blue-200">{type}</i>
-        </span>
-        <address className="not-italic">
-          <MapPinIcon className="w-4 inline" />{" "}
-          <span>
-            {locality},
-            <small className="p-2">
+        </div>
+        <div className="card-body gap-y-4 z-10 justify-end">
+          <span className="flex-center *:badge *:badge-sm flex-wrap gap-y-3">
+            <i className="!badge-secondary">
+              {entranceWidth} X {entranceHeight} ft.
+            </i>
+            <i className="!badge-warning">{storageSpace} sq. feet</i>
+            <i className="!badge-neutral">{type}</i>
+          </span>
+          <div className="card-actions">
+            {facilities?.map((facility, index) => (
+              <span className="badge badge-info text-xs" key={index}>
+                {facility}
+              </span>
+            ))}
+          </div>
+          <address className="not-italic bg-base-100 p-1 text-sm *:mr-1">
+            <MapPinIcon className="w-4 inline" />
+            <span>{locality},</span>
+            <small>
               {city}, {state}
             </small>
-          </span>
-        </address>
-        <q className="font-mono text-sm opacity-90">{description}</q>
-        <div className="card-actions">
-          {facilities?.map((facility, index) => (
-            <span className="badge text-xs" key={index}>
-              {facility}
-            </span>
-          ))}
+          </address>
         </div>
-      </div>
-    </article>
+      </article>
+      <figcaption className="font-mono text-sm bg-warning/50 p-2 rounded-b-md">
+        <q>{description}</q>
+      </figcaption>
+    </figure>
   );
 };
 

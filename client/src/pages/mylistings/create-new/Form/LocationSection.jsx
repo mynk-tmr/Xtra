@@ -8,7 +8,7 @@ import Select from "@/components/Select";
 import { notifyError, notifySuccess } from "@/libs/utils/toast";
 
 const LocationSection = () => {
-  const { register, getValues } = useFormContext();
+  const { register, getValues, setValue } = useFormContext();
   const { isLoading, data, refetch } = useQuery({
     queryKey: "newlistingLocation",
     queryFn: async () => {
@@ -17,11 +17,17 @@ const LocationSection = () => {
     },
     refetchOnWindowFocus: false,
     enabled: false,
-    onSuccess: function () {
+    onSuccess: function (data) {
       notifySuccess("Pincode changed !");
+      setValue(fields.state, data.state);
+      setValue(fields.city, data.city);
+      setValue(fields.locality, 0);
     },
     onError: function () {
       notifyError("Pincode is invalid !");
+      setValue(fields.state, "");
+      setValue(fields.city, "");
+      setValue(fields.locality, 0);
     },
   });
 
@@ -29,6 +35,7 @@ const LocationSection = () => {
     <Fieldset legend="Add Location" disabled={isLoading}>
       <LabeledInput
         id={fields.pincode}
+        placeholder="------"
         {...register(fields.pincode, {
           required: "Please confirm pincode !",
           validate: () => {
@@ -39,32 +46,33 @@ const LocationSection = () => {
         type="number"
       />
       <button type="button" onClick={refetch}>
-        {getValues(fields.state) ? "Change pincode" : "Confirm"}
+        {getValues(fields.state) ? "Change pincode" : "Verify your Pincode"}
       </button>
 
-      <LabeledInput
-        id={fields.state}
-        {...register(fields.state)}
-        readOnly={true}
-        value={data?.state ?? getValues(fields.state)}
-      />
+      {getValues(fields.state) && (
+        <>
+          <LabeledInput
+            id={fields.state}
+            {...register(fields.state)}
+            readOnly={true}
+          />
 
-      <LabeledInput
-        id={fields.city}
-        {...register(fields.city)}
-        readOnly={true}
-        value={data?.city ?? getValues(fields.city)}
-      />
-      <Select
-        id={fields.locality}
-        {...register(fields.locality, {
-          validate: (value) => {
-            if (value == "__null__") return "Pick your locality";
-          },
-        })}
-        label="Pick your locality:"
-        options={data?.localities ?? [getValues(fields.locality)]}
-      />
+          <LabeledInput
+            id={fields.city}
+            {...register(fields.city)}
+            readOnly={true}
+          />
+
+          <Select
+            id={fields.locality}
+            {...register(fields.locality, {
+              required: "Pick your locality",
+            })}
+            label="Pick your locality:"
+            options={data?.localities ?? [getValues(fields.locality)]}
+          />
+        </>
+      )}
     </Fieldset>
   );
 };

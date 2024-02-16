@@ -18,7 +18,7 @@ const ImageUploadSection = () => {
       <LabeledInput
         {...register(fields.listingImages, {
           validate: (files) => {
-            let length = files?.length + imageUrls?.length;
+            let length = files.length + (imageUrls?.length || 0);
             if (!length || length > 6)
               return "You have to pick 1-6 images in total";
           },
@@ -44,7 +44,9 @@ const ImageUploadSection = () => {
       </small>
       {!images.length ? null : (
         <section>
-          <h4 className="!text-error">Images to be uploaded</h4>
+          <h4 className="!text-error">
+            Images to be uploaded (first image will be thumbnail)
+          </h4>
           <ImagePreviewer files={images} />
         </section>
       )}

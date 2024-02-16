@@ -9,10 +9,9 @@ const Select = forwardRef(({ label, className, options, ...props }, ref) => {
         id={props.name}
         ref={ref}
         name={props.name}
-        defaultValue={"__null__"}
         className={`${customStyles} ${className}`}
         {...props}>
-        <option disabled value={"__null__"}>
+        <option key={"dummy"} disabled value={0}>
           Click to Open
         </option>
         {options.map((option) => (
