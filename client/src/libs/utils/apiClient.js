@@ -10,8 +10,10 @@ async function fetchHandler(callback) {
     throw { message: "Server couldn't be reached" };
   }
   if (!response.ok) {
-    const body = await response.json();
-    throw new Error(body.message ?? response.statusText);
+    if (response.status == 404)
+      throw { message: "Request points to non-existing resource" };
+    const { message } = await response.json();
+    throw new Error(message);
   }
   return response;
 }
@@ -57,4 +59,13 @@ export async function get(endpoint) {
   );
   let { message } = await response.json();
   return message;
+}
+
+export async function destroy(endpoint) {
+  await fetchHandler(() =>
+    fetch(`${BASEURL}/api/${endpoint}`, {
+      credentials: "include",
+      method: "DELETE",
+    })
+  );
 }

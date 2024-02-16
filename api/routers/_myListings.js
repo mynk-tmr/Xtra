@@ -77,4 +77,16 @@ router.put(
   }
 );
 
+router.delete("/:id", verifyToken, async (req, res) => {
+  try {
+    await Listing.findOneAndDelete({
+      _id: req.params.id.toString(),
+      userId: req.userId,
+    });
+    res.sendStatus(204);
+  } catch (err) {
+    return handleInternalError(res, err);
+  }
+});
+
 export default router;

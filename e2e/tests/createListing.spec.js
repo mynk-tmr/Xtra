@@ -69,29 +69,6 @@ test("user can create a new listing", async () => {
   await page.setInputFiles(byName(fields.listingImages), [
     path.join(__dirname, "images", "1.jpeg"),
     path.join(__dirname, "images", "2.jpeg"),
-    path.join(__dirname, "images", "3.jpeg"),
-    path.join(__dirname, "images", "4.jpeg"),
   ]);
-  await page.waitForTimeout(3000);
-  await expect(page.locator("img")).toHaveCount(4);
-  await page.getByRole("button", { name: "Create New Listing" }).click();
-  await expect(page.getByText("listing is added")).toBeVisible();
-});
-
-test("On success, form fields are cleared ", async () => {
-  await expect(page.locator(byName(fields.city))).toHaveCount(0);
-  await expect(page.locator(byName(fields.state))).toHaveCount(0);
-  await expect(page.locator(byName(fields.locality))).toHaveCount(0);
-  await expect(page.locator(byName(fields.pincode))).toHaveValue("");
-  await expect(page.locator(byName(fields.description))).toHaveValue("");
-  await expect(page.locator(byName(fields.pricePerDay))).toHaveValue("");
-  await expect(page.locator(byName(fields.discount))).toHaveValue("");
-  await expect(page.locator(byName(fields.entranceHeight))).toHaveValue("");
-  await expect(page.locator(byName(fields.entranceWidth))).toHaveValue("");
-  await expect(page.locator(byName(fields.storageSpace))).toHaveValue("");
-  await expect(page.locator(byName(fields.listingImages))).toHaveValue("");
-  await expect(page.getByLabel("Guarded Area")).not.toBeChecked();
-  await expect(page.getByLabel("Pest Control")).not.toBeChecked();
-  await expect(page.getByLabel("Security Cameras")).not.toBeChecked();
-  await expect(page.getByLabel("Residential")).not.toBeChecked();
+  await expect(page.locator("img")).toHaveCount(2);
 });

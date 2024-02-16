@@ -1,6 +1,6 @@
 import Xtralogo from "@/components/Xtralogo";
 import FormContainer from "./Form/FormContainer";
-import { useBlocker } from "react-router-dom";
+import { Navigate, useBlocker } from "react-router-dom";
 import Blocker from "./Blocker";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
@@ -26,6 +26,8 @@ const CreateListingPage = () => {
     ({ currentLocation, nextLocation }) =>
       currentLocation !== nextLocation && !isSuccess
   );
+
+  if (isSuccess) return <Navigate to="/mylistings" />;
 
   return (
     <section className="prose">
