@@ -10,7 +10,11 @@ import { notifyError, notifySuccess } from "@/libs/utils/toast";
 const EditListingPage = () => {
   usePageTitle("Xtra | Edit Listing");
   const { assetId } = useParams();
-  const { data, isLoading: isGettingInfo } = useQuery({
+  const {
+    data,
+    refetch,
+    isLoading: isGettingInfo,
+  } = useQuery({
     queryKey: `listing_${assetId}`,
     queryFn: () => apiClient.get(`my-listings/${assetId}`),
     enabled: Boolean(assetId),
@@ -25,6 +29,7 @@ const EditListingPage = () => {
     mutationFn: (formData) => apiClient.putListing(formData, assetId),
     onSuccess: () => {
       notifySuccess("Your listing was updated 😁");
+      refetch();
     },
     onError: notifyError,
   });

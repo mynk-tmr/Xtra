@@ -43,7 +43,7 @@ const FormContainer = ({
   function onValid() {
     let fd = new FormData(formRef.current);
     let imageUrls = getValues("imageUrls"); //only for editPage
-    fd.append("imageUrls", JSON.stringify(imageUrls));
+    imageUrls?.forEach((url, i) => fd.append(`imageUrls[${i}]`, url));
     submit(fd);
   }
 
