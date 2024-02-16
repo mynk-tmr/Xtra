@@ -15,5 +15,5 @@ export function notifyError(error) {
   let message;
   if (typeof error == "string") message = error;
   else message = error.message;
-  toast.error(message);
+  toast.error(message + "😟");
 }

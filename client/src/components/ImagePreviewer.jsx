@@ -9,7 +9,7 @@ const ImagePreviewer = ({ files, urlArray, renderControlBtns }) => {
           <article key={index} className="relative group">
             <img src={url} className="object-contain" />
             {renderControlBtns && (
-              <div className="hidden group-hover:flex gap-5 absolute z-10 top-12 left-1/4 *:btn-sm *:btn">
+              <div className="hidden group-hover:flex w-full justify-center absolute z-10 top-12 *:btn-sm *:btn">
                 {renderControlBtns(url)}
               </div>
             )}

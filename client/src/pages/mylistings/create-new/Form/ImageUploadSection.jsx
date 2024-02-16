@@ -17,9 +17,10 @@ const ImageUploadSection = () => {
     <Fieldset legend="Add Images">
       <LabeledInput
         {...register(fields.listingImages, {
-          validate: (files) => {
-            let length = files.length + (imageUrls?.length || 0);
-            if (!length || length > 6)
+          validate: () => {
+            //files.length is buggy, so used images
+            let length = images.length + (imageUrls?.length || 0);
+            if (length === 0 || length > 6)
               return "You have to pick 1-6 images in total";
           },
         })}

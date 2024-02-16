@@ -1,5 +1,5 @@
 // @ts-check
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { closeBrowser } from "../utils/browser";
 
 let page = null;
@@ -17,20 +17,20 @@ test("unregistered user cannot login", async () => {
   await page.locator("[name=email]").fill("anon@test.com");
   await page.locator("[name=password]").fill("anon123");
   await page.getByRole("button", { name: "Sign In" }).click();
-  await page.locator(".Toastify__toast--error");
+  await expect(page.getByText(/invalid/i)).toHaveCount(1);
 });
 
 test("registerd user can login", async () => {
   await page.locator("[name=email]").fill("play1@test.com");
   await page.locator("[name=password]").fill("play123");
   await page.getByRole("button", { name: "Sign In" }).click();
-  await page.locator(".Toastify__toast--success");
+  await expect(page.getByText(/signed in/i)).toHaveCount(1);
   await page.getByRole("link", { name: "Profile", exact: true }).click();
 });
 
 test("logged in user can logout", async () => {
   await page.getByRole("button", { name: "Logout" }).click();
-  await page.locator(".Toastify__toast--success");
+  await expect(page.getByText(/signed out/i)).toHaveCount(1);
   await page.getByRole("link", { name: "Sign In", exact: true }).click();
 });
 
@@ -42,6 +42,6 @@ test("unregistered user can register new account", async () => {
   await page.locator("[name=password]").fill("rand123");
   await page.locator("[name=confirm_password]").fill("rand123");
   await page.getByRole("button", { name: "Create Account" }).click();
-  await page.locator(".Toastify__toast--success");
+  await expect(page.getByText(/signed in/i)).toHaveCount(1);
   await page.getByRole("link", { name: "Profile", exact: true }).click();
 });

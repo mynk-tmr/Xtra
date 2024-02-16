@@ -71,4 +71,6 @@ test("user can create a new listing", async () => {
     path.join(__dirname, "images", "2.jpeg"),
   ]);
   await expect(page.locator("img")).toHaveCount(2);
+  await page.getByRole("button", { name: "Create New Listing" }).click();
+  await expect(page.getByText(/listing is added/i)).toHaveCount(1);
 });
