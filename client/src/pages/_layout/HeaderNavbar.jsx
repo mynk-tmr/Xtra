@@ -16,7 +16,7 @@ const HeaderNavbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="navbar px-4 md:px-12 h-fit fixed bottom-0 xs:top-0 xs:sticky z-[999] bg-white">
+    <nav className="navbar px-4 md:px-12 h-fit fixed bottom-0 xs:top-0 xs:sticky z-50 bg-white">
       <div className="flex-1">
         <Link to="/">
           <Xtralogo className="text-3xl" />

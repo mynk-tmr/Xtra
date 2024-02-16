@@ -25,7 +25,7 @@ const DisplayListings = () => {
     <section>
       <Link
         to="create-new"
-        className="fixed z-10 btn btn-info btn-sm bottom-4 right-[4.25rem] xs:right-8 md:btn-md">
+        className="fixed z-[999] btn btn-info btn-sm bottom-4 right-[4.25rem] xs:right-8 md:btn-md">
         <PlusCircleIcon className="w-6 inline-block" />
         Create New
       </Link>
