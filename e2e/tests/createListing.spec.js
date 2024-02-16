@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test, describe, expect } from "@playwright/test";
 import { logintoWebSite } from "../utils/login";
 import { closeBrowser } from "../utils/browser";
 import path from "path";
@@ -23,18 +23,31 @@ let fields = {
 
 test.beforeAll(async ({ browser }) => {
   page = await logintoWebSite(browser);
+  await page.getByRole("link", { name: "My Listings" }).click();
+  await page.getByRole("link", { name: "Create New" }).click();
 });
 
 test.afterAll(closeBrowser);
 
+const byName = (val) => `[name=${val}]`;
+
+describe("Pincode Functionality", async () => {
+  test("City, state, locality aren't initially visible", async () => {
+    await expect(page.locator(byName(fields.city))).toHaveCount(0);
+    await expect(page.locator(byName(fields.state))).toHaveCount(0);
+    await expect(page.locator(byName(fields.locality))).toHaveCount(0);
+  });
+
+  test("City, state, locality are visible once pincode is verified", async () => {
+    await page.locator(byName(fields.pincode)).fill("110019");
+    await page.getByRole("button", { name: "pincode" }).click();
+    await expect(page.locator(byName(fields.city))).toHaveCount(1);
+    await expect(page.locator(byName(fields.state))).toHaveCount(1);
+    await expect(page.locator(byName(fields.locality))).toHaveCount(1);
+  });
+});
+
 test("user can create a new listing", async () => {
-  const byName = (val) => `[name=${val}]`;
-
-  await page.getByRole("link", { name: "My Listings" }).click();
-  await page.getByRole("link", { name: "Create New" }).click();
-
-  await page.locator(byName(fields.pincode)).fill("110019");
-  await page.getByRole("button", { name: "Confirm" }).click();
   await page.selectOption(byName(fields.locality), "Kalkaji");
 
   await page
@@ -48,7 +61,6 @@ test("user can create a new listing", async () => {
   await page.locator(byName(fields.entranceHeight)).fill("26");
   await page.locator(byName(fields.storageSpace)).fill("100");
 
-  await page.getByLabel("Fire Protection").check();
   await page.getByLabel("Guarded Area").check();
   await page.getByLabel("Pest Control").check();
   await page.getByLabel("Security Cameras").check();
@@ -60,6 +72,26 @@ test("user can create a new listing", async () => {
     path.join(__dirname, "images", "3.jpeg"),
     path.join(__dirname, "images", "4.jpeg"),
   ]);
-
+  await page.waitForTimeout(3000);
+  await expect(page.locator("img")).toHaveCount(4);
   await page.getByRole("button", { name: "Create New Listing" }).click();
+  await expect(page.getByText("listing is added")).toBeVisible();
+});
+
+test("On success, form fields are cleared ", async () => {
+  await expect(page.locator(byName(fields.city))).toHaveCount(0);
+  await expect(page.locator(byName(fields.state))).toHaveCount(0);
+  await expect(page.locator(byName(fields.locality))).toHaveCount(0);
+  await expect(page.locator(byName(fields.pincode))).toHaveValue("");
+  await expect(page.locator(byName(fields.description))).toHaveValue("");
+  await expect(page.locator(byName(fields.pricePerDay))).toHaveValue("");
+  await expect(page.locator(byName(fields.discount))).toHaveValue("");
+  await expect(page.locator(byName(fields.entranceHeight))).toHaveValue("");
+  await expect(page.locator(byName(fields.entranceWidth))).toHaveValue("");
+  await expect(page.locator(byName(fields.storageSpace))).toHaveValue("");
+  await expect(page.locator(byName(fields.listingImages))).toHaveValue("");
+  await expect(page.getByLabel("Guarded Area")).not.toBeChecked();
+  await expect(page.getByLabel("Pest Control")).not.toBeChecked();
+  await expect(page.getByLabel("Security Cameras")).not.toBeChecked();
+  await expect(page.getByLabel("Residential")).not.toBeChecked();
 });
