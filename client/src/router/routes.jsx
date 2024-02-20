@@ -11,18 +11,20 @@ import LoginPage from "@/pages/login";
 import RegistrationForm from "@/pages/login/RegisrationForm";
 import ProfilePage from "@/pages/profile";
 import LoginForm from "@/pages/login/LoginForm";
-import MyListingsLayout from "@/pages/mylistings/_layout";
+import MyListingsLayout from "@/pages/mylistings";
 import CreateListingPage from "@/pages/mylistings/create-new/CreateListingPage";
 import DisplayListings from "@/pages/mylistings/display";
 import AuthRequired from "./AuthRequired";
 import EditListingPage from "@/pages/mylistings/EditListingPage";
 import OnlyAnonRoute from "./OnlyAnonRoute";
+import SearchPageLayout from "@/pages/search";
 
 export default function Router() {
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <Route path="/" Component={RootLayout}>
         <Route index Component={IntroPage} />
+        <Route path="search" Component={SearchPageLayout}></Route>
         <Route Component={OnlyAnonRoute}>
           <Route path="login" Component={LoginPage}>
             <Route index Component={LoginForm} />

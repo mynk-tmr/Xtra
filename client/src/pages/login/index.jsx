@@ -23,7 +23,7 @@ const LoginPage = () => {
   });
 
   return (
-    <section className="p-8 prose mx-auto pb-40">
+    <section className="prose mx-auto">
       <h1>
         Step into the <Xtralogo className="text-5xl" /> Zone
       </h1>

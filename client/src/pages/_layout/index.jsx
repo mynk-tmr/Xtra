@@ -7,7 +7,9 @@ const RootLayout = () => {
   return (
     <section className="pb-28 xs:pb-0">
       <HeaderNavbar />
-      <Outlet />
+      <div className="p-8">
+        <Outlet />
+      </div>
       <ToastContainer
         position="top-left"
         className="font-bold"

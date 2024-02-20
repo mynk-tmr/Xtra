@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const MyListingsLayout = () => {
   usePageTitle("Xtra | My Listings");
   return (
-    <section className="p-8 grid justify-center">
+    <section className="grid justify-center">
       <Outlet />
     </section>
   );
