@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import RootLayout from "@/pages/_layout";
-import NotFound from "./404";
+import NotFound from "../pages/404";
 import IntroPage from "@/pages/intro";
 import LoginPage from "@/pages/login";
 import RegistrationForm from "@/pages/login/RegisrationForm";

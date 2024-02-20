@@ -23,7 +23,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json()); //to recognise request body as JSON
-app.use(express.urlencoded({ extended: true })); //to allow nested object creation from query strings
+app.use(express.urlencoded({ extended: true })); //parse req with qs-library into object/array
 
 app.use("/api/authorize", authRoutes);
 app.use("/api/users", userRoutes);

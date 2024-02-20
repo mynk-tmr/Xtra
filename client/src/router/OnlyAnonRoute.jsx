@@ -7,7 +7,7 @@ const OnlyAnonRoute = () => {
   const { isLoggedIn, isVerifying } = useAppContext();
   if (isVerifying) return null;
   if (isLoggedIn) {
-    return <Navigate to={state?.from ?? "/"} replace />;
+    return <Navigate to={state?.to ?? "/"} replace />;
   }
   return <Outlet />;
 };

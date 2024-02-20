@@ -4,14 +4,14 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const AuthRequired = () => {
   const { isLoggedIn, isVerifying } = useAppContext();
-  const { pathname } = useLocation();
+  const { pathname: to } = useLocation();
   if (isVerifying)
     return (
       <LoadingDots>
         <h2>Verifying your connection ... </h2>
       </LoadingDots>
     );
-  if (!isLoggedIn) return <Navigate to="/login" state={{ from: pathname }} />;
+  if (!isLoggedIn) return <Navigate to="/login" state={{ to }} />;
   return <Outlet />;
 };
 
