@@ -14,7 +14,7 @@ const Select = forwardRef(({ label, className, options, ...props }, ref) => {
         <option key={"dummy"} disabled value={0}>
           Click to Open
         </option>
-        {options.map((option) => (
+        {options?.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>

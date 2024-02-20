@@ -12,6 +12,7 @@ const DisplayListings = () => {
     queryKey: "my-listings",
     queryFn: () => apiClient.get("my-listings"),
     onError: notifyError,
+    staleTime: Infinity,
   });
 
   const { mutate: requestDelete } = useMutation({

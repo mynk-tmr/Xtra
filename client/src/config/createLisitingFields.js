@@ -16,6 +16,7 @@ export default {
   type: "type",
   facilities: "facilities",
   listingImages: "listingImages",
+  starRating: "starRating",
 };
 
 export const facilitiesArray = [

@@ -1,6 +1,6 @@
 import express from "express";
 import { formDataParser, uploadFiles } from "../middlewares/_cloudinary.js";
-import { Listing } from "../models/_myListing.js";
+import { Listing } from "../models/_listing.js";
 import { validationsAtCreateListing } from "../middlewares/_validator.js";
 import { verifyToken } from "../middlewares/_verifyToken.js";
 import { handleInternalError, jsonResponse } from "../helpers/_formatters.js";

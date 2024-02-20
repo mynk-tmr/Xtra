@@ -1,5 +1,5 @@
 import express from "express";
-import { Listing } from "../models/_myListing.js";
+import { Listing } from "../models/_listing.js";
 import { handleInternalError, jsonResponse } from "../helpers/_formatters.js";
 import q2m from "query-to-mongo";
 
