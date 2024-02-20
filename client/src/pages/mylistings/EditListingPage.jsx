@@ -6,6 +6,7 @@ import LoadingDots from "@/components/LoadingDots";
 import FormContainer from "./create-new/Form/FormContainer";
 import Xtralogo from "@/components/Xtralogo";
 import { notifyError, notifySuccess } from "@/libs/utils/toast";
+import FetchError from "@/components/FetchError";
 
 const EditListingPage = () => {
   usePageTitle("Xtra | Edit Listing");
@@ -14,11 +15,12 @@ const EditListingPage = () => {
     data,
     refetch,
     isLoading: isGettingInfo,
+    isError: isGettingError,
   } = useQuery({
     queryKey: `listing_${assetId}`,
     queryFn: () => apiClient.get(`my-listings/${assetId}`),
     enabled: Boolean(assetId),
-    refetchOnWindowFocus: false,
+    onError: notifyError,
   });
 
   const {
@@ -33,6 +35,8 @@ const EditListingPage = () => {
     },
     onError: notifyError,
   });
+
+  if (isGettingError) return <FetchError refetch={refetch} />;
 
   if (isGettingInfo || isPuttingInfo) {
     return (

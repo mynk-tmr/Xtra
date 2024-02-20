@@ -21,7 +21,7 @@ const LocationSection = () => {
       notifySuccess("Pincode changed !");
       setValue(fields.state, data.state);
       setValue(fields.city, data.city);
-      setValue(fields.locality, 0);
+      setValue(fields.locality, "");
     },
     onError: function () {
       notifyError("Pincode is invalid !");

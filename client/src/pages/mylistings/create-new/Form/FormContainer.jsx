@@ -19,18 +19,15 @@ const FormContainer = ({
     enableLocalStorage ? "listingDraft" : ""
   );
   const formMethods = useForm({
-    defaultValues: withData ?? fromLS,
+    values: withData ?? fromLS,
   });
 
-  const { getValues, handleSubmit, reset } = formMethods;
+  const { getValues, handleSubmit } = formMethods;
 
   //on server's ok, clear all
   useEffect(() => {
-    if (isSuccess) {
-      removefromLS();
-      reset(withData);
-    }
-  }, [isSuccess, removefromLS, reset, withData]);
+    if (isSuccess) removefromLS();
+  }, [isSuccess, removefromLS]);
 
   //save to local storage before unmount
   useEffect(() => {

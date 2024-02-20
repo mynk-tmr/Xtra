@@ -10,6 +10,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0, //switch off auto-retries (3x)
+      refetchOnWindowFocus: false,
     },
   },
 });

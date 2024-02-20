@@ -4,9 +4,11 @@ import * as apiClient from "@/libs/utils/apiClient";
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import EnhancedCard from "./EnhancedCard";
 import { notifyError, notifySuccess } from "@/libs/utils/toast";
+import LoadingDots from "@/components/LoadingDots";
+import FetchError from "@/components/FetchError";
 
 const DisplayListings = () => {
-  const { data, refetch } = useQuery({
+  const { data, refetch, isLoading, isError } = useQuery({
     queryKey: "my-listings",
     queryFn: () => apiClient.get("my-listings"),
     onError: notifyError,
@@ -20,6 +22,15 @@ const DisplayListings = () => {
     },
     onError: notifyError,
   });
+
+  if (isLoading)
+    return (
+      <LoadingDots>
+        <h1>Loading your listings ...</h1>
+      </LoadingDots>
+    );
+
+  if (isError) return <FetchError refetch={refetch} />;
 
   return (
     <section>
