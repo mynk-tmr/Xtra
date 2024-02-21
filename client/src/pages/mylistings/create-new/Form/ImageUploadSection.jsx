@@ -1,7 +1,7 @@
 import Fieldset from "@/components/Fieldset";
 import ImagePreviewer from "@/components/ImagePreviewer";
 import LabeledInput from "@/components/LabeledInput";
-import fields from "@/config/createLisitingFields";
+import { createLisitingFields as fields } from "@/config/listingFields";
 import useImagePreviewer from "@/libs/hooks/useImagePreviewer";
 import { TrashIcon } from "@heroicons/react/16/solid";
 import { useFormContext } from "react-hook-form";

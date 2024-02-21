@@ -7,11 +7,6 @@ import {
 } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
-const within1Week = (date) => {
-  const ms_Week = 7 * 24 * 60 * 60 * 1000;
-  return Date.now() - Date.parse(date) < ms_Week;
-};
-
 const EnhancedCard = ({ storageData, requestDelete }) => {
   const [shouldDelete, toggleMode] = useToggle(false);
   return (
@@ -40,10 +35,7 @@ const EnhancedCard = ({ storageData, requestDelete }) => {
         )}
       </div>
       <div className="group-hover:blur-[1px]">
-        <StorageView
-          {...storageData}
-          isNew={within1Week(storageData.lastUpdated)}
-        />
+        <StorageView {...storageData} />
       </div>
     </article>
   );

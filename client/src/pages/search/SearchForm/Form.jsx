@@ -1,16 +1,15 @@
 import { useForm } from "react-hook-form";
-import createLisitingFields, {
+import {
+  searchListingFields as fields,
   facilitiesArray,
-} from "@/config/createLisitingFields";
+} from "@/config/listingFields";
 import LabeledInput from "@/components/LabeledInput";
 import LocationSet from "./LocationSet";
 import { notifyError } from "@/libs/utils/toast";
 
-let fields = createLisitingFields;
-
-const Form = ({ onValid, init }) => {
+const Form = ({ onValid, withData, resetter }) => {
   const { register, getValues, handleSubmit } = useForm({
-    values: init,
+    values: withData,
   });
   return (
     <form
@@ -26,25 +25,13 @@ const Form = ({ onValid, init }) => {
         <LabeledInput
           type="number"
           label="Lowest price (min. 1)"
-          {...register(fields.pricePerDay + "Min", {
-            valueAsNumber: true,
-            min: {
-              value: 1,
-              message: "Price range is invalid",
-            },
-          })}
+          {...register(fields.pricePerDayMin)}
           className="w-[18ch] block mt-1"
         />
         <LabeledInput
           type="number"
           label="Highest price"
-          {...register(fields.pricePerDay + "Max", {
-            valueAsNumber: true,
-            validate: (val) => {
-              if (val && val < getValues(fields.pricePerDay + "Min"))
-                return "Price Range is invalid";
-            },
-          })}
+          {...register(fields.pricePerDayMax)}
           className="w-[18ch] block mt-1"
         />
       </fieldset>
@@ -55,25 +42,13 @@ const Form = ({ onValid, init }) => {
           type="number"
           label="Minimium height"
           className="w-[18ch] block mt-1"
-          {...register(fields.entranceHeight, {
-            valueAsNumber: true,
-            min: {
-              value: 1,
-              message: "Height must be more than 1",
-            },
-          })}
+          {...register(fields.entranceHeight)}
         />
         <LabeledInput
           type="number"
           label="Minimium width"
           className="w-[18ch] block mt-1"
-          {...register(fields.entranceWidth, {
-            valueAsNumber: true,
-            min: {
-              value: 1,
-              message: "Width must be more than 1",
-            },
-          })}
+          {...register(fields.entranceWidth)}
         />
       </fieldset>
 
@@ -84,13 +59,7 @@ const Form = ({ onValid, init }) => {
         <LabeledInput
           type="number"
           className="w-[18ch] block mt-1"
-          {...register(fields.storageSpace, {
-            valueAsNumber: true,
-            min: {
-              value: 10,
-              message: "",
-            },
-          })}
+          {...register(fields.storageSpace)}
         />
       </fieldset>
 
@@ -102,9 +71,8 @@ const Form = ({ onValid, init }) => {
           min={1}
           max={5}
           step={1}
-          {...register(fields.starRating, {
-            value: 3,
-          })}
+          defaultValue={1}
+          {...register(fields.starRating)}
         />
         <span className="flex justify-between mx-1 *:text-sm">
           <b>1</b>
@@ -131,7 +99,10 @@ const Form = ({ onValid, init }) => {
       </fieldset>
 
       <fieldset className="flex basis-full justify-between border-t border-gray-200 px-5 py-3 mt-6">
-        <button type="reset" className="btn btn-xs btn-link text-info">
+        <button
+          type="button"
+          onClick={resetter}
+          className="btn btn-xs btn-link text-info">
           Reset All
         </button>
         <button className="btn btn-outline btn-sm text-black">

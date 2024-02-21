@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { useQuery } from "react-query";
 import Fieldset from "@/components/Fieldset";
 import LabeledInput from "@/components/LabeledInput";
-import fields from "@/config/createLisitingFields";
+import { createLisitingFields as fields } from "@/config/listingFields";
 import Select from "@/components/Select";
 import { notifyError, notifySuccess } from "@/libs/utils/toast";
 

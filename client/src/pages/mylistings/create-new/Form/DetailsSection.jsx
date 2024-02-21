@@ -1,7 +1,7 @@
 import Fieldset from "@/components/Fieldset";
 import { useFormContext } from "react-hook-form";
 import LabeledInput from "@/components/LabeledInput";
-import fields from "@/config/createLisitingFields";
+import { createLisitingFields as fields } from "@/config/listingFields";
 
 function createRegisterConfig(label, minvalue, unit, validate) {
   return {

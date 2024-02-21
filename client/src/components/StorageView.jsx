@@ -18,6 +18,11 @@ const PriceBadge = ({ discount, pricePerDay }) => {
   );
 };
 
+const within1Week = (date) => {
+  const ms_Week = 7 * 24 * 60 * 60 * 1000;
+  return Date.now() - Date.parse(date) < ms_Week;
+};
+
 const StorageView = ({
   description,
   discount,
@@ -26,7 +31,7 @@ const StorageView = ({
   facilities,
   type,
   imageUrls,
-  isNew,
+  lastUpdated,
   locality,
   city,
   state,
@@ -47,7 +52,7 @@ const StorageView = ({
             <StarIcon className="w-6" /> {starRating}
           </span>
           <PriceBadge discount={discount} pricePerDay={pricePerDay} />
-          {isNew && (
+          {within1Week(lastUpdated) && (
             <div className="p-1 pl-3 bg-accent text-sm mt-2 rounded-l-md ml-auto w-fit">
               NEW
             </div>

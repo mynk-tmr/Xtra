@@ -69,3 +69,8 @@ export async function destroy(endpoint) {
     })
   );
 }
+
+export async function searchListings(searchParams) {
+  let q = searchParams;
+  return await get(`listings/search?${q}`);
+}

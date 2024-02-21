@@ -1,9 +1,10 @@
 import Fieldset from "@/components/Fieldset";
 import LabeledInput from "@/components/LabeledInput";
-import fields, {
+import {
+  createLisitingFields as fields,
   facilitiesArray,
   typesArray,
-} from "@/config/createLisitingFields";
+} from "@/config/listingFields";
 import { useFormContext } from "react-hook-form";
 
 const FacilitiesSection = () => {

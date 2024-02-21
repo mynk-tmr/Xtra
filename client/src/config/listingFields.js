@@ -2,10 +2,10 @@
 //copy your model schema (in db) and just stringify names
 //this ensures we don't run into key mismatch errors
 
-export default {
+export const createLisitingFields = {
   description: "description",
   entranceWidth: "entranceWidth",
-  entranceHeight: "entranceHeight" /* entraceDimensions = [w,h] */,
+  entranceHeight: "entranceHeight",
   storageSpace: "storageSpace",
   pricePerDay: "pricePerDay",
   discount: "discount",
@@ -17,6 +17,20 @@ export default {
   facilities: "facilities",
   listingImages: "listingImages",
   starRating: "starRating",
+};
+
+//schema as per q2m library
+export const searchListingFields = {
+  entranceWidth: "entranceWidth:gte",
+  entranceHeight: "entranceHeight:gte",
+  storageSpace: "storageSpace:gte",
+  pricePerDayMin: "pricePerDay:gte",
+  pricePerDayMax: "pricePerDay:lte",
+  pincode: "pincode",
+  locality: "locality",
+  type: "type",
+  facilities: "facilities:all",
+  starRating: "starRating:gte",
 };
 
 export const facilitiesArray = [
