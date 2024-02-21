@@ -17,7 +17,7 @@ const PasswordField = forwardRef((props, ref) => {
         <input
           ref={ref}
           id={props.useId}
-          className={`input bg-yellow-100 input-sm input-bordered font-semibold ${className}`}
+          className={`input bg-yellow-100 input-bordered font-semibold ${className}`}
           {...rest}
           //this should be atlast to override all
           type={visibile ? "text" : "password"}

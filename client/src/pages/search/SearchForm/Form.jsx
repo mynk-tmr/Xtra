@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import {
   searchListingFields as fields,
   facilitiesArray,
+  typesArray,
 } from "@/config/listingFields";
 import LabeledInput from "@/components/LabeledInput";
-import LocationSet from "./LocationSet";
+import PincodeFieldset from "./PincodeFieldset";
 import { notifyError } from "@/libs/utils/toast";
 
 const Form = ({ onValid, withData, resetter }) => {
@@ -18,7 +19,7 @@ const Form = ({ onValid, withData, resetter }) => {
       flex flex-wrap *:grow p-2 *:m-4
       [&_legend]:bg-blue-100 [&_legend]:w-full [&_legend]:p-1 [&_legend]:mb-1
       `}>
-      <LocationSet {...{ register, getValues, fields }} />
+      <PincodeFieldset {...{ register, getValues, fields }} />
 
       <fieldset>
         <legend className="text-xs font-medium">Price Range (per day)</legend>
@@ -63,7 +64,7 @@ const Form = ({ onValid, withData, resetter }) => {
         />
       </fieldset>
 
-      <fieldset>
+      <fieldset className="max-w-44">
         <legend className="text-xs font-medium">Star Rating</legend>
         <input
           type="range"
@@ -83,7 +84,7 @@ const Form = ({ onValid, withData, resetter }) => {
         </span>
       </fieldset>
 
-      <fieldset className="w-full columns-2 xs:columns-3">
+      <fieldset className="columns-2 xs:columns-3">
         <legend className="text-xs font-medium">Facilities</legend>
         {facilitiesArray.map((facility) => (
           <LabeledInput
@@ -92,6 +93,21 @@ const Form = ({ onValid, withData, resetter }) => {
             id={facility}
             value={facility}
             {...register(fields.facilities)}
+            type="checkbox"
+            className="cursor-pointer scale-75"
+          />
+        ))}
+      </fieldset>
+
+      <fieldset>
+        <legend className="text-xs font-medium">Type</legend>
+        {typesArray.map(({ text }) => (
+          <LabeledInput
+            label={text}
+            key={text}
+            id={text}
+            value={text}
+            {...register(fields.type)}
             type="checkbox"
             className="cursor-pointer scale-75"
           />

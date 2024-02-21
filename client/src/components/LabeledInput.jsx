@@ -13,8 +13,9 @@ const LabeledInput = forwardRef(({ label, as, className, ...props }, ref) => {
     ${
       ["checkbox", "radio", "file"].includes(props.type)
         ? ""
-        : "input bg-yellow-100 input-sm input-bordered"
+        : "input bg-yellow-100 input-bordered"
     }
+    ${props.type == "number" ? "input-sm" : ""}
     ${props.type == "checkbox" ? "checkbox checkbox-accent" : ""}
     ${props.type == "radio" ? "radio radio-secondary" : ""}
     ${props.readOnly ? "opacity-60 cursor-not-allowed font-bold" : ""}

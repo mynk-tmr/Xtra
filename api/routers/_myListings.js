@@ -67,7 +67,7 @@ router.put(
       if (!listing) return jsonResponse(res, 404, "No such listing is present");
 
       let newImgUrls = await uploadFiles(req.files);
-      listing.imageUrls = [...newImgUrls, ...listingData.imageUrls];
+      listing.imageUrls = [...newImgUrls, ...(listingData.imageUrls || [])];
       listing.lastUpdated = new Date();
       await listing.save();
       return jsonResponse(res, 201, listing);

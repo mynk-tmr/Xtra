@@ -28,7 +28,7 @@ export const searchListingFields = {
   pricePerDayMax: "pricePerDay:lte",
   pincode: "pincode",
   locality: "locality",
-  type: "type",
+  type: "type:in",
   facilities: "facilities:all",
   starRating: "starRating:gte",
 };

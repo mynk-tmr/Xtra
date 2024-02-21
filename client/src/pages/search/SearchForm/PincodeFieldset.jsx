@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { getLocationDetails } from "@/libs/utils/getLocationDetails";
 import { notifyError } from "@/libs/utils/toast";
 
-const LocationSet = ({ register, getValues, fields }) => {
+const PincodeFieldSet = ({ register, getValues, fields }) => {
   const { data, isLoading, refetch, isError } = useQuery({
     queryFn: () => getLocationDetails(getValues("pincode")),
     onError: () => {
@@ -16,10 +16,11 @@ const LocationSet = ({ register, getValues, fields }) => {
   return (
     <fieldset disabled={isLoading} className="grid gap-y-3">
       <legend className="text-xs font-medium">Location</legend>
-      <div>
+      <div className="flex flex-wrap gap-3">
         <LabeledInput
           label="Pincode"
-          className="w-[18ch] m-1 mr-2"
+          type="number"
+          className="w-[18ch]"
           {...register(fields.pincode)}
         />
         <button
@@ -42,4 +43,4 @@ const LocationSet = ({ register, getValues, fields }) => {
   );
 };
 
-export default LocationSet;
+export default PincodeFieldSet;

@@ -17,14 +17,14 @@ import DisplayListings from "@/pages/mylistings/display";
 import AuthRequired from "./AuthRequired";
 import EditListingPage from "@/pages/mylistings/EditListingPage";
 import OnlyAnonRoute from "./OnlyAnonRoute";
-import SearchPageLayout from "@/pages/search";
+import SearchPage from "@/pages/search";
 
 export default function Router() {
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <Route path="/" Component={RootLayout}>
         <Route index Component={IntroPage} />
-        <Route path="search" Component={SearchPageLayout}></Route>
+        <Route path="search" Component={SearchPage}></Route>
         <Route Component={OnlyAnonRoute}>
           <Route path="login" Component={LoginPage}>
             <Route index Component={LoginForm} />
