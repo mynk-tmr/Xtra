@@ -7,7 +7,7 @@ const AppContext = createContext(undefined);
 export const useAppContext = () => useContext(AppContext);
 
 export const AppContextProvider = ({ children }) => {
-  const { isSuccess, isLoading } = useQuery({
+  const { isSuccess, isLoading, data } = useQuery({
     queryKey: "validateToken",
     queryFn: () => apiClient.get("authorize/validate-token"),
     retry: false,
@@ -15,7 +15,7 @@ export const AppContextProvider = ({ children }) => {
   });
   return (
     <AppContext.Provider
-      value={{ isLoggedIn: isSuccess, isVerifying: isLoading }}>
+      value={{ isLoggedIn: isSuccess, isVerifying: isLoading, user: data }}>
       {children}
     </AppContext.Provider>
   );

@@ -7,7 +7,7 @@ import {
 } from "../middlewares/_validator.js";
 import { jsonResponse } from "../helpers/_formatters.js";
 import { verifyToken } from "../middlewares/_verifyToken.js";
-import { getUserByEmail } from "../models/_user.js";
+import { User, getUserByEmail } from "../models/_user.js";
 
 async function loginUser(req, res) {
   const errors = getValidationErrors(req);
@@ -29,9 +29,14 @@ async function loginUser(req, res) {
 const router = express.Router();
 router.post("/login", validationsAtLogin, loginUser);
 
-router.get("/validate-token", verifyToken, (req, res) => {
-  //transferring req.userId into body
-  return jsonResponse(res, 200, { userId: req.userId });
+router.get("/validate-token", verifyToken, async (req, res) => {
+  const { email, firstName, lastName } = await User.findById(req.userId);
+  return jsonResponse(res, 200, {
+    userId: req.userId,
+    email,
+    firstName,
+    lastName,
+  });
 });
 
 router.post("/logout", (req, res) => {

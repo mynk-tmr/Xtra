@@ -2,22 +2,22 @@ import { useMutation } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import { toast } from "react-toastify";
 import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
-import useNavigateToHome from "@/libs/hooks/useNavigateToHome";
 
-const LogOutHandler = () => {
+const LogOutHandler = ({ handleLoading }) => {
   const invalidate = useTokenInvalidator();
-  const goto = useNavigateToHome();
-  const { mutate: logOut } = useMutation({
+  const { mutate: logOut, isLoading } = useMutation({
     mutationFn: () => apiClient.post({ endpoint: "authorize/logout" }),
     onSuccess: async function () {
       await invalidate();
       toast.success("Signed Out !");
-      goto();
     },
     onError: function () {
       toast.error("Couldn't Logout. Maybe Try again !");
     },
   });
+
+  if (isLoading) handleLoading();
+
   return (
     <button onClick={logOut} className="btn btn-warning">
       Logout

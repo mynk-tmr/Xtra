@@ -10,9 +10,9 @@ import FilterContainer from "./FilterContainer";
 const SearchPage = () => {
   const [searchPars, setSearchPars] = useSearchParams();
   const [withData, setWithData] = useState();
-  const { data, isLoading, isSuccess, refetch } = useQuery({
+  const { data, isLoading, isSuccess, refetch, isFetching } = useQuery({
     queryKey: "searchedListings",
-    staleTime: Infinity,
+    staleTime: 5 * 60 * 1000,
     queryFn: async () => await apiClient.searchListings(searchPars),
     onError: (err) => {
       notifyError(err);
@@ -29,10 +29,12 @@ const SearchPage = () => {
     setWithData(json);
   }, [searchPars]);
 
-  if (isLoading) {
-    <LoadingDots>
-      <h1 className="text-3xl">Loading search results ....</h1>
-    </LoadingDots>;
+  if (isLoading || isFetching) {
+    return (
+      <LoadingDots>
+        <h1>Loading search results ....</h1>
+      </LoadingDots>
+    );
   }
 
   function onValid(formValues) {
@@ -52,9 +54,7 @@ const SearchPage = () => {
     <section>
       <FilterContainer {...{ withData, onValid, resetter }} />
       {data && (
-        <section
-          ref={(node) => node?.scrollIntoView({ behavior: "smooth" })}
-          className="mt-6 grid justify-center gap-8 md:grid-cols-2 lg:grid-cols-3 bg-base-100">
+        <section className="mt-6 grid justify-center gap-8 md:grid-cols-2 lg:grid-cols-3 bg-base-100">
           {data.map((storageData, index) => (
             <StorageView key={index} {...storageData} />
           ))}
