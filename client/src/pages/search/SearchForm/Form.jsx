@@ -8,10 +8,16 @@ import LabeledInput from "@/components/LabeledInput";
 import PincodeFieldset from "./PincodeFieldset";
 import { notifyError } from "@/libs/utils/toast";
 
-const Form = ({ onValid, withData, resetter }) => {
-  const { register, getValues, handleSubmit } = useForm({
+const Form = ({ onValid, withData, setSearchPars }) => {
+  const { register, getValues, handleSubmit, reset } = useForm({
     values: withData,
   });
+
+  const doReset = () => {
+    setSearchPars();
+    setTimeout(reset, 50); //race condition
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onValid, notifyError)}
@@ -117,7 +123,7 @@ const Form = ({ onValid, withData, resetter }) => {
       <fieldset className="flex basis-full justify-between border-t border-gray-200 px-5 py-3 mt-6">
         <button
           type="button"
-          onClick={resetter}
+          onClick={doReset}
           className="btn btn-xs btn-link text-info">
           Reset All
         </button>
