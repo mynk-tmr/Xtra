@@ -30,14 +30,8 @@ const router = express.Router();
 router.post("/login", validationsAtLogin, loginUser);
 
 router.get("/validate-token", verifyToken, async (req, res) => {
-  if (!req.userId) return jsonResponse(res, 401, "unauthorised access");
-  const { email, firstName, lastName } = await User.findById(req.userId);
-  return jsonResponse(res, 200, {
-    userId: req.userId,
-    email,
-    firstName,
-    lastName,
-  });
+  const user = await User.findById(req.userId).select("-password");
+  return jsonResponse(res, 200, user);
 });
 
 router.post("/logout", (req, res) => {

@@ -12,7 +12,6 @@ router.get("/search", async (req, res) => {
     //criteria : {$all : ["Guar..", "Fir.."] } , options: {skip:0, limit:1}
     query.options.skip ??= 0;
     query.options.limit ??= 3;
-    console.log(query);
 
     let count = await Listing.countDocuments(query.criteria);
 

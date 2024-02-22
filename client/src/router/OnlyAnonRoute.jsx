@@ -9,7 +9,7 @@ const OnlyAnonRoute = () => {
   if (isVerifying)
     return (
       <LoadingDots>
-        <h1 className="text-2xl">Verifying please wait ...</h1>
+        <h1 className="text-xl">Verifying please wait ...</h1>
       </LoadingDots>
     );
 

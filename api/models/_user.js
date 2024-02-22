@@ -6,11 +6,22 @@ const requiredString = {
   required: true,
 };
 
+const requiredDate = {
+  type: Date,
+  required: true,
+};
+
+const bookingType = {
+  id: requiredString,
+  createdAt: requiredDate,
+};
+
 const userSchema = new mongoose.Schema({
   email: { ...requiredString, unique: true },
   password: requiredString,
   firstName: requiredString,
   lastName: requiredString,
+  bookings: [bookingType],
 });
 
 //pre hook (before save)  [don't use arrow fn, this must be runtime bound]

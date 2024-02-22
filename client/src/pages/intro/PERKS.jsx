@@ -14,25 +14,21 @@ class Perk {
 
 export default [
   new Perk(<FaceSmileIcon className="text-yellow-400" />, "Convenience", [
-    "Full control over storage space",
-    "Flexible tenure",
-    "Minimal Paperwork",
+    "Rent on your own terms",
+    "Use your own payment options",
     "Diverse storage options",
-    "No brokerage fees from users",
   ]),
   new Perk(
     <ShieldCheckIcon className="text-blue-500" />,
     "Safe and Transparent",
     [
-      "Verified hosts and genuine renters",
-      "No security deposit",
-      "Identity verification for hosts and renters",
-      "Secure payment facilitation",
+      "Both parties are verified by our team",
+      "Renters can contact only upon verified booking",
+      "Constant monitoring of user grievances",
     ]
   ),
   new Perk(<CreditCardIcon className="text-fuchsia-500" />, "Affordable", [
     "Guaranteed lowest price",
-    "More Affordable than other services",
-    "Cover both short & long term storage",
+    "Search storages as per your budget",
   ]),
 ];
