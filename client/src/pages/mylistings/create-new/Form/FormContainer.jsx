@@ -2,7 +2,6 @@ import DetailsSection from "./DetailsSection";
 import FacilitiesSection from "./FacilitiesSection";
 import LocationSection from "./LocationSection";
 import ImageUploadSection from "./ImageUploadSection";
-import useLocalStorage from "@/libs/hooks/useLocalStorage";
 import { useEffect, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { notifyFormError } from "@/libs/utils/toast";
@@ -10,30 +9,20 @@ import { notifyFormError } from "@/libs/utils/toast";
 const FormContainer = ({
   blocker,
   submit,
-  isSuccess,
   withData,
-  enableLocalStorage = true, //store to it only for create-new page
   submitBtnText = "Create New Listing",
 }) => {
-  const [fromLS, storeToLS, removefromLS] = useLocalStorage(
-    enableLocalStorage ? "listingDraft" : ""
-  );
   const formMethods = useForm({
-    values: withData ?? fromLS,
+    values: withData ?? JSON.parse(localStorage.getItem("draft") ?? null),
   });
 
   const { getValues, handleSubmit } = formMethods;
 
-  //on server's ok, clear all
-  useEffect(() => {
-    if (isSuccess) removefromLS();
-  }, [isSuccess, removefromLS]);
-
   //save to local storage before unmount
   useEffect(() => {
-    if (blocker?.state !== "blocked") return;
-    else storeToLS(getValues());
-  }, [blocker?.state, storeToLS, getValues]);
+    if (blocker?.state == "blocked")
+      localStorage.setItem("draft", JSON.stringify(getValues()));
+  }, [blocker?.state, getValues]);
 
   const formRef = useRef(null);
 

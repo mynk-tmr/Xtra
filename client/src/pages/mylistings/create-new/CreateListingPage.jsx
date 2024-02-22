@@ -1,14 +1,16 @@
 import Xtralogo from "@/components/Xtralogo";
 import FormContainer from "./Form/FormContainer";
-import { Navigate, useBlocker } from "react-router-dom";
+import { useBlocker } from "react-router-dom";
 import Blocker from "./Blocker";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import LoadingDots from "@/components/LoadingDots";
 import { notifyError, notifySuccess } from "@/libs/utils/toast";
+import { Navigate } from "react-router-dom";
 
 const CreateListingPage = () => {
   const queryClient = useQueryClient();
+
   const {
     mutate: submitData,
     isLoading,
@@ -18,27 +20,23 @@ const CreateListingPage = () => {
     onSuccess: () => {
       notifySuccess("Your listing is added 😍");
       queryClient.removeQueries({ queryKey: "newlistingLocation" });
+      localStorage.removeItem("draft");
     },
     onError: notifyError,
   });
 
-  const blocker = useBlocker(
-    ({ currentLocation, nextLocation }) =>
-      currentLocation !== nextLocation && !isSuccess
-  );
+  const blocker = useBlocker();
 
-  if (isSuccess) return <Navigate to=".." />;
+  if (isSuccess) {
+    return <Navigate to=".." />;
+  }
 
   return (
     <section className="prose">
       <h1>
         Add your new <Xtralogo /> space
       </h1>
-      <FormContainer
-        blocker={blocker}
-        submit={submitData}
-        isSuccess={isSuccess}
-      />
+      <FormContainer blocker={blocker} submit={submitData} />
       {blocker.state === "blocked" && <Blocker blocker={blocker} />}
       {isLoading && (
         <LoadingDots>
