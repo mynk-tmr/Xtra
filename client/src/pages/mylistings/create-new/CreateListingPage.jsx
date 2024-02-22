@@ -27,7 +27,7 @@ const CreateListingPage = () => {
       currentLocation !== nextLocation && !isSuccess
   );
 
-  if (isSuccess) return <Navigate to="/mylistings" />;
+  if (isSuccess) return <Navigate to=".." />;
 
   return (
     <section className="prose">
