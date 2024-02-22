@@ -41,7 +41,7 @@ const StorageView = ({
 }) => {
   return (
     <figure className="shadow-xl">
-      <article className="relative card bg-success h-96">
+      <article className="relative card h-96">
         <img
           src={imageUrls[0]}
           alt={"Picture of Storage"}

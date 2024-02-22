@@ -1,33 +1,15 @@
 import { test, describe, expect } from "@playwright/test";
 import { logintoWebSite } from "../utils/login";
-import { closeBrowser } from "../utils/browser";
 import path from "path";
+import { fields } from "../utils/field-data";
 
 let page = null;
-
-let fields = {
-  description: "description",
-  entranceWidth: "entranceWidth",
-  entranceHeight: "entranceHeight",
-  storageSpace: "storageSpace",
-  pricePerDay: "pricePerDay",
-  discount: "discount",
-  state: "state",
-  city: "city",
-  pincode: "pincode",
-  locality: "locality",
-  type: "type",
-  facilities: "facilities",
-  listingImages: "listingImages",
-};
 
 test.beforeAll(async ({ browser }) => {
   page = await logintoWebSite(browser);
   await page.getByRole("link", { name: "My Listings" }).click();
   await page.getByRole("link", { name: "Create New" }).click();
 });
-
-test.afterAll(closeBrowser);
 
 const byName = (val) => `[name=${val}]`;
 

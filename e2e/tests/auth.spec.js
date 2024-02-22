@@ -1,6 +1,5 @@
 // @ts-check
 import { expect, test } from "@playwright/test";
-import { closeBrowser } from "../utils/browser";
 
 let page = null;
 
@@ -9,8 +8,6 @@ test.beforeAll(async ({ browser }) => {
   page = await context.newPage();
   await page.goto("http://localhost:3000/");
 });
-
-test.afterAll(closeBrowser);
 
 test("unregistered user cannot login", async () => {
   await page.getByRole("link", { name: "Sign In", exact: true }).click();
@@ -21,8 +18,8 @@ test("unregistered user cannot login", async () => {
 });
 
 test("registerd user can login", async () => {
-  await page.locator("[name=email]").fill("play1@test.com");
-  await page.locator("[name=password]").fill("play123");
+  await page.locator("[name=email]").fill("kiran@123.com");
+  await page.locator("[name=password]").fill("kiran123");
   await page.getByRole("button", { name: "Sign In" }).click();
   await expect(page.getByText(/signed in/i)).toHaveCount(1);
   await page.getByRole("link", { name: "Profile", exact: true }).click();
