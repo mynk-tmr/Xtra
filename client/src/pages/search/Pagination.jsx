@@ -1,12 +1,24 @@
-const Pagination = () => {
+import { ArrowLeftCircleIcon } from "@heroicons/react/16/solid";
+import { Link } from "react-router-dom";
+
+const CustomLink = ({ to, children }) =>
+  to ? <Link to={to}>{children}</Link> : null;
+
+const Pagination = ({ links }) => {
   return (
-    <nav className="join">
-      <button className="join-item btn">1</button>
-      <button className="join-item btn">2</button>
-      <button className="join-item btn btn-disabled">...</button>
-      <button className="join-item btn">99</button>
-      <button className="join-item btn">100</button>
-    </nav>
+    <section className="flex justify-center adjust-icons">
+      <nav className="join *:join-item *:btn *:btn-sm gap-1 *:btn-info mt-8">
+        <CustomLink to={links.first}>1</CustomLink>
+        <CustomLink to={links.prev}>
+          <ArrowLeftCircleIcon className="size-5" />
+        </CustomLink>
+        <CustomLink className="btn-disabled">...</CustomLink>
+        <CustomLink to={links.next}>
+          <ArrowLeftCircleIcon className="size-5 rotate-180" />
+        </CustomLink>
+        <CustomLink to={links.last}>last</CustomLink>
+      </nav>
+    </section>
   );
 };
 

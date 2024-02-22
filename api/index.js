@@ -19,6 +19,7 @@ app.use(
   cors({
     origin: process.env.CLIENT_URL, //only allow this url
     credentials: true,
+    exposedHeaders: ["link"],
   })
 );
 app.use(cookieParser());

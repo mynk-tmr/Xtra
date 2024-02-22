@@ -8,14 +8,20 @@ import LabeledInput from "@/components/LabeledInput";
 import PincodeFieldset from "./PincodeFieldset";
 import { notifyError } from "@/libs/utils/toast";
 
-const Form = ({ onValid, withData, setSearchPars }) => {
-  const { register, getValues, handleSubmit, reset } = useForm({
+const Form = ({ onValid, withData }) => {
+  const { register, getValues, setValue, handleSubmit } = useForm({
     values: withData,
+    defaultValues: {
+      [fields.starRating]: 1,
+    },
   });
 
+  //reset() doesn't work for 'controlled' values, so manually have to set
   const doReset = () => {
-    setSearchPars();
-    setTimeout(reset, 50); //race condition
+    for (let key in fields) {
+      setValue(fields[key], "");
+    }
+    setValue(fields.starRating, 1);
   };
 
   return (
@@ -25,7 +31,7 @@ const Form = ({ onValid, withData, setSearchPars }) => {
       flex flex-wrap *:grow p-2 *:m-4
       [&_legend]:bg-blue-100 [&_legend]:w-full [&_legend]:p-1 [&_legend]:mb-1
       `}>
-      <PincodeFieldset {...{ register, getValues, fields }} />
+      <PincodeFieldset {...{ register, getValues, setValue, fields }} />
 
       <fieldset>
         <legend className="text-xs font-medium">Price Range (per day)</legend>
@@ -78,7 +84,6 @@ const Form = ({ onValid, withData, setSearchPars }) => {
           min={1}
           max={5}
           step={1}
-          defaultValue={1}
           {...register(fields.starRating)}
         />
         <span className="flex justify-between mx-1 *:text-sm">

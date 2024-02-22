@@ -4,11 +4,12 @@ import { useQuery } from "react-query";
 import { getLocationDetails } from "@/libs/utils/getLocationDetails";
 import { notifyError } from "@/libs/utils/toast";
 
-const PincodeFieldSet = ({ register, getValues, fields }) => {
+const PincodeFieldSet = ({ register, setValue, getValues, fields }) => {
   const { data, isLoading, refetch, isError } = useQuery({
     queryFn: () => getLocationDetails(getValues("pincode")),
     onError: () => {
       notifyError("Pincode is invalid");
+      setValue(fields.locality, 0);
     },
     enabled: false,
   });

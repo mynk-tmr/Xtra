@@ -6,6 +6,8 @@ import StorageView from "@/components/StorageView";
 import FilterContainer from "./FilterContainer";
 import { useSearchParams } from "react-router-dom";
 import { fromEntriesv2 } from "@/libs/utils/convertors";
+import Pagination from "./Pagination";
+import { useEffect } from "react";
 
 const SearchPage = () => {
   const [searchPars, setSearchPars] = useSearchParams();
@@ -13,11 +15,12 @@ const SearchPage = () => {
     queryKey: "searchedListings",
     staleTime: 5 * 60 * 1000,
     queryFn: async () => await apiClient.searchListings(searchPars),
-    onError: (err) => {
-      notifyError(err);
-      setSearchPars();
-    },
+    onError: notifyError,
   });
+
+  useEffect(() => {
+    refetch();
+  }, [searchPars, refetch]);
 
   if (isLoading || isFetching) {
     return (
@@ -34,17 +37,18 @@ const SearchPage = () => {
       />
       {data && (
         <section className="mt-6 grid justify-center gap-8 md:grid-cols-2 lg:grid-cols-3 bg-base-100">
-          {data.map((storageData, index) => (
+          {data.message.map((storageData, index) => (
             <StorageView key={index} {...storageData} />
           ))}
         </section>
       )}
-      {!data?.length && isSuccess && (
+      {data && !data.message.length && isSuccess && (
         <section className="m-6 text-xl">
           There seems to be no listing that match your criteria. Try with
           different filters..😅
         </section>
       )}
+      {data?.links && <Pagination links={data.links} />}
     </section>
   );
 };

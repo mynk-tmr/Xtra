@@ -1,13 +1,12 @@
 import { Bars3Icon } from "@heroicons/react/16/solid";
 import Searchform from "./SearchForm/Form";
 
-const FilterContainer = ({ refetch, withData, setSearchPars }) => {
+const FilterContainer = ({ withData, setSearchPars }) => {
   function onValid(formValues) {
     for (let key in formValues) {
       if (!formValues[key]) delete formValues[key];
     }
     setSearchPars(formValues); //handles obj to q-param
-    setTimeout(refetch, 0);
   }
 
   return (
@@ -19,7 +18,7 @@ const FilterContainer = ({ refetch, withData, setSearchPars }) => {
           <span className="text-sm font-bold"> Toggle Search Filters</span>
           <Bars3Icon className="size-5" />
         </summary>
-        <Searchform {...{ onValid, withData, setSearchPars }} />
+        <Searchform {...{ onValid, withData }} />
       </details>
     </nav>
   );

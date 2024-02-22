@@ -71,6 +71,28 @@ export async function destroy(endpoint) {
 }
 
 export async function searchListings(searchParams) {
-  let q = searchParams;
-  return await get(`listings/search?${q}`);
+  let URLSEARCH = `${BASEURL}/api/listings/search`;
+
+  let response = await fetchHandler(() =>
+    fetch(`${URLSEARCH}?${searchParams}`)
+  );
+
+  let links = response.headers.get("Link");
+  let { message } = await response.json();
+
+  if (links) {
+    links = links.split(",").map((link) => link.split(";"));
+    links = links.reduce(
+      (acc, [link, rel]) => ({
+        ...acc,
+        [rel.slice(6, -1)]: link.replace(/[<>]/g, "").trim(),
+      }),
+      {}
+    );
+  }
+
+  return {
+    message,
+    links,
+  };
 }
