@@ -9,10 +9,7 @@ import mylistingRoutes from "./routers/_myListings.js";
 import listingRoutes from "./routers/_listings.js";
 
 await mongoose.connect(process.env.MONGODB_URI);
-console.log(
-  "Connected to database",
-  process.env.MONGODB_URI.includes("cluster0") ? "e2e-test" : "production"
-);
+console.log("Connected to database");
 
 const app = express();
 app.use(

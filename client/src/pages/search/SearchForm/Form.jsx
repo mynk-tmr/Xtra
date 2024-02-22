@@ -11,9 +11,6 @@ import { notifyError } from "@/libs/utils/toast";
 const Form = ({ onValid, withData }) => {
   const { register, getValues, setValue, handleSubmit } = useForm({
     values: withData,
-    defaultValues: {
-      [fields.starRating]: 1,
-    },
   });
 
   //reset() doesn't work for 'controlled' values, so manually have to set
@@ -84,6 +81,7 @@ const Form = ({ onValid, withData }) => {
           min={1}
           max={5}
           step={1}
+          defaultValue={1}
           {...register(fields.starRating)}
         />
         <span className="flex justify-between mx-1 *:text-sm">

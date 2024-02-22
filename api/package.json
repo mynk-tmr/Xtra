@@ -3,9 +3,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "e2e": "nodemon",
     "start": "node index.js",
-    "e2e": "cross-env DOTENV_CONFIG_PATH=.env.e2e nodemon",
     "lint": "eslint . --ext js"
   },
   "dependencies": {
