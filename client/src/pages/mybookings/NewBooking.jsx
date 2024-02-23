@@ -13,10 +13,17 @@ const MenuBtns = ({ confirm }) => (
 );
 
 const Carousel = ({ urls }) => (
-  <section className="grid md:grid-cols-2 grow">
+  <section className="carousel carousel-center aspect-video max-w-3xl rounded-lg">
     {urls.map((url, i) => (
-      <div key={i}>
-        <img src={url} alt={"Storage Image " + i} />
+      //m-10 gives it a snappy feel
+      <div key={i} className="mx-10 carousel-item w-full relative bg-black/80">
+        <span className="absolute top-0 m-2 *:bg-primary">
+          <b className="btn btn-circle">{i + 1}</b>
+          <b className="p-1 opacity-70">
+            {urls[i + 1] ? "Swipe to see More" : "End.."}
+          </b>
+        </span>
+        <img src={url} className="mx-auto" alt={"Storage Image " + i + 1} />
       </div>
     ))}
   </section>
@@ -24,8 +31,8 @@ const Carousel = ({ urls }) => (
 
 const NewBooking = ({ storageData, confirm }) => {
   return (
-    <section className="flex gap-4 flex-wrap md:flex-nowrap adjusticons gap-y-12 [&_svg]:size-4">
-      <article className="md:w-2/3">
+    <section className="flex gap-4 flex-wrap md:flex-nowrap adjusticons gap-y-12 [&_svg]:size-4 justify-center">
+      <article className="min-w-96">
         <StorageView {...storageData} />
         <MenuBtns confirm={confirm} />
       </article>

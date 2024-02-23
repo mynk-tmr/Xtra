@@ -1,23 +1,41 @@
 import usePageTitle from "@/libs/hooks/usePageTitle";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useOutletContext } from "react-router-dom";
 import NewBooking from "./NewBooking";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import { notifyError } from "@/libs/utils/toast";
 import LoadingDots from "@/components/LoadingDots";
 import { HeartIcon } from "@heroicons/react/16/solid";
 
-const AddBookingPage = ({ storageData }) => {
+const AddBookingPage = () => {
   usePageTitle("Xtra | Add Booking");
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { storageData, bookings } = useOutletContext();
+
+  const qclient = useQueryClient();
+  const {
+    mutate,
+    isLoading: isConfirming,
+    isSuccess,
+  } = useMutation({
     mutationFn: () => {
       const data = { assetId: storageData._id };
       return apiClient.post({ data, endpoint: "my-bookings/add" });
     },
     onError: notifyError,
+    onSuccess: () => {
+      qclient.removeQueries("mybookings");
+    },
   });
 
-  if (isLoading) {
+  if (!storageData) {
+    return <Navigate to="/mybookings" replace />;
+  }
+
+  if (bookings.some((booking) => booking._id === storageData._id)) {
+    return <Navigate to="/mybookings" replace />;
+  }
+
+  if (isConfirming) {
     return (
       <LoadingDots>
         <h1>Requesting Booking ....</h1>

@@ -2,7 +2,7 @@ import Xtralogo from "@/components/Xtralogo";
 import FormContainer from "./Form/FormContainer";
 import { useBlocker } from "react-router-dom";
 import Blocker from "./Blocker";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import LoadingDots from "@/components/LoadingDots";
 import { notifyError, notifySuccess } from "@/libs/utils/toast";

@@ -1,5 +1,5 @@
 import usePageTitle from "@/libs/hooks/usePageTitle";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import * as apiClient from "@/libs/utils/apiClient";
 import LoadingDots from "@/components/LoadingDots";
@@ -17,7 +17,7 @@ const EditListingPage = () => {
     isLoading: isGettingInfo,
     isError: isGettingError,
   } = useQuery({
-    queryKey: `listing_${assetId}`,
+    queryKey: ["mylisting", assetId],
     queryFn: () => apiClient.get(`my-listings/${assetId}`),
     enabled: Boolean(assetId),
     onError: notifyError,

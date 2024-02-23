@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { notifyError } from "@/libs/utils/toast";
 import LoadingDots from "@/components/LoadingDots";
 import * as apiClient from "@/libs/utils/apiClient";
@@ -17,7 +17,7 @@ const SearchPage = () => {
   const [searchPars, setSearchPars] = useSearchParams();
   const { user } = useAppContext();
   const { data, isLoading, isSuccess, refetch } = useQuery({
-    queryKey: "searchedListings",
+    queryKey: ["searchResults"],
     staleTime: 5 * 60 * 1000,
     queryFn: async () => await apiClient.searchListings(searchPars),
     onError: notifyError,
@@ -40,22 +40,24 @@ const SearchPage = () => {
       <FilterContainer
         {...{ refetch, withData: fromEntriesv2(searchPars), setSearchPars }}
       />
-      {data && (
-        <section className="mt-6 grid items-start justify-center gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {data.message.map((storageData, index) => (
-            <article key={index} className="relative group">
-              <StorageView {...storageData} />
-              <FloatingBookingBtn {...{ storageData, user }} />
-            </article>
-          ))}
-        </section>
-      )}
-      {data && !data.message.length && isSuccess && (
-        <section className="m-6 text-xl">
-          There seems to be no listing that match your criteria. Try with
-          different filters..😅
-        </section>
-      )}
+      <section ref={(node) => node?.scrollIntoView({ behavior: "smooth" })}>
+        {data && (
+          <section className="mt-6 grid items-start justify-center gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {data.message.map((storageData, index) => (
+              <article key={index} className="relative group">
+                <StorageView {...storageData} />
+                <FloatingBookingBtn {...{ storageData, user }} />
+              </article>
+            ))}
+          </section>
+        )}
+        {data && !data.message.length && isSuccess && (
+          <section className="m-6 text-xl">
+            There seems to be no listing that match your criteria. Try with
+            different filters..😅
+          </section>
+        )}
+      </section>
       {data?.links && <Pagination links={data.links} />}
     </section>
   );

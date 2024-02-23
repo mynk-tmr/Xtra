@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import * as apiClient from "@/libs/utils/apiClient";
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
@@ -9,7 +9,7 @@ import FetchError from "@/components/FetchError";
 
 const DisplayListings = () => {
   const { data, refetch, isLoading, isError } = useQuery({
-    queryKey: "my-listings",
+    queryKey: ["mylistings"],
     queryFn: () => apiClient.get("my-listings"),
     onError: notifyError,
   });

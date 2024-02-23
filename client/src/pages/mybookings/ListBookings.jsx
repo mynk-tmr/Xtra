@@ -1,28 +1,13 @@
 import usePageTitle from "@/libs/hooks/usePageTitle";
-import { useQuery } from "react-query";
-import * as apiClient from "@/libs/utils/apiClient";
-import { notifyError } from "@/libs/utils/toast";
-import LoadingDots from "@/components/LoadingDots";
 import StorageView from "@/components/StorageView";
 import { XCircleIcon } from "@heroicons/react/16/solid";
+import { useOutletContext } from "react-router-dom";
 
 const ListBookings = () => {
   usePageTitle("Xtra | My Bookings");
-  const { data, isLoading } = useQuery({
-    queryKey: "mybookings",
-    queryFn: () => apiClient.get("my-bookings"),
-    onError: notifyError,
-  });
+  const { bookings } = useOutletContext();
 
-  if (isLoading) {
-    return (
-      <LoadingDots>
-        <h1>Getting Bookings ...</h1>
-      </LoadingDots>
-    );
-  }
-
-  if (!data || !data.length)
+  if (!bookings || !bookings.length)
     return (
       <section className="grid place-items-center gap-8">
         <h1 className="text-xl">You do not have any Bookings ...</h1>
@@ -41,7 +26,7 @@ const ListBookings = () => {
         </h1>
       </header>
       <section className="grid justify-center gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {data.map((storageData, index) => (
+        {bookings.map((storageData, index) => (
           <StorageView key={index} {...storageData} />
         ))}
       </section>

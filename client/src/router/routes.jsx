@@ -19,6 +19,8 @@ import EditListingPage from "@/pages/mylistings/EditListingPage";
 import OnlyAnonRoute from "./OnlyAnonRoute";
 import SearchPage from "@/pages/search";
 import BookingsPage from "@/pages/mybookings";
+import ListBookings from "@/pages/mybookings/ListBookings";
+import AddBookingPage from "@/pages/mybookings/AddBookingPage";
 
 export default function Router() {
   const router = createBrowserRouter(
@@ -39,7 +41,10 @@ export default function Router() {
             <Route path="create-new" Component={CreateListingPage} />
             <Route path="edit/:assetId" Component={EditListingPage} />
           </Route>
-          <Route path="mybookings" Component={BookingsPage} />
+          <Route path="mybookings" Component={BookingsPage}>
+            <Route index Component={ListBookings} />
+            <Route path="add" Component={AddBookingPage} />
+          </Route>
         </Route>
         <Route path="*" Component={NotFound} />
       </Route>

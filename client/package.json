@@ -13,15 +13,16 @@
     "@fontsource-variable/azeret-mono": "^5.0.19",
     "@fontsource/lato": "^5.0.18",
     "@heroicons/react": "^2.1.1",
+    "@tanstack/react-query": "^5.22.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
-    "react-query": "^3.39.3",
     "react-router-dom": "^6.22.0",
     "react-toastify": "^10.0.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@tanstack/react-query-devtools": "^5.24.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",

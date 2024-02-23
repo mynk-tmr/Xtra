@@ -30,7 +30,7 @@ router.post("/add", verifyToken, async (req, res) => {
     };
     user.bookings.push(newBooking);
     await user.save();
-    return jsonResponse(res, 201);
+    return jsonResponse(res, 201, newBooking);
   } catch (err) {
     handleInternalError(res, err);
   }

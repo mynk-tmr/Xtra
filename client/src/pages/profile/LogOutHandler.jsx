@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import * as apiClient from "@/libs/utils/apiClient";
 import { toast } from "react-toastify";
 import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";

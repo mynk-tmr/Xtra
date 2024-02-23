@@ -1,6 +1,6 @@
 import { getLocationDetails } from "@/libs/utils/getLocationDetails";
 import { useFormContext } from "react-hook-form";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import Fieldset from "@/components/Fieldset";
 import LabeledInput from "@/components/LabeledInput";
 import { createLisitingFields as fields } from "@/config/listingFields";
@@ -10,12 +10,11 @@ import { notifyError, notifySuccess } from "@/libs/utils/toast";
 const LocationSection = () => {
   const { register, getValues, setValue } = useFormContext();
   const { isLoading, data, refetch } = useQuery({
-    queryKey: "newlistingLocation",
+    queryKey: ["pincode"],
     queryFn: async () => {
       let pincode = getValues(fields.pincode);
       return await getLocationDetails(pincode);
     },
-    refetchOnWindowFocus: false,
     enabled: false,
     onSuccess: function (data) {
       notifySuccess("Pincode changed !");

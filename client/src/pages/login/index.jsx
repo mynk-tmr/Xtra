@@ -1,6 +1,6 @@
 import Xtralogo from "@/components/Xtralogo";
 import { Outlet } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import * as apiClient from "@/libs/utils/apiClient";
 import { notifyError, notifySuccess } from "@/libs/utils/toast";
