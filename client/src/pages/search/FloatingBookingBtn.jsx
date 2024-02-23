@@ -20,8 +20,7 @@ const FloatingBookingBtn = ({ storageData, user }) => (
         <Link
           to="/mybookings/add"
           className="cursor-pointer btn btn-error !px-5"
-          state={{ storageData }}
-          replace>
+          state={{ storageData }}>
           Book <HeartIcon className="size-4 inline animate-bounce" />
         </Link>
       );
