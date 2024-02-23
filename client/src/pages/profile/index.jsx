@@ -3,21 +3,10 @@ import LogOutHandler from "./LogOutHandler";
 import { useAppContext } from "@/contexts/AppContext";
 import { EnvelopeIcon } from "@heroicons/react/16/solid";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
-import LoadingDots from "@/components/LoadingDots";
 
 const ProfilePage = () => {
   usePageTitle("Xtra | My Profile");
   const { user } = useAppContext();
-  const [loading, setLoading] = useState(false);
-
-  if (loading) {
-    return (
-      <LoadingDots>
-        <h1 className="text-xl">Logging you out please wait ...</h1>
-      </LoadingDots>
-    );
-  }
 
   return (
     <section className="grid justify-center">
@@ -28,7 +17,7 @@ const ProfilePage = () => {
         <code>
           <EnvelopeIcon className="size-7" /> {user.email}
         </code>
-        <LogOutHandler handleLoading={() => setLoading(true)} />
+        <LogOutHandler />
       </article>
     </section>
   );

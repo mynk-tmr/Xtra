@@ -3,9 +3,9 @@ import * as apiClient from "@/libs/utils/apiClient";
 import { toast } from "react-toastify";
 import { useAppContext } from "@/contexts/AppContext";
 
-const LogOutHandler = ({ handleLoading }) => {
+const LogOutHandler = () => {
   const { verifyUser } = useAppContext();
-  const { mutate: logOut, isLoading } = useMutation({
+  const { mutate: logOut, status } = useMutation({
     mutationFn: () => apiClient.post({ endpoint: "authorize/logout" }),
     onSuccess: function () {
       toast.success("Signed Out !");
@@ -16,10 +16,11 @@ const LogOutHandler = ({ handleLoading }) => {
     },
   });
 
-  if (isLoading) handleLoading();
-
   return (
-    <button onClick={logOut} className="btn btn-warning">
+    <button
+      disabled={status === "pending"}
+      onClick={logOut}
+      className="btn btn-warning">
       Logout
     </button>
   );

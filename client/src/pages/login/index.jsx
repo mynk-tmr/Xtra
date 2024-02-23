@@ -14,7 +14,7 @@ const LoginPage = () => {
 
   const { verifyUser } = useAppContext();
 
-  const { mutate: submitUserInfo, isLoading } = useMutation({
+  const { mutate: submitUserInfo, status } = useMutation({
     mutationFn: apiClient.post,
     onSuccess: async function () {
       notifySuccess("You are signed in! 😎");
@@ -23,10 +23,10 @@ const LoginPage = () => {
     onError: notifyError,
   });
 
-  if (isLoading) {
+  if (status == "pending") {
     return (
       <LoadingDots>
-        <h4>Registering your Account. Please wait ....</h4>
+        <h4>Please wait ....</h4>
       </LoadingDots>
     );
   }
@@ -36,7 +36,7 @@ const LoginPage = () => {
       <h1>
         Step into the <Xtralogo className="text-5xl" /> Zone
       </h1>
-      <Outlet context={{ onError, submitUserInfo, isLoading }} />
+      <Outlet context={{ onError, submitUserInfo }} />
     </section>
   );
 };
