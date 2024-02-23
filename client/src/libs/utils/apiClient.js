@@ -19,7 +19,7 @@ async function fetchHandler(callback) {
 }
 
 export async function post({ data, endpoint }) {
-  return await fetchHandler(() =>
+  let response = await fetchHandler(() =>
     fetch(`${BASEURL}/api/${endpoint}`, {
       method: "POST",
       credentials: "include", //include cookies (jwt) in request
@@ -29,6 +29,12 @@ export async function post({ data, endpoint }) {
       body: JSON.stringify(data),
     })
   );
+  try {
+    const { message } = await response.json();
+    return message;
+  } catch (e) {
+    return "SUCCESS";
+  }
 }
 
 export async function postListing(formData) {

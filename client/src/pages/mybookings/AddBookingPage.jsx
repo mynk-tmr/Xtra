@@ -12,18 +12,19 @@ const AddBookingPage = () => {
   const { storageData, bookings } = useOutletContext();
 
   const qclient = useQueryClient();
-  const {
-    mutate,
-    isLoading: isConfirming,
-    isSuccess,
-  } = useMutation({
+
+  const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: () => {
       const data = { assetId: storageData._id };
       return apiClient.post({ data, endpoint: "my-bookings/add" });
     },
     onError: notifyError,
-    onSuccess: () => {
-      qclient.removeQueries("mybookings");
+    onSuccess: async (newbooking) => {
+      qclient.removeQueries({ queryKey: ["mybookings"] });
+      window.history.replaceState({}, "");
+      qclient.setQueryData(["user"], (user) => {
+        return { ...user, bookings: [...user.bookings, newbooking] };
+      });
     },
   });
 
@@ -35,7 +36,7 @@ const AddBookingPage = () => {
     return <Navigate to="/mybookings" replace />;
   }
 
-  if (isConfirming) {
+  if (isLoading) {
     return (
       <LoadingDots>
         <h1>Requesting Booking ....</h1>
