@@ -35,7 +35,7 @@ export default function Router() {
         <Route Component={AuthRequired}>
           <Route path="profile" Component={ProfilePage} />
           <Route path="mylistings" Component={MyListingsLayout}>
-            <Route Component={DisplayListings} />
+            <Route index Component={DisplayListings} />
             <Route path="create-new" Component={CreateListingPage} />
             <Route path="edit/:assetId" Component={EditListingPage} />
           </Route>

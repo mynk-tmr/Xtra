@@ -13,9 +13,9 @@ const MenuBtns = ({ confirm }) => (
 );
 
 const Carousel = ({ urls }) => (
-  <section className="carousel carousel-center max-h-screen rounded-box">
+  <section className="grid md:grid-cols-2 grow">
     {urls.map((url, i) => (
-      <div key={i} className="carousel-item w-full ">
+      <div key={i}>
         <img src={url} alt={"Storage Image " + i} />
       </div>
     ))}
@@ -24,17 +24,12 @@ const Carousel = ({ urls }) => (
 
 const NewBooking = ({ storageData, confirm }) => {
   return (
-    <section className="grid adjusticons gap-y-12 [&_svg]:size-4">
-      <article className="max-w-xl">
+    <section className="flex gap-4 flex-wrap md:flex-nowrap adjusticons gap-y-12 [&_svg]:size-4">
+      <article className="md:w-2/3">
         <StorageView {...storageData} />
         <MenuBtns confirm={confirm} />
       </article>
-      <article className="justify-self-center">
-        <h1 className="mb-6 font-semibold text-info text-center">
-          Swipe to see more images
-        </h1>
-        <Carousel urls={storageData.imageUrls.reverse()} />
-      </article>
+      <Carousel urls={storageData.imageUrls.reverse()} />
     </section>
   );
 };

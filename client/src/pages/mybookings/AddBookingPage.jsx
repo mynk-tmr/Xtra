@@ -35,7 +35,7 @@ const AddBookingPage = ({ storageData }) => {
             Our Team will Contact you shortly.
           </p>
           <Link
-            to=".."
+            to="/mybookings"
             className="btn btn-link text-info animate-pulse text-xl">
             See your bookings
           </Link>

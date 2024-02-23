@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
-    const list = user.bookings.map(({ id }) => id);
+    const list = user.bookings.map(({ assetId }) => assetId);
     const bookings = await Listing.find({ _id: { $in: list } });
     return jsonResponse(res, 200, bookings);
   } catch (err) {
@@ -25,7 +25,7 @@ router.post("/add", verifyToken, async (req, res) => {
       //user can't book their own listing
       return jsonResponse(res, 400, "Bad request");
     const newBooking = {
-      id: req.body.assetId,
+      assetId: req.body.assetId,
       createdAt: Date.now(),
     };
     user.bookings.push(newBooking);

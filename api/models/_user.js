@@ -6,18 +6,23 @@ const requiredString = {
   required: true,
 };
 
+const uniqueString = {
+  ...requiredString,
+  unique: true,
+};
+
 const requiredDate = {
   type: Date,
   required: true,
 };
 
 const bookingType = {
-  id: requiredString,
+  assetId: uniqueString,
   createdAt: requiredDate,
 };
 
 const userSchema = new mongoose.Schema({
-  email: { ...requiredString, unique: true },
+  email: uniqueString,
   password: requiredString,
   firstName: requiredString,
   lastName: requiredString,
