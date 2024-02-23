@@ -1,20 +1,12 @@
 import { useLocation } from "react-router-dom";
 import { useAppContext } from "@/contexts/AppContext";
 import { Navigate, Outlet } from "react-router-dom";
-import LoadingDots from "@/components/LoadingDots";
 
 const OnlyAnonRoute = () => {
   const { state } = useLocation(); //the state pushed by AuthRequired
-  const { isLoggedIn, isVerifying } = useAppContext();
-  if (isVerifying)
-    return (
-      <LoadingDots>
-        <h1 className="text-xl">Verifying please wait ...</h1>
-      </LoadingDots>
-    );
-
+  const { isLoggedIn } = useAppContext();
   if (isLoggedIn) {
-    return <Navigate to={state?.to ?? "/"} replace />;
+    return <Navigate to={state?.to ?? "/"} state={state} replace />;
   }
   return <Outlet />;
 };

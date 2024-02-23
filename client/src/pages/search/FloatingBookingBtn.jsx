@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const FloatingBookingBtn = ({ storageData, user }) => (
   <div className="*:p-1 z-10 m-1 opacity-0 group-hover:opacity-100 transition-opacity absolute top-0">
     {(() => {
-      if (storageData.userId == user._id)
+      if (storageData.userId == user?._id)
         return (
           <span className="bg-accent">
             {user.firstName} <HeartIcon className="size-4 inline" />

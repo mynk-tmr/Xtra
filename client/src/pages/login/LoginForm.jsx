@@ -4,19 +4,12 @@ import { loginFields } from "@/config/formFields";
 import Fieldset from "@/components/Fieldset";
 import usePageTitle from "@/libs/hooks/usePageTitle";
 import LabeledInput from "@/components/LabeledInput";
-import LoadingDots from "@/components/LoadingDots";
 
 const LoginForm = () => {
   usePageTitle("Xtra | Login");
   const { register, handleSubmit } = useForm();
-  const { submitUserInfo, onError, isLoading } = useOutletContext();
-  if (isLoading) {
-    return (
-      <LoadingDots>
-        <h4>Logging in please wait ....</h4>
-      </LoadingDots>
-    );
-  }
+  const { submitUserInfo, onError } = useOutletContext();
+
   return (
     <form
       onSubmit={handleSubmit(

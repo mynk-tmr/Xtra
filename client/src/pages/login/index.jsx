@@ -1,9 +1,10 @@
 import Xtralogo from "@/components/Xtralogo";
 import { Outlet } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import useTokenInvalidator from "@/libs/hooks/useTokenInvalidator";
 import * as apiClient from "@/libs/utils/apiClient";
 import { notifyError, notifySuccess } from "@/libs/utils/toast";
+import LoadingDots from "@/components/LoadingDots";
+import { useAppContext } from "@/contexts/AppContext";
 
 const LoginPage = () => {
   //here we define handlers that our forms can use from outletcontext
@@ -11,16 +12,24 @@ const LoginPage = () => {
     notifyError(errors[0]);
   };
 
-  const invalidator = useTokenInvalidator();
+  const { verifyUser } = useAppContext();
 
   const { mutate: submitUserInfo, isLoading } = useMutation({
     mutationFn: apiClient.post,
     onSuccess: async function () {
       notifySuccess("You are signed in! 😎");
-      await invalidator();
+      verifyUser();
     },
     onError: notifyError,
   });
+
+  if (isLoading) {
+    return (
+      <LoadingDots>
+        <h4>Registering your Account. Please wait ....</h4>
+      </LoadingDots>
+    );
+  }
 
   return (
     <section className="prose mx-auto">

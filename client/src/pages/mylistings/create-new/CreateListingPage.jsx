@@ -25,7 +25,7 @@ const CreateListingPage = () => {
     onError: notifyError,
   });
 
-  const blocker = useBlocker();
+  const blocker = useBlocker(() => !isSuccess);
 
   if (isSuccess) {
     return <Navigate to=".." />;

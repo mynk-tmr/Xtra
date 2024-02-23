@@ -6,10 +6,12 @@ import * as apiClient from "@/libs/utils/apiClient";
 import { notifyError } from "@/libs/utils/toast";
 import LoadingDots from "@/components/LoadingDots";
 import { HeartIcon } from "@heroicons/react/16/solid";
+import { useAppContext } from "@/contexts/AppContext";
 
 const AddBookingPage = () => {
   usePageTitle("Xtra | Add Booking");
   const { storageData, bookings } = useOutletContext();
+  const { user } = useAppContext();
 
   const qclient = useQueryClient();
 
@@ -28,11 +30,13 @@ const AddBookingPage = () => {
     },
   });
 
-  if (!storageData) {
-    return <Navigate to="/mybookings" replace />;
-  }
-
-  if (bookings.some((booking) => booking._id === storageData._id)) {
+  if (
+    !storageData ||
+    //already booked
+    bookings.some((booking) => booking._id === storageData._id) ||
+    //user is himself owner
+    user._id === storageData.userId
+  ) {
     return <Navigate to="/mybookings" replace />;
   }
 
