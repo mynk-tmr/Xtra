@@ -17,9 +17,6 @@ export const HeroSection = () => {
         our team to be <b>safe</b>, <b>affordable</b> and <b>convenient</b>
       </p>
       <div className="flex gap-x-6 prose-a:no-underline prose-a:font-bold">
-        <Link to="/home" className="btn btn-primary">
-          Browse Storage
-        </Link>
         <Link
           to={isLoggedIn ? "/profile" : "/login"}
           className="btn btn-secondary">

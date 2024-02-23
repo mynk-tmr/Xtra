@@ -9,7 +9,7 @@ import {
 export default {
   anon: [
     ["login", "Sign In", KeyIcon],
-    ["search", "Search", MapIcon],
+    ["search?starRating%3Agte=1&offset=0", "Search", MapIcon],
   ],
   loggedin: [
     ["search?starRating%3Agte=1&offset=0", "Search", MapIcon],
