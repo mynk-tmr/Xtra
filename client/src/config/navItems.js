@@ -12,7 +12,7 @@ export default {
     ["search", "Search", MapIcon],
   ],
   loggedin: [
-    ["search", "Search", MapIcon],
+    ["search?starRating%3Agte=1&offset=0", "Search", MapIcon],
     ["profile", "Profile", UserCircleIcon],
     ["mylistings", "My Listings", BuildingOfficeIcon],
     ["mybookings", "My Bookings", HeartIcon],

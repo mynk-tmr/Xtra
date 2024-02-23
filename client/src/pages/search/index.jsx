@@ -4,16 +4,18 @@ import LoadingDots from "@/components/LoadingDots";
 import * as apiClient from "@/libs/utils/apiClient";
 import StorageView from "@/components/StorageView";
 import FilterContainer from "./FilterContainer";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { fromEntriesv2 } from "@/libs/utils/convertors";
 import Pagination from "./Pagination";
 import { useEffect } from "react";
-import { HeartIcon } from "@heroicons/react/16/solid";
 import usePageTitle from "@/libs/hooks/usePageTitle";
+import { useAppContext } from "@/contexts/AppContext";
+import FloatingBookingBtn from "./FloatingBookingBtn";
 
 const SearchPage = () => {
   usePageTitle("Xtra | Search");
   const [searchPars, setSearchPars] = useSearchParams();
+  const { user } = useAppContext();
   const { data, isLoading, isSuccess, refetch } = useQuery({
     queryKey: "searchedListings",
     staleTime: 5 * 60 * 1000,
@@ -43,12 +45,7 @@ const SearchPage = () => {
           {data.message.map((storageData, index) => (
             <article key={index} className="relative group">
               <StorageView {...storageData} />
-              <Link
-                to="/mybookings"
-                state={{ storageData }}
-                className="bg-success p-1 cursor-pointer z-50 m-1 opacity-0 group-hover:opacity-100 transition-opacity absolute top-0">
-                Book <HeartIcon className="size-4 inline" />
-              </Link>
+              <FloatingBookingBtn {...{ storageData, user }} />
             </article>
           ))}
         </section>

@@ -21,7 +21,9 @@ router.post("/add", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
     const listing = await Listing.findById(req.body.assetId);
-    if (!user || !listing) return jsonResponse(res, 400, "Bad request");
+    if (!user || !listing || listing.userId == req.userId)
+      //user can't book their own listing
+      return jsonResponse(res, 400, "Bad request");
     const newBooking = {
       id: req.body.assetId,
       createdAt: Date.now(),
