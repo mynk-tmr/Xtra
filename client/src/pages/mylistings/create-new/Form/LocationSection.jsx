@@ -9,7 +9,7 @@ import { notifyError, notifySuccess } from "@/libs/utils/toast";
 
 const LocationSection = () => {
   const { register, getValues, setValue } = useFormContext();
-  const { isLoading, data, refetch } = useQuery({
+  const { isFetching, data, refetch } = useQuery({
     queryKey: ["pincode"],
     queryFn: async () => {
       let pincode = getValues(fields.pincode);
@@ -31,7 +31,7 @@ const LocationSection = () => {
   });
 
   return (
-    <Fieldset legend="Add Location" disabled={isLoading}>
+    <Fieldset legend="Add Location" disabled={isFetching}>
       <LabeledInput
         id={fields.pincode}
         placeholder="------"

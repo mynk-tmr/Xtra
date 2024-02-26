@@ -19,7 +19,7 @@ const CreateListingPage = () => {
     mutationFn: apiClient.postListing,
     onSuccess: () => {
       notifySuccess("Your listing is added 😍");
-      queryClient.removeQueries({ queryKey: "newlistingLocation" });
+      queryClient.removeQueries({ queryKey: ["pincode"] });
       localStorage.removeItem("draft");
     },
     onError: notifyError,

@@ -5,7 +5,7 @@ import { getLocationDetails } from "@/libs/utils/getLocationDetails";
 import { notifyError } from "@/libs/utils/toast";
 
 const PincodeFieldSet = ({ register, setValue, getValues, fields }) => {
-  const { data, isLoading, refetch, isError } = useQuery({
+  const { data, isFetching, refetch, isError } = useQuery({
     queryFn: () => getLocationDetails(getValues("pincode")),
     onError: () => {
       notifyError("Pincode is invalid");
@@ -15,7 +15,7 @@ const PincodeFieldSet = ({ register, setValue, getValues, fields }) => {
   });
 
   return (
-    <fieldset disabled={isLoading} className="grid gap-y-3">
+    <fieldset disabled={isFetching} className="grid gap-y-3">
       <legend className="text-xs font-medium">Location</legend>
       <div className="flex flex-wrap gap-3">
         <LabeledInput
