@@ -5,24 +5,25 @@ import {
   getValidationErrors,
   validationsAtLogin,
 } from "../middlewares/_validator.js";
-import { jsonResponse } from "../helpers/_formatters.js";
+import { handleInternalError, jsonResponse } from "../helpers/_formatters.js";
 import { verifyToken } from "../middlewares/_verifyToken.js";
 import { User, getUserByEmail } from "../models/_user.js";
 
 async function loginUser(req, res) {
   const errors = getValidationErrors(req);
   if (errors) return jsonResponse(res, 400, errors);
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     let user = await getUserByEmail(email);
-    if (!user) return jsonResponse(res, 400, "Invalid credentials");
+    if (!user) throw "INVALID_CRED";
     const isPasswordOK = await bcrypt.compare(password, user.password);
-    if (!isPasswordOK) return jsonResponse(res, 400, "Invalid credentials");
+    if (!isPasswordOK) throw "INVALID_CRED";
     setJWTCookieInResponse(res, user._id);
     return jsonResponse(res, 200, { userId: user._id }); //userId is sent so script can read
   } catch (error) {
-    console.log(error);
-    return jsonResponse(res, 500, "Something went wrong");
+    if (error == "INVALID_CRED")
+      return jsonResponse(res, 400, "Invalid credentials");
+    else handleInternalError(res, error);
   }
 }
 

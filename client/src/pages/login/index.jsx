@@ -2,7 +2,7 @@ import Xtralogo from "@/components/Xtralogo";
 import { Outlet } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import * as apiClient from "@/libs/utils/apiClient";
-import { notifyError, notifySuccess } from "@/libs/utils/toast";
+import { notifyError } from "@/libs/utils/toast";
 import LoadingDots from "@/components/LoadingDots";
 import { useAppContext } from "@/contexts/AppContext";
 
@@ -16,10 +16,7 @@ const LoginPage = () => {
 
   const { mutate: submitUserInfo, status } = useMutation({
     mutationFn: apiClient.post,
-    onSuccess: async function () {
-      notifySuccess("You are signed in! 😎");
-      verifyUser();
-    },
+    onSuccess: verifyUser,
     onError: notifyError,
   });
 

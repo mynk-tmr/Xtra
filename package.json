@@ -2,8 +2,5 @@
   "scripts": {
     "start": "concurrently \"cd client && bun dev\" \"cd api && npm run start\"",
     "e2e": "concurrently \"cd client && bun dev\" \"cd api && npm run e2e\""
-  },
-  "dependencies": {
-    "@tanstack/react-query-devtools": "4"
   }
 }
